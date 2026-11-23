@@ -45,3 +45,13 @@ Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 - **Local Chromium smoke PASS:** 1920×1080, 1366×768, 1024×768, 390×844; no vertical page scroll; 12 lesson nodes and 4 chests; modal validation, wrong/correct, one heart deduction, World Map, shop icon rendering, buy/wear/wearing, HUD synchronization. Node syntax and 18 native WebP decode checks PASS.
 - **Live route HTTP verification PASS** for `/kids-english/` and `/kids-english/classic/`. Live hosted click-by-click browser tests remain unverified: do not confuse local smoke with remote interactive certification.
 - Classic fallback `/classic/` and rollback branch `release/classic-pre-island-2026-11-23` remain unchanged.
+
+## Block A — deployed map/asset correction (2026-11-23)
+- PR #15: https://github.com/nikonovmike2737/kids-english/pull/15
+- Production commit: `7f898d5d3b122c5656c655e71615976ef1d8158d`.
+- Action #11: https://github.com/nikonovmike2737/kids-english/actions/runs/45209889216 — success, single deploy job with asset validation.
+- Full-screen image stage without side frame; background is static clean terrain; kitten and chests are independent positioned assets; new dimensionally styled key and coin.
+- Explicit terrain anchors for each four-node row and each chest; 3 bridge dotted paths, no inbound route to node 1.
+- Local Chromium 1920×1080, 1366×768, 1280×800, 1024×768, stage and scroll geometry PASS, zero JavaScript page errors.
+- Public root and /classic/ accessible via external HTTP. **Independent live visual and interaction acceptance still pending.**
+- Follow-up release block B will change hearts to lesson-only; this action intentionally does not change them.
