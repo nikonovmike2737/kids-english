@@ -1025,3 +1025,27 @@ button:disabled{cursor:not-allowed;opacity:.58}
   .gameover-card .btn-row{flex-direction:row;gap:8px}
   .gameover-card .btn-row .btn{width:auto;min-height:39px;padding:7px 12px}
 }
+
+/* G6 owner green portrait: center the visible silhouette, not PNG padding.
+   JS alpha-fit scales the shared canvas while preserving gear anchors.
+   The neutral preview and the Safari-bounded parent remain unchanged. */
+.modal-panel.wardrobe .cat-preview .cat-figure .cat-avatar-canvas{
+  width:var(--portrait-width,min(125%,390px,50vh)) !important;
+  max-width:none !important;max-height:none;
+  flex:0 0 auto;translate:var(--portrait-x,0px) var(--portrait-y,0px);
+}
+.modal-panel.wardrobe .shop-item>img{
+  width:min(90%,170px);height:auto;aspect-ratio:1;min-height:0;
+  flex:0 0 auto;object-fit:contain;
+  transform:translate(var(--art-x,0%),var(--art-y,0%));
+}
+.modal-panel.wardrobe .shop-item-name{min-height:2.25em;display:grid;place-items:center;white-space:normal;text-align:center}
+@media(max-width:750px){
+  .modal-panel.wardrobe .shop-item>img{width:min(90%,132px)}
+}
+@media(max-width:500px){
+  .modal-panel.wardrobe .cat-preview .cat-figure .cat-avatar-canvas{
+    width:var(--portrait-width,min(82%,210px,24vh)) !important;
+  }
+  .modal-panel.wardrobe .shop-item>img{width:min(92%,108px)}
+}
