@@ -406,26 +406,30 @@ function finishLesson() {
   const lesson = curLesson();
   const first = !hasKey(lesson.id);
   if (first) { progress.completedLessonIds.push(lesson.id); persist(); }
-  // Attempt results and remaining lives are RAM-only, never part of saved progress.
-  const report = { lives: active.lives, results: active.results.map((r) => ({ type: r.type, attempts: r.attempts })) };
-  const mistakes = report.results.reduce((sum, r) => sum + r.attempts - 1, 0);
+  // A celebratory modal is not an assessment report. Attempt details remain
+  // transient; neither the individual answers nor the report is published.
+  active.results = [];
   active.lessonId = null;
   active.lives = 3;
   updateMap();
-  showReward(first ? 'You Got a Key!' : 'Great Job!', first ? `🔑 ${firstReady()} / 12 keys` : `Completed again · ${mistakes} wrong tries`, 'assets/modals/reward-key.webp', report);
+  showReward(first ? 'You Got a Key!' : 'Great Job!', `${firstReady()} / 12 keys`, null, first ? 'key' : 'replay');
 }
 
-function showReward(title, sub, art, report = null) {
-  const summary = report ? `
-    <section class="lesson-summary" aria-label="Lesson results">
-      <h3>Lesson Results</h3>
-      <p>Lives left in this lesson: <strong>${report.lives} of 3</strong></p>
-      <ol class="lesson-summary-list">${report.results.map((r, i) => `
-        <li><strong>Task ${i + 1}</strong><span>Solved · ${r.attempts === 1 ? "First try" : `${r.attempts - 1} ${r.attempts === 2 ? "mistake" : "mistakes"}`}</span></li>
-      `).join('')}</ol>
-    </section>` : '';
-  const rewardArt = report ? `<div class="reward-illustrations"><img class="reward-art" src="${esc(art)}" alt=""><div class="reward-avatar" aria-label="Your explorer cat"><span class="outfit-behind">${outfittedCat('behind')}</span><img class="cat-base" src="assets/mascot/cat-dressable.webp" alt="Explorer kitten"><span class="outfit-overlays">${outfittedCat()}</span></div></div>` : `<img class="reward-art" src="${esc(art)}" alt="">`;
-  setModal(`${modalX()}<h2>${esc(title)}</h2>${rewardArt}<p class="reward-sub">${esc(sub)}</p>${summary}<button class="btn" id="reward-continue" type="button">Continue →</button>`, "reward");
+function showReward(title, sub, art, celebration = null) {
+  // Compose one illustrated stage with the player's existing dressable kitten.
+  // Replays use a star, never another newly awarded key.
+  const rewardArt = celebration ? `
+    <div class="reward-celebration" data-celebration="${esc(celebration)}">
+      <div class="celebration-rays" aria-hidden="true"></div>
+      <span class="celebration-spark spark-one" aria-hidden="true">✦</span><span class="celebration-spark spark-two" aria-hidden="true">✧</span><span class="celebration-spark spark-three" aria-hidden="true">✦</span><span class="celebration-spark spark-four" aria-hidden="true">✧</span>
+      <div class="reward-avatar" aria-label="Your explorer cat"><span class="outfit-behind">${outfittedCat('behind')}</span><img class="cat-base" src="assets/mascot/cat-dressable.webp" alt="Explorer kitten" draggable="false"><span class="outfit-overlays">${outfittedCat()}</span></div>
+      <img class="celebration-prize" src="assets/modals/${celebration === 'key' ? 'g4-golden-key.svg' : 'g4-golden-star.svg'}" alt="${celebration === 'key' ? 'Golden key earned' : 'Lesson complete'}" draggable="false">
+    </div>` : `<img class="reward-art" src="${esc(art)}" alt="">`;
+  const progressLabel = celebration ? `<p class="reward-sub key-progress"><img src="assets/symbols/key.webp" alt=""><span>${esc(sub)}</span></p>` : `<p class="reward-sub">${esc(sub)}</p>`;
+  setModal(`${modalX()}<h2 id="reward-heading">${esc(title)}</h2>${rewardArt}${progressLabel}<button class="btn" id="reward-continue" type="button">Continue →</button>`, "reward");
+  const panel = $('.modal-panel.reward', root);
+  panel.setAttribute('aria-labelledby', 'reward-heading');
+  if (celebration) panel.classList.add('lesson-celebration');
   $('#reward-continue').addEventListener('click', closeModal);
 }
 
