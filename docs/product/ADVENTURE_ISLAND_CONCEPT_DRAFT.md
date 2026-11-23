@@ -150,4 +150,25 @@ This section supersedes any contradictory v3 wardrobe button illustrations and 3
 
 **Scope:** design concept and method/technical requirements only. No GitHub Pages deployment, persistence or shop logic until the product concept is explicitly accepted.
 
+## 13. Owner correction — strict serpentine path with chest after each row (2026-11-23)
+Status: CONCEPT ONLY; no changes to production.
+
+**Top row `Getting Started`, left to right:** START = lesson 1 at far left, with **NO inbound dashed segment, arrow or entry bridge**. The first visible dashed line starts at the **right edge of lesson 1**, then connects to lessons 2, 3, 4, and to **small chest A at the far right**. Unlock bridge A only after chest A is opened.
+
+**Middle row `Next Level`, right to left:** bridge A arrives at the **right edge of the middle row** and connects to lessons 5, 6, 7, 8 in right-to-left order. **Small chest B must be at the far LEFT of all four lesson circles**, after lesson 8. Never put chest B to the right of lesson 5. Open chest B, then bridge B descends from the LEFT of chest B to the far left of the bottom row.
+
+**Bottom row `Final Challenge`, left to right:** bridge B arrives at lesson 9 on the **far left**, then lessons 10, 11, 12, then **small chest C at far right**. When small chest C is opened, a clearly visible **third outbound bridge** goes further right to a **separate final islet** containing the **GRAND chest**; small chest C and the grand chest are visually and logically distinct objects.
+
+```text
+ TOP:         START L1 → L2 → L3 → L4 → CHEST A
+                                                ↓ bridge A
+ MID:         CHEST B ← L8 ← L7 ← L6 ← L5 ←─────┘
+              ↓ bridge B
+ BOTTOM:      L9 → L10 → L11 → L12 → CHEST C
+                                           ↓ outbound bridge
+                                     FINAL ISLET → GRAND CHEST
+```
+
+**No inbound path into the starting node.** No bridge before the preceding chest, no duplicate chest role, no broken post-chest routes. This is a binding visual topology requirement; decorative concept illustrations are not necessarily geometrically exact. All text labels used in the game are English-only. At any stage only existing fully authored lessons have themed icons; unimplemented lessons display locks. Successfully completed lesson circles get a key marker, not a checkmark. Each theme's four lessons can be completed in any order when that theme is unlocked; the dotted route is a visual progression around the group, not enforced sequential task gating.
+
 **Do not merge this document into main as accepted canon and do not change production assets or Pages until approved.**
