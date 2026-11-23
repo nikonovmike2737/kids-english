@@ -47,3 +47,6 @@ All production art is committed to GitHub as **native binary PNG/WebP** (not ext
 
 ## G6 local motion sources
 - `assets/animation/cat-poses.js`: four normalized source-space pose definitions; `cat-motion.js`: alpha-safe shared canvas deformation for body + equipped accessories, 24 fps cap, random 13–17s scheduling; `wardrobe-art.js`: alpha measurement and fit; `ambient.css`: waterfall/foam/foliage effects (SVG geometry in `index.html`). Original mascot and fifteen wearables remain canonical. No third-party animation dependencies.
+
+## G7 revised asset set
+`assets/chests/{closed,grand,opened}.webp` replaces the contaminated old chest crops with independent transparent silhouettes. `assets/modals/chest-reward.webp` uses the clean opened sprite. `assets/symbols/g7-{compass,rocket,mountain}.webp` are reference-style standalone illustrations; `g7-lock.svg` / `g7-unlock.svg` are state overlays. G6 mascot motion retired and removed; only ambient CSS is loaded.
