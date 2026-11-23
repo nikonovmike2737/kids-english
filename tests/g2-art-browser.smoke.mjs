@@ -157,7 +157,8 @@ try {
   assert.equal(await page.locator('.reward-avatar .outfit-behind .equipped-item').count(),1);
   assert.equal(await page.locator('.reward-avatar .outfit-overlays .equipped-item').count(),4);
   for(const loc of await page.locator('.reward-avatar .equipped-item').all()) await inspectImage(loc);
-  assert.equal(await page.locator('.lesson-summary-list li').count(),4);
+  assert.equal(await page.locator('.lesson-summary, .lesson-summary-list').count(),0);
+  assert.equal(await page.locator('[data-celebration="key"]').count(),1);
   assert.equal(await page.locator('#hud-keys').innerText(),'1/12');
   await screenshot(page,'g2-fully-dressed-lesson-reward-1280');
   pass('reward shows all 5 original accessory sprites on neutral cat while lesson/key invariants hold');
