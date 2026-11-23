@@ -27,7 +27,7 @@ test('E1: 5 item categories, 3 tiers each, prices 1,3,5 and native art',()=>{
   }
 });
 test('E2: outfit uses real item sprite in map, wardrobe and reward',()=>{
-  const outfit=cut('function outfittedCat()','function updateMap()');
+  const outfit=cut('function outfittedCat(','function updateMap()');
   assert.match(outfit,/class="equipped-item"/);
   assert.match(outfit,/assets\/inventory\//);
   assert.match(outfit,/data-item-id/);
