@@ -77,9 +77,10 @@ function toast(s) {
   toast.timer = setTimeout(() => el.classList.remove('show'), 1800);
 }
 
-function outfittedCat() {
-  // One illustrated item asset per equipped slot, shared across map, closet and rewards.
-  return slots.map((slot) => {
+function outfittedCat(layer = 'front') {
+  // Backpacks sit BEHIND the kitten; hats/scarves/shoes/tools sit in front.
+  // The neutral cat is accessory-free, so selected gear never duplicates baked-in art.
+  return slots.filter((slot) => layer === 'behind' ? slot === 'backpacks' : slot !== 'backpacks').map((slot) => {
     const id = progress.equippedBySlot[slot];
     if (!id || !progress.purchasedItemIds.includes(id)) return '';
     const tier = Number(id.slice(slot.length + 1));
@@ -135,6 +136,7 @@ function updateMap() {
 
   $('#hud-keys').textContent = `${firstReady()}/12`;
   $('#hud-coins').textContent = String(progress.coinBalance);
+  $('#island-outfit-behind').innerHTML = outfittedCat('behind');
   $('#island-outfit').innerHTML = outfittedCat();
 }
 
@@ -422,7 +424,7 @@ function showReward(title, sub, art, report = null) {
         <li><strong>Task ${i + 1}</strong><span>Solved · ${r.attempts === 1 ? "First try" : `${r.attempts - 1} ${r.attempts === 2 ? "mistake" : "mistakes"}`}</span></li>
       `).join('')}</ol>
     </section>` : '';
-  const rewardArt = report ? `<div class="reward-illustrations"><img class="reward-art" src="${esc(art)}" alt=""><div class="reward-avatar" aria-label="Your explorer cat"><img class="cat-base" src="assets/mascot/cat-wardrobe.webp" alt="Explorer kitten"><span class="outfit-overlays">${outfittedCat()}</span></div></div>` : `<img class="reward-art" src="${esc(art)}" alt="">`;
+  const rewardArt = report ? `<div class="reward-illustrations"><img class="reward-art" src="${esc(art)}" alt=""><div class="reward-avatar" aria-label="Your explorer cat"><span class="outfit-behind">${outfittedCat('behind')}</span><img class="cat-base" src="assets/mascot/cat-dressable.webp" alt="Explorer kitten"><span class="outfit-overlays">${outfittedCat()}</span></div></div>` : `<img class="reward-art" src="${esc(art)}" alt="">`;
   setModal(`${modalX()}<h2>${esc(title)}</h2>${rewardArt}<p class="reward-sub">${esc(sub)}</p>${summary}<button class="btn" id="reward-continue" type="button">Continue →</button>`, "reward");
   $('#reward-continue').addEventListener('click', closeModal);
 }
@@ -523,7 +525,8 @@ function catProfile() {
     <div class="wardrobe-inner">
       <div class="cat-preview" aria-label="Your dressed cat">
         <div class="cat-figure">
-          <img class="cat-base" src="assets/mascot/cat-wardrobe.webp" alt="Explorer kitten" draggable="false">
+          <span class="outfit-behind">${outfittedCat('behind')}</span>
+          <img class="cat-base" src="assets/mascot/cat-dressable.webp" alt="Explorer kitten" draggable="false">
           <span class="outfit-overlays">${outfittedCat()}</span>
         </div>
       </div>
