@@ -6,6 +6,7 @@ on:
     paths:
       - 'index.html'
       - 'assets/**'
+      - 'classic/**'
       - 'site/**'
       - 'content/**'
       - '.github/workflows/pages.yml'
@@ -37,6 +38,36 @@ jobs:
 
       - name: Verify site entry point
         run: test -s index.html
+
+      - name: Validate game sources and asset binaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check assets/js/app.js
+          node --check assets/js/data.js
+          test -s classic/index.html
+          python3 - <<'PY'
+          from pathlib import Path
+          expected=[
+            'assets/maps/adventure-island.webp',
+            'assets/mascot/cat-explorer.png',
+            'assets/brand/abc-cat-logo.png',
+            'assets/chests/closed.webp',
+            'assets/chests/opened.webp',
+            'assets/chests/grand.webp',
+            'assets/symbols/key.webp',
+            'assets/symbols/coin.webp',
+            'assets/modals/sad-cat.webp',
+            'assets/inventory/hats/tier-1.webp',
+          ]
+          for name in expected:
+              p=Path(name)
+              assert p.exists() and p.stat().st_size>100, name
+              b=p.read_bytes()
+              if p.suffix=='.webp':assert b[:4]==b'RIFF' and b[8:12]==b'WEBP',name
+              if p.suffix=='.png':assert b[:8]==b'\\x89PNG\\r\\n\\x1a\\n',name
+          print('Game source and binary asset checks PASS')
+          PY
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
