@@ -701,3 +701,62 @@ button:disabled{cursor:not-allowed;opacity:.58}
 .modal-panel.wardrobe .shop-item.locked-tier>img{
   filter:grayscale(.18) saturate(.58) drop-shadow(0 3px 4px #32245710)
 }
+
+
+/* G2 owner-reference visual review v2: a single kitten-proportioned 1024:936
+   avatar canvas fixes previously floating hat, face scarf and belly shoes.
+   The parent preview panel must NOT be the accessory coordinate system. */
+.island-cat{display:grid;place-items:center}
+.cat-preview .cat-figure{display:grid;place-items:center}
+.island-cat .cat-avatar-canvas,
+.cat-preview .cat-figure .cat-avatar-canvas{
+  position:relative;display:block;width:100%;height:auto;
+  aspect-ratio:1024 / 936;
+  max-height:100%;
+  flex:0 0 auto;
+  overflow:visible;
+  isolation:isolate;
+}
+.island-cat .cat-avatar-canvas>.cat-base,
+.cat-preview .cat-figure .cat-avatar-canvas>.cat-base{
+  position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;
+  object-fit:contain;object-position:center;display:block;z-index:2;pointer-events:none;
+}
+.reward-avatar{
+  position:relative;width:min(30vw,145px);height:auto;
+  aspect-ratio:1024 / 936;max-height:22vh;isolation:isolate;overflow:visible;
+}
+.island-cat .cat-avatar-canvas .outfit-behind,
+.island-cat .cat-avatar-canvas .outfit-overlays,
+.cat-preview .cat-avatar-canvas .outfit-behind,
+.cat-preview .cat-avatar-canvas .outfit-overlays{position:absolute;inset:0;pointer-events:none}
+.island-cat .cat-avatar-canvas .outfit-behind,
+.cat-preview .cat-avatar-canvas .outfit-behind{z-index:1}
+.island-cat .cat-avatar-canvas .outfit-overlays,
+.cat-preview .cat-avatar-canvas .outfit-overlays{z-index:3}
+/* All three cat views share these normalized positions. */
+.island-cat .outfit-overlays .equipped-item[data-slot=hat],
+.cat-preview .cat-figure .outfit-overlays .equipped-item[data-slot=hat],
+.reward-avatar .outfit-overlays .equipped-item[data-slot=hat]{
+  width:53%;height:50%;left:22.5%;top:-9.4%;bottom:auto;right:auto;transform:rotate(-7deg);
+}
+.island-cat .outfit-overlays .equipped-item[data-slot=neck],
+.cat-preview .cat-figure .outfit-overlays .equipped-item[data-slot=neck],
+.reward-avatar .outfit-overlays .equipped-item[data-slot=neck]{
+  width:33%;height:34%;left:38%;top:43%;bottom:auto;right:auto;transform:none;
+}
+.island-cat .outfit-overlays .equipped-item[data-slot=shoes],
+.cat-preview .cat-figure .outfit-overlays .equipped-item[data-slot=shoes],
+.reward-avatar .outfit-overlays .equipped-item[data-slot=shoes]{
+  width:41%;height:42%;left:30%;top:66%;bottom:auto;right:auto;transform:none;
+}
+.island-cat .outfit-behind .equipped-item[data-slot=back],
+.cat-preview .cat-figure .outfit-behind .equipped-item[data-slot=back],
+.reward-avatar .outfit-behind .equipped-item[data-slot=back]{
+  width:41.4%;height:43.8%;left:1.4%;top:43.8%;bottom:auto;right:auto;transform:none;
+}
+.island-cat .outfit-overlays .equipped-item[data-slot=tool],
+.cat-preview .cat-figure .outfit-overlays .equipped-item[data-slot=tool],
+.reward-avatar .outfit-overlays .equipped-item[data-slot=tool]{
+  width:22%;height:26%;left:77%;top:42%;bottom:auto;right:auto;transform:rotate(10deg);
+}
