@@ -52,7 +52,6 @@ function persist() {
 const active = { lessonId: null, index: 0, lives: 3, attempts: 0, done: false, selected: null, matchWord: null, match: {}, order: [], results: [] };
 let currentCategory = 'hats';
 let selectedTier = 1;
-let currentShopView = 'shop';
 let wardrobeFocusTarget = null;
 let modalType = null;
 let restoreFocus = null;
@@ -472,7 +471,6 @@ function itemState() {
   if (!id) return 'empty';
   const owned = progress.purchasedItemIds.includes(id);
   if (owned) return progress.equippedBySlot[currentCategory] === id ? 'wearing' : 'wear';
-  if (currentShopView === 'inventory') return 'empty';
   if (selectedTier > 1) return 'locked';
   return progress.coinBalance >= itemCost() ? 'buy' : 'insufficient';
 }
@@ -486,14 +484,11 @@ function itemAction() {
           : st === 'locked' ? ['Locked', 'grey', true]
             : [`Need ${itemCost() - progress.coinBalance} ${coinNoun(itemCost() - progress.coinBalance)}`, 'grey', true];
 }
-function firstOwnedTier(slot) {
-  return [1, 2, 3].find((i) => progress.purchasedItemIds.includes(`${slot}-${i}`)) || 0;
-}
-
 function catProfile() {
   const names = { hats: '🎩 Hats', scarves: '🧣 Scarves', shoes: '👟 Shoes', backpacks: '🎒 Backpacks', tools: '🧭 Tools' };
-  const tiers = [1, 2, 3].filter((tier) => currentShopView === 'shop' || progress.purchasedItemIds.includes(`${currentCategory}-${tier}`));
-  if (!tiers.includes(selectedTier)) selectedTier = tiers[0] || 0;
+  // Latest owner QA: one five-category catalogue, no redundant Shop / Inventory view.
+  const tiers = [1, 2, 3];
+  if (!tiers.includes(selectedTier)) selectedTier = 1;
   const tab = slots.map((s) =>
     `<button type="button" data-category="${s}" class="${currentCategory === s ? 'selected' : ''}" aria-pressed="${currentCategory === s}">${names[s]}</button>`
   ).join('');
@@ -503,12 +498,15 @@ function catProfile() {
     const owned = progress.purchasedItemIds.includes(id);
     const equipped = progress.equippedBySlot[currentCategory] === id;
     const status = equipped ? 'Wearing' : owned ? 'Owned' : tier > 1 ? 'Locked' : 'Available';
-    return `<button type="button" data-item="${tier}" class="shop-item ${selectedTier === tier ? 'selected' : ''}"
+    const locked = !owned && tier > 1;
+    return `<button type="button" data-item="${tier}" data-tier-state="${locked ? 'locked' : equipped ? 'wearing' : owned ? 'owned' : 'available'}"
+      class="shop-item ${selectedTier === tier ? 'selected' : ''} ${locked ? 'locked-tier' : ''}"
       aria-pressed="${selectedTier === tier}" aria-label="${esc(name)}, ${price} ${coinNoun(price)}, ${status}">
       <img src="assets/inventory/${currentCategory}/tier-${tier}.webp" alt="" loading="eager">
+      ${locked ? '<span class="item-lock-mark" aria-hidden="true">🔒</span>' : ''}
       <span class="shop-item-name">${esc(name)}</span>
-      <span class="price"><img src="assets/symbols/coin.webp" alt=""> ${price}</span>
-      <span class="owned-indicator">${equipped ? '✓ Wearing' : owned ? '✓ Owned' : tier > 1 ? '🔒' : '&nbsp;'}</span>
+      <span class="price"><img src="assets/symbols/coin.webp" alt="">${price}</span>
+      <span class="owned-indicator">${equipped ? '✓ Wearing' : owned ? '✓ Owned' : '&nbsp;'}</span>
     </button>`;
   }).join('');
   const [label, color, disabled] = itemAction();
@@ -530,32 +528,16 @@ function catProfile() {
         </div>
       </div>
       <div class="shop-panel">
-        <div class="shop-view-tabs" role="group" aria-label="Wardrobe view">
-          <button type="button" data-shop-view="shop" aria-pressed="${currentShopView === 'shop'}" class="${currentShopView === 'shop' ? 'selected' : ''}">Shop</button>
-          <button type="button" data-shop-view="inventory" aria-pressed="${currentShopView === 'inventory'}" class="${currentShopView === 'inventory' ? 'selected' : ''}">Inventory</button>
-        </div>
         <div class="category-tabs" aria-label="Item categories">${tab}</div>
-        <div class="shop-grid ${!tiers.length ? 'shop-grid-empty' : ''}">
-          ${cards || '<p class="empty-inventory">No items in this category yet.</p>'}
-        </div>
-        <div class="shop-selected" aria-live="polite">
-          <span>${selectedTier ? esc(shopCatalog[currentCategory][selectedTier - 1][0]) : 'Inventory'}</span>
-          <span>${selectedTier ? itemCost() + ' ' + coinNoun(itemCost()) : ''}</span>
-        </div>
+        <div class="shop-grid" aria-label="Available accessories">${cards}</div>
         <button id="item-action" type="button" class="btn item-action ${color}" aria-label="${esc(label)}"
           ${disabled ? 'disabled' : ''}>${esc(label)}</button>
       </div>
     </div>
   `, 'wardrobe');
-  $$('[data-shop-view]').forEach((button) => button.addEventListener('click', () => {
-    currentShopView = button.dataset.shopView;
-    selectedTier = currentShopView === 'shop' ? 1 : firstOwnedTier(currentCategory);
-    wardrobeFocusTarget = `[data-shop-view="${currentShopView}"]`;
-    catProfile();
-  }));
   $$('[data-category]').forEach((button) => button.addEventListener('click', () => {
     currentCategory = button.dataset.category;
-    selectedTier = currentShopView === 'shop' ? 1 : firstOwnedTier(currentCategory);
+    selectedTier = 1;
     wardrobeFocusTarget = `[data-category="${currentCategory}"]`;
     catProfile();
   }));
@@ -606,8 +588,8 @@ function settings() {
 }
 
 $('#world-button').addEventListener('click', worldMap);
-$('#cat-button').addEventListener('click', () => { currentShopView = 'shop'; selectedTier = 1; catProfile(); });
-$('#island-cat').addEventListener('click', () => { currentShopView = 'shop'; selectedTier = 1; catProfile(); });
+$('#cat-button').addEventListener('click', () => { selectedTier = 1; catProfile(); });
+$('#island-cat').addEventListener('click', () => { selectedTier = 1; catProfile(); });
 $('#settings-button').addEventListener('click', settings);
 
 document.addEventListener('keydown', (e) => {

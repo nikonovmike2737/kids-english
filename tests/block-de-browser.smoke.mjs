@@ -47,7 +47,8 @@ try {
   await page.locator('#cat-button').click();
   assert.equal(await page.locator('.modal-panel.wardrobe').count(),1);
   assert.equal(await page.locator('[data-category]').count(),5);
-  assert.equal(await page.locator('[data-shop-view]').count(),2);
+  assert.equal(await page.locator('[data-shop-view]').count(),0);
+  assert.equal(await page.locator('.shop-selected').count(),0);
   assert.equal(await page.locator('.shop-item').count(),3);
   await verifyArt(page,'.shop-item>img');
   assert.equal(await page.locator('#item-action').count(),1);
@@ -55,12 +56,29 @@ try {
   assert.match(await page.locator('#item-action').innerText(),/Need 1 Coin/);
   assert.doesNotMatch(await page.locator('.wardrobe-header').innerText(),/❤️|🤍/);
   await screenshot(page,'de-my-cat-shop-1280');
-  await page.locator('[data-shop-view="inventory"]').click();
-  assert.equal(await page.locator('.shop-item').count(),0);
-  assert.match(await page.locator('.empty-inventory').innerText(),/No items/);
-  assert.equal(await page.locator('#item-action').isDisabled(),true);
+  assert.equal(await page.locator('.shop-item.locked-tier').count(),2);
+  assert.equal(await page.locator('.item-lock-mark').count(),2);
+  assert.equal(await page.locator('.shop-item .price img').count(),3);
   assert.equal(await page.locator('#item-action').count(),1);
-  pass('E: 5 categories x 3 illustrated items, Shop/Inventory and one disabled action');
+  const visual = await page.locator('.cat-preview').evaluate(el=>{
+    const panel=el.getBoundingClientRect(),cat=el.querySelector('.cat-figure').getBoundingClientRect();
+    return {centerDelta:Math.abs((cat.x+cat.width/2)-(panel.x+panel.width/2))/panel.width};
+  });
+  assert.ok(visual.centerDelta<.16,'cat preview must be centered: '+JSON.stringify(visual));
+  const price = await page.locator('.shop-item .price img').first().evaluate(el=>el.getBoundingClientRect().width);
+  assert.ok(price>=24,'readable coin symbol: '+price);
+  const layout = await page.locator('.shop-item').first().evaluate(el=>{
+    const card=el.getBoundingClientRect(), art=el.querySelector(':scope > img').getBoundingClientRect();
+    return {ratio:art.height/card.height,width:art.width/card.width};
+  });
+  assert.ok(layout.ratio>=.26 && layout.width>=.7,'item artwork must be prominent: '+JSON.stringify(layout));
+  const vertical = await page.locator('.shop-item').first().evaluate(el=>{
+    const rect=el.getBoundingClientRect(),art=el.querySelector(':scope > img').getBoundingClientRect();
+    const end=el.querySelector('.owned-indicator').getBoundingClientRect();
+    return Math.abs((art.top+end.bottom)/2-(rect.top+rect.height/2))/rect.height;
+  });
+  assert.ok(vertical<.14,'product image/name/price group must be vertically balanced, not parked at the top: '+vertical);
+  pass('G1: direct categories, no segmented tabs/detail, large centered cat/art, prices and full-card locks');
 
   // Smoke fixture is confined to this disposable browser context: three credited
   // chest IDs produce an internally consistent 3-coin wallet after reload.
@@ -98,25 +116,27 @@ try {
   pass('E: Buy->Wear->Wearing, unwear, two illustrated worn layers on map, debit once');
 
   await page.locator('#cat-button').click();
-  await page.locator('[data-shop-view="inventory"]').click();
-  assert.equal(await page.locator('.shop-item').count(),1);
-  assert.match(await page.locator('.shop-item').innerText(),/Cozy Scarf/);
+  assert.equal(await page.locator('.shop-item').count(),3);
+  assert.match(await page.locator('.shop-item').first().innerText(),/Cozy Scarf/);
+  assert.match(await page.locator('.shop-item').first().innerText(),/Wearing/);
   await page.locator('[data-category="hats"]').click();
-  assert.equal(await page.locator('.shop-item').count(),1);
+  assert.equal(await page.locator('.shop-item').count(),3);
+  assert.match(await page.locator('.shop-item').first().innerText(),/Wearing/);
   await page.locator('[data-category="shoes"]').click();
-  assert.equal(await page.locator('.shop-item').count(),0);
+  assert.equal(await page.locator('.shop-item').count(),3);
+  assert.equal(await page.locator('.shop-item.locked-tier').count(),2);
   assert.equal(await page.locator('#item-action').count(),1);
   await page.locator('#close-modal').click();
   await page.reload({waitUntil:'networkidle'});
   assert.equal(await page.locator('#hud-coins').innerText(),'1');
   assert.equal(await page.locator('#island-outfit .equipped-item').count(),2);
   await page.locator('#cat-button').click();
-  await page.locator('[data-shop-view="inventory"]').click();
   await page.locator('[data-category="hats"]').click();
-  assert.equal(await page.locator('.shop-item').count(),1);
+  assert.equal(await page.locator('.shop-item').count(),3);
+  assert.match(await page.locator('.shop-item').first().innerText(),/Wearing/);
   assert.match(await page.locator('#item-action').innerText(),/Wearing/);
   await page.locator('#close-modal').click();
-  pass('E: inventory is owned-only by category; purchases/equipment survive reload');
+  pass('G1/E: purchases and equipment visible in direct categories and survive reload');
 
   // Full existing lesson reward must reflect the same outfit without modifying
   // question answers, number of hearts or completion/coin logic.
@@ -158,8 +178,17 @@ try {
   assert.equal(await m.locator('[data-category]').count(),5);
   assert.equal(await m.locator('#item-action').count(),1);
   await verifyArt(m,'.shop-item>img');
+  assert.equal(await m.locator('[data-shop-view]').count(),0);
+  assert.equal(await m.locator('.shop-item').count(),3);
+  assert.equal(await m.locator('.shop-item.locked-tier').count(),2);
+  assert.equal(await m.locator('.shop-selected').count(),0);
   const noShopOverflow=await m.locator('.modal-panel.wardrobe').evaluate(el=>el.scrollWidth<=el.clientWidth+3);
   assert.equal(noShopOverflow,true);
+  const mobileFooterGap=await m.locator('.modal-panel.wardrobe').evaluate(el=>{
+    const r=el.getBoundingClientRect(),cta=el.querySelector('#item-action').getBoundingClientRect();
+    return r.bottom-cta.bottom;
+  });
+  assert.ok(mobileFooterGap<64,'no empty mobile panel below wardrobe CTA: '+mobileFooterGap);
   await screenshot(m,'de-my-cat-mobile');
   pass('D/E: mobile 390px opens both modals with decoded art and no horizontal overflow');
 

@@ -36,9 +36,10 @@ test('E2: outfit uses real item sprite in map, wardrobe and reward',()=>{
   assert.match(cut('function catProfile()','function performItemAction()'),/outfittedCat\(\)/);
   assert.match(cut('function showReward(','function openChest('),/reward-avatar/);
 });
-test('E3: Shop/Inventory filters purchases; exactly one shared action',()=>{
+test('E3/G1: one five-category wardrobe, owned/worn indicators, one action',()=>{
   const body=cut('function catProfile()','function performItemAction()');
-  for(const word of ['data-shop-view="shop"','data-shop-view="inventory"','purchasedItemIds.includes','No items in this category yet','wardrobeFocusTarget']) assert.ok(body.includes(word),word);
+  assert.doesNotMatch(body,/data-shop-view|shop-view-tabs|shop-selected|empty-inventory/);
+  for(const word of ['category-tabs','data-category','const tiers = [1, 2, 3]','purchasedItemIds.includes','data-tier-state','item-lock-mark','wardrobeFocusTarget'])assert.ok(body.includes(word),word);
   assert.equal((body.match(/id="item-action"/g)||[]).length,1);
   assert.match(body,/aria-pressed/);
 });
