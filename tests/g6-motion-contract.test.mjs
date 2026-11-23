@@ -44,3 +44,15 @@ test('G8-02: existing wardrobe updates shop only, stable portrait is fitted from
  assert.match(fit,/await alphaBounds\(base\)/);assert.match(fit,/if\(key===previous\)return/);
  assert.doesNotMatch(fit,/querySelectorAll\('\.cat-base,\.equipped-item'\)/);
 });
+
+test('G9: local illustrated lesson lock and layered reference discs retain native states',()=>{
+ const style=readFileSync('assets/css/app.css','utf8');
+ const icon=readFileSync('assets/symbols/g9-lesson-lock.svg','utf8');
+ const map=js.slice(js.indexOf('function updateMap()'),js.indexOf('function setModal('));
+ assert.match(map,/class="lesson-lock" src="assets\/symbols\/g9-lesson-lock\.svg"/);
+ assert.match(map,/b\.disabled = state === 'locked'/);
+ assert.match(map,/class="key-mark"/);
+ assert.match(style,/\.stage \.node\[data-state=locked\]/);
+ assert.match(style,/\.stage \.node\[data-state=completed\]/);
+ assert.match(icon,/viewBox="0 0 80 92"/);assert.match(icon,/fill="#fffaf2"/);
+});

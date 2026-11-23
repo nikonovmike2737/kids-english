@@ -125,3 +125,6 @@ Static mascot supersedes G6 gestures completely. Clean native WebP chests (close
 
 ## G8 — owner visual correction [#45](https://github.com/nikonovmike2737/kids-english/issues/45)
 Remove G7 additional chest lock overlays (native art and locked/ready/opened state remain). Shared symmetric SVG cross centered in all modal close buttons. Preserve the same wardrobe portrait DOM and base scale during category/item browsing and wear actions; recalculate only on real panel size changes. Tests include immediate DOM/geometry assertions, bare and dressed desktop + mobile, normal and nested close buttons; owner visual sign-off remains separate.
+
+## G9 — [#47](https://github.com/nikonovmike2737/kids-english/issues/47)
+Reference-style round ivory/pink lesson buttons with a glossy layered purple base and centered illustrated lavender padlock instead of platform emoji. Preserve native disabled states, available lesson icons, completed key badges and fixed map geometry. Browser checks at five viewports in Chromium/WebKit; owner visual acceptance separate.

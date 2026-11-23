@@ -108,7 +108,7 @@ function updateMap() {
     b.style.setProperty('--x', `${x}%`);
     b.style.setProperty('--y', `${y}%`);
     b.disabled = state === 'locked';
-    b.innerHTML = `<span class="icon-emoji" aria-hidden="true">${state === 'locked' ? '🔒' : lesson.icon}</span>${state === 'completed' ? '<span class="key-mark"><img alt="" src="assets/symbols/key.webp"></span>' : ''}`;
+    b.innerHTML = `${state === 'locked' ? '<img class="lesson-lock" src="assets/symbols/g9-lesson-lock.svg" alt="" draggable="false">' : `<span class="icon-emoji" aria-hidden="true">${lesson.icon}</span>`}${state === 'completed' ? '<span class="key-mark"><img alt="" src="assets/symbols/key.webp"></span>' : ''}`;
     b.setAttribute('aria-label', lesson ? `${lesson.title} — ${state}` : `Lesson ${number} — locked`);
     b.title = lesson ? `${lesson.title} · ${lesson.duration}` : 'Coming Soon';
     if (lesson && isUnlocked) b.addEventListener('click', () => previewLesson(lesson.id));

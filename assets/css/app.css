@@ -1068,3 +1068,37 @@ button:disabled{cursor:not-allowed;opacity:.58}
 /* The wardrobe's portrait is independent of the catalogue's intrinsic sizes. */
 .modal-panel.wardrobe .cat-preview{min-width:0;contain:size layout}
 .modal-panel.wardrobe .cat-avatar-canvas,.modal-panel.wardrobe .cat-avatar-canvas *{animation:none!important;transition:none!important}
+
+/* G9 — reference-style layered game discs. Preserve the G7 footprint and
+   coordinates; shallow colored bevels replace the previous thick grey ring. */
+.stage .node{
+  --face-top:#fffefa;--face-mid:#fff5df;--face-bottom:#ffe0a3;
+  --bevel:#f7af62;--rim:#ffeac3;--side:#a35af0;--base:#5423a4;
+  box-sizing:border-box;
+  border:.20cqw solid #fff8ed;
+  border-radius:50%;
+  background:radial-gradient(ellipse at 37% 16%,var(--face-top) 0%,var(--face-mid) 58%,var(--face-bottom) 100%);
+  box-shadow:inset 0 0 0 .10cqw var(--rim),
+    inset 0 -.24cqw .20cqw #a46d5429,
+    0 .21cqw 0 .10cqw var(--bevel),
+    0 .42cqw 0 .13cqw var(--side),
+    0 .63cqw 0 .12cqw var(--base),
+    0 .78cqw .40cqw .10cqw #39216b55;
+  isolation:isolate;filter:none;
+}
+.stage .node[data-state=locked]{
+  --face-top:#fffdfa;--face-mid:#fbeeea;--face-bottom:#f9d9e6;
+  --bevel:#e9a0b5;--rim:#fff2eb;--side:#a459ec;--base:#5b25ad;
+  cursor:default;
+}
+.stage .node[data-state=completed]{
+  --face-top:#fffdfa;--face-mid:#fff5d7;--face-bottom:#dff5c5;
+  --bevel:#95d67b;--rim:#f5ffe7;--side:#68c85c;--base:#288b49;
+}
+.stage .node .lesson-lock{
+  display:block;width:46%;height:51%;object-fit:contain;
+  margin:0;pointer-events:none;user-select:none;
+}
+.stage .node .icon-emoji{display:grid;place-items:center;line-height:1}
+.stage .node:focus-visible{outline:.18cqw solid #fff;outline-offset:.30cqw}
+@media(prefers-reduced-motion:reduce){.stage .node{transition:none}}

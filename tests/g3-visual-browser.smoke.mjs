@@ -32,6 +32,19 @@ async function checkMap(page,width,height){
   assert.equal(await page.locator('[data-chest]').count(),4);
   assert.equal(await page.locator('.node[data-state="available"]').count(),3);
   assert.equal(await page.locator('.node[data-state="locked"]').count(),9);
+  const disks=await page.locator('.node').evaluateAll(async els=>Promise.all(els.map(async el=>{
+    const icon=el.querySelector('.lesson-lock');
+    if(icon)await icon.decode();
+    const b=el.getBoundingClientRect(),i=icon?.getBoundingClientRect(),style=getComputedStyle(el);
+    return {state:el.dataset.state,disabled:el.disabled,w:b.width,h:b.height,face:style.backgroundImage,shadow:style.boxShadow,filter:style.filter,
+      icon:icon?{loaded:icon.naturalWidth>0,src:icon.getAttribute('src'),dx:Math.abs(i.x+i.width/2-b.x-b.width/2),dy:Math.abs(i.y+i.height/2-b.y-b.height/2),ratio:i.width/b.width}:null,text:el.textContent};
+  })));
+  assert.ok(disks.every(d=>Math.abs(d.w-d.h)<.5&&d.shadow.split('),').length>=5&&d.filter==='none'),'layered round disks '+JSON.stringify(disks));
+  assert.ok(disks.filter(d=>d.state==='locked').every(d=>d.disabled&&d.icon?.loaded&&d.icon.src.endsWith('g9-lesson-lock.svg')&&d.icon.dx<.7&&d.icon.dy<.7&&d.icon.ratio>.37&&d.icon.ratio<.50&&!d.text.includes('🔒')),'centered reference lock art');
+  assert.ok(disks.filter(d=>d.state==='available').every(d=>!d.disabled&&!d.icon),'available lessons remain actionable');
+  await page.locator('[data-stop="4"]').evaluate(el=>el.click());
+  assert.equal(await page.locator('.modal-panel').count(),0,'locked lesson cannot open');
+
   const nodes=await page.locator('.node').evaluateAll(els=>els.map(x=>({n:Number(x.dataset.stop),x:Number.parseFloat(x.style.getPropertyValue('--x')),y:Number.parseFloat(x.style.getPropertyValue('--y'))})));
   assert.deepEqual(nodes.map(n=>n.n),Array.from({length:12},(_,i)=>i+1));
   assert.deepEqual(nodes.map(n=>[n.x,n.y]),[[25.5,27.1],[32.5,27.1],[39.5,27.1],[46.5,27.1],[55.4,50.2],[47.9,50.2],[40.4,50.2],[32.9,50.2],[28.5,75.4],[36,75.4],[43.5,75.4],[51,75.4]]);
