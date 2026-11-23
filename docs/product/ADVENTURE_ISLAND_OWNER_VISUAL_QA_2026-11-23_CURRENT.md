@@ -2,12 +2,12 @@
 
 **Authority:** newest owner annotations attached to this conversation, reviewed against Production SHA `bf9925c7` and approved Adventure Island canon. The latest explicit visual instruction prevails over the earlier Shop/Inventory UX illustration, **without changing progress/game economy**.
 
-**Workflow:** one bounded technical production release per group; G1 was delivered in PR #30, G2/G3/G4 remain separate. TECH_PASS requires source-level contract, real Chromium interaction at desktop and 390px mobile, A/B/C/D/E gameplay regression and postdeploy hosted public-site smoke. Screenshots must be compared to owner references; no claim of owner visual acceptance unless explicitly signed off.
+**Workflow:** one bounded technical production release per group; G1 was delivered in PR #30, G2 in PR #32, G3/G4 remain independent open groups. TECH_PASS requires source-level contract, real Chromium interaction at desktop and 390px mobile, A/B/C/D/E gameplay regression and postdeploy hosted public-site smoke. Screenshots must be compared to owner references; no claim of owner visual acceptance unless explicitly signed off.
 
 | Group | GitHub | Priority | Scope | Source screenshots | State |
 |---|---|---|---|---|---|
 | **G1 — Wardrobe interface** | [#26](https://github.com/nikonovmike2737/kids-english/issues/26) | P0 | My Cat composition, tabs, cards, sizing, price, locked state, single action | 22:10:20, 22:14:39, 22:15:18, 22:15:56, 22:16:30 | **DEPLOYED · TECH_PASS · owner visual sign-off pending** |
-| **G2 — Inventory artwork** | [#27](https://github.com/nikonovmike2737/kids-english/issues/27) | P0 | Replace 15 placeholder item graphics with original, consistent, rich 3D transparent art; test outfit anchoring on cat | 22:10–22:16, 22:33:28, 22:34:47 | IMPLEMENTED IN PR #32 · CI/owner acceptance pending |
+| **G2 — Inventory artwork** | [#27](https://github.com/nikonovmike2737/kids-english/issues/27) | P0 | Replace 15 placeholder item graphics with original, consistent, rich 3D transparent art; test outfit anchoring on cat | 22:10–22:16, 22:33:28, 22:34:47 | **DEPLOYED · TECH_PASS · HOSTED E2E PASS · owner visual sign-off pending** |
 | **G3 — Island composition** | [#28](https://github.com/nikonovmike2737/kids-english/issues/28) | P1 | Chests, independent sprites, lesson anchors, row signs, bridge routes, leftward cat placement | 22:18:33, 22:29:23 | OPEN |
 | **G4 — Key reward** | [#29](https://github.com/nikonovmike2737/kids-english/issues/29) | P1 | Polished key/cat reward art; remove overly dense Lesson Results panel as annotated, retain actual award logic | 22:29:23 | OPEN |
 
@@ -28,14 +28,14 @@
 ## G2 — engineering acceptance gate (PR #32)
 | ID | Mandatory technical evidence | Status before postdeploy QA |
 |---|---|---|
-| G2-01 | All 15 old flat items replaced by distinct 256×256 native 3D WebP binaries; SHA-256 checks match manifest | Implemented, CI pending |
-| G2-02 | Each native item has an alpha flag and actual transparent pixels (including corners), no white rectangular image matte | Implemented, browser alpha QA pending |
-| G2-03 | Transparent accessory-free cat replaces baked-in hat/backpack/tool on map, wardrobe, reward (otherwise duplicates) | Implemented, browser QA pending |
-| G2-04 | Backpack belongs behind cat; hat/scarf/shoes/tool above cat; item layers decode and scale to responsive view | Implemented, screenshot QA pending |
-| G2-05 | Five categories × three tiers, same 1/3/5 coin prices, one button, Buy/Wear/Wearing, persistence and reward key unaffected | Implemented, regression QA pending |
-| G2-06 | Existing lessons/Classic, local-only storage, no outgoing POST, no JS errors, mobile 390px and desktop screenshots | Automated pre/postdeploy evidence pending |
-| G2-07 | Exactly one successful GitHub Pages release and independent real public-URL Chromium tests after deploy | Pending |
-| G2-08 | Compare item appearance and dressed cat with supplied owner 3D assortment and cabinet references, record owner artistic sign-off separately | Technical comparison pending; owner approval OPEN |
+| G2-01 | All 15 old flat items replaced by distinct 256×256 native 3D WebP binaries; SHA-256 checks match manifest | **PASS:** CI 45261967812 |
+| G2-02 | Each native item has an alpha flag and actual transparent pixels (including corners), no white rectangular image matte | **PASS:** Chromium 45262486687 |
+| G2-03 | Transparent accessory-free cat replaces baked-in hat/backpack/tool on map, wardrobe, reward (otherwise duplicates) | **PASS:** Chromium 45262486687 |
+| G2-04 | Backpack belongs behind cat; hat/scarf/shoes/tool above cat; item layers decode and scale to responsive view | **PASS:** desktop/mobile visual review + browser geometry |
+| G2-05 | Five categories × three tiers, same 1/3/5 coin prices, one button, Buy/Wear/Wearing, persistence and reward key unaffected | **PASS:** 38/38 + hosted regressions |
+| G2-06 | Existing lessons/Classic, local-only storage, no outgoing POST, no JS errors, mobile 390px and desktop screenshots | **PASS:** CI + hosted browser |
+| G2-07 | Exactly one successful GitHub Pages release and independent real public-URL Chromium tests after deploy | **PASS:** Pages #45262374460 + hosted #45262486687 |
+| G2-08 | Compare item appearance and dressed cat with supplied owner 3D assortment and cabinet references, record owner artistic sign-off separately | Technical partner visual review PASS; owner artistic approval OPEN |
 
 **Source artifact:** [pinned G2 binary manifest](G2_ART_MANIFEST_2026-11-23.json), five groups of 3 artwork assets + neutral cat; [PR #32](https://github.com/nikonovmike2737/kids-english/pull/32) and [Issue #27](https://github.com/nikonovmike2737/kids-english/issues/27).
 
@@ -64,5 +64,15 @@
 - **Independent hosted Production Chromium:** https://github.com/nikonovmike2737/kids-english/actions/runs/45254355140 — **SUCCESS**, 9 A/B/C lesson+Classic checkpoints and 7 D/E/G1 wardrobe+world checkpoints. Checks include live category switching, three cards/two locks, price icon, centered cat, single action, buy/wear/reload, no horizontal overflow, no JS errors, no non-GET requests.
 - **Screenshots reviewed directly by technical partner:** https://github.com/nikonovmike2737/kids-english/actions/runs/45253919818/artifacts/14855343940 — desktop 1280 and mobile 390; after initial self-QA identified excessive empty card area and blank mobile modal footer, revised CSS and geometry assertions and re-reviewed actual screenshots from final PR. Owner artistic approval remains unclaimed.
 - **G1 status: TECH_PASS / DEPLOYED / HOSTED_E2E_PASS.** Owner visual review remains open; issue #26 should not be closed until that confirmation.
-- **G2 P0:** generated 15 original glossy 3D accessory image candidates from owner reference. Candidates are **not deployed in GitHub**, not artistically approved, and current G1 screenshot still uses older flat binary artwork. Keep issue #27 OPEN; full binary replacement + visual alpha/overlay QA required in its own release.
+- **Historical at G1 release:** at that moment G2 candidate images had not yet been deployed. Superseded by the separate G2 production record below; only owner artistic approval remains open.
 - **G3 and G4** remain OPEN and untouched in this release. No scoring, currency, key, lesson, map geometry, chest or reward logic changed.
+
+## G2 shipped evidence — 2026-11-23 (replaces preliminary CI-pending descriptions above)
+- **Implementation PR #32:** https://github.com/nikonovmike2737/kids-english/pull/32 — merged. Application SHA `9fd1f0b2ccd8dde2ab95a42a5bd1a7e0317be58e`.
+- **Published GitHub Pages:** https://github.com/nikonovmike2737/kids-english/actions/runs/45262374460 — SUCCESS, same application SHA.
+- **Final PR CI:** https://github.com/nikonovmike2737/kids-english/actions/runs/45261967812 — SUCCESS, 38/38 Node source/binary integrity tests, old C/D/E/G1 real browser regression, new G2 7/7 image/alpha/equipment tests, desktop/mobile screenshot evidence.
+- **Independent hosted production Chromium:** https://github.com/nikonovmike2737/kids-english/actions/runs/45262486687 — SUCCESS. 9 earlier lesson/Classic checks + 7 D/E/G1 checks + 7 G2 checks: **23/23 distinct live-browser checkpoints**.
+- **Visual QA screenshots:** https://github.com/nikonovmike2737/kids-english/actions/runs/45261967812/artifacts/14859529735 — 1280px all five categories, dressed kitten with all five accessories, map, reward and 390px mobile. The technical partner personally checked composite positioning. In particular: hat sits on head, scarf on neck, shoes at paws, backpack behind the torso, hand-held tool near raised paw; no duplicate baked-in accessory on the kitten. A late mobile regression revealed wallet/close overlap; this was repaired and verified in Chromium before merge.
+- **Binary-integrity evidence:** 15 native 256×256 transparent VP8X WebP item files with unique SHA-256 plus one 1024×936 transparent dressable cat, recorded in [G2 asset manifest](G2_ART_MANIFEST_2026-11-23.json); no remote image dependencies.
+- **Unchanged:** all 3 authored English lessons, 3 lives per attempt, 12 permanent-key system, 3 small/1 grand chest coin ledger, tier prices 1/3/5, Buy/Wear/Wearing, localStorage v1, classic fallback.
+- **Owner visual sign-off remains PENDING.** G2 engineering gate = **TECH_PASS / DEPLOYED / HOSTED_E2E_PASS**. Keep issue #27 open until owner checks artistic fidelity. G3 (#28) map layout and G4 (#29) reward layout remain OPEN and are not reclassified by G2 success.
