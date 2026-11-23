@@ -9,7 +9,10 @@ const errors=[],nonGets=[];
 const pass=(s)=>console.log('DE BROWSER PASS: '+s);
 const clickAction=(page,expected)=>page.locator('#item-action').getByText(expected).click();
 const verifyArt=async(page,selector)=>{
-  const list=await page.locator(selector).evaluateAll(els=>els.map(img=>({src:img.getAttribute('src'),ready:img.complete&&img.naturalWidth>0})));
+  const list=await page.locator(selector).evaluateAll(async els=>Promise.all(els.map(async img=>{
+    try { await img.decode(); } catch { /* report missing/corrupt art below */ }
+    return {src:img.getAttribute('src'),ready:img.complete&&img.naturalWidth>0};
+  })));
   assert.ok(list.length>0, 'no art: '+selector);
   assert.ok(list.every(v=>v.ready),'undecoded art: '+JSON.stringify(list));
   return list;
