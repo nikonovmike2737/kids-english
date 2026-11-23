@@ -1,15 +1,27 @@
 name: Deploy Kids English Pages
+
 on:
   push:
     branches: [main]
+    paths:
+      - 'index.html'
+      - 'assets/**'
+      - 'site/**'
+      - 'content/**'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
+
+# One workflow, one deployment job. Documentation-only changes do not redeploy.
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
+
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,16 +29,45 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
+      - name: Verify site entry point
+        run: test -s index.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          enablement: true
-      - name: Upload Pages files
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
+          path: '.'
+
+      # GitHub's artifact API may lag behind a completed upload.
+      # Verify that exactly one artifact is queryable before deploying.
+      - name: Wait for uploaded artifact visibility
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..15}; do
+            count="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts?per_page=100" --jq '[.artifacts[] | select(.name == "github-pages" and .expired == false)] | length')"
+            if [ "$count" = "1" ]; then
+              echo "Exactly one github-pages artifact is visible in run ${GITHUB_RUN_ID}"
+              sleep 5
+              exit 0
+            fi
+            if [ "$count" != "0" ]; then
+              echo "::error::Expected one github-pages artifact, found ${count}"
+              exit 1
+            fi
+            echo "Artifact not visible yet (${attempt}/15)"
+            sleep 3
+          done
+          echo "::error::Timed out waiting for github-pages artifact"
+          exit 1
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
