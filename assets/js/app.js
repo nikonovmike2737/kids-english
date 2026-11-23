@@ -52,6 +52,8 @@ function persist() {
 const active = { lessonId: null, index: 0, lives: 3, attempts: 0, done: false, selected: null, matchWord: null, match: {}, order: [], results: [] };
 let currentCategory = 'hats';
 let selectedTier = 1;
+let currentShopView = 'shop';
+let wardrobeFocusTarget = null;
 let modalType = null;
 let restoreFocus = null;
 
@@ -77,19 +79,15 @@ function toast(s) {
 }
 
 function outfittedCat() {
-  const icon = {
-    hats: ['🧢', '👒', '🏴‍☠️'],
-    scarves: ['🧣', '🎗️', '👑'],
-    shoes: ['👟', '🥾', '👢'],
-    backpacks: ['🎒', '🎒', '🎒'],
-    tools: ['🧭', '🔭', '🔭'],
-  };
+  // One illustrated item asset per equipped slot, shared across map, closet and rewards.
   return slots.map((slot) => {
     const id = progress.equippedBySlot[slot];
-    if (!id) return '';
-    const tier = Number(id.split('-')[1]);
-    const key = slot === 'hats' ? 'hat' : slot === 'scarves' ? 'neck' : slot === 'shoes' ? 'shoes' : slot === 'backpacks' ? 'back' : 'tool';
-    return `<span data-slot="${key}" aria-hidden="true">${icon[slot][tier - 1]}</span>`;
+    if (!id || !progress.purchasedItemIds.includes(id)) return '';
+    const tier = Number(id.slice(slot.length + 1));
+    if (![1, 2, 3].includes(tier)) return '';
+    const position = { hats: 'hat', scarves: 'neck', shoes: 'shoes', backpacks: 'back', tools: 'tool' }[slot];
+    return '<img class="equipped-item" data-slot="' + position + '" data-item-id="' + esc(id)
+      + '" src="assets/inventory/' + slot + '/tier-' + tier + '.webp" alt="" aria-hidden="true" draggable="false">';
   }).join('');
 }
 
@@ -442,16 +440,26 @@ function openChest(id) {
 function worldMap() {
   setModal(`
     ${modalX()}
-    <h2 class="modal-title">🌍 World Map</h2>
-    <div class="world-grid">
+    <div class="world-heading">
+      <span class="world-kicker">Explore</span>
+      <h2 class="modal-title">🌍 World Map</h2>
+    </div>
+    <div class="world-grid" aria-label="Available and upcoming worlds">
       ${worldCards.map((w, i) => `
-        <button class="world-card ${i === 0 ? 'current' : ''}" data-world="${w.id}" ${i ? 'disabled' : ''}>
-          <img src="${w.image}" alt="${esc(w.name)}">
-          <strong>${esc(w.name)}</strong>
-          <small>${i ? '🔒 Coming Soon' : `🔑 ${firstReady()}/12`}</small>
-          ${i ? '<span class="world-lock">🔒</span>' : ''}
+        <button class="world-card ${i === 0 ? 'current' : 'future'}" type="button" data-world="${esc(w.id)}"
+          aria-label="${esc(w.name)}, ${i === 0 ? 'current world' : 'locked, coming soon'}"
+          ${i ? 'disabled aria-disabled="true"' : ''}>
+          <span class="world-picture">
+            <img src="${esc(w.image)}" alt="" loading="eager" draggable="false">
+            ${i ? '<span class="world-lock" aria-hidden="true">🔒</span>' : '<span class="world-current-badge">Current World</span>'}
+          </span>
+          <span class="world-details">
+            <strong>${esc(w.name)}</strong>
+            <span class="world-status">${i ? '🔒 Coming Soon' : '<img src="assets/symbols/key.webp" alt=""> ' + firstReady() + ' / 12 Keys'}</span>
+          </span>
         </button>`).join('')}
     </div>
+    <div class="world-atlas-footer" aria-hidden="true"><span>✦</span><span>✦</span><span>✦</span></div>
   `, 'worldmap');
   $('[data-world="adventure-island"]').addEventListener('click', closeModal);
 }
