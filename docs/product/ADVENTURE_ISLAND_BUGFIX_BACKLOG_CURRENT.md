@@ -1,5 +1,5 @@
 # Adventure Island — Visual Bugfix Register (CURRENT)
-Status: **Blocks A, B, C deployed to Production, PR/Pages CI PASS; owner interactive acceptance pending. Blocks D/E remain open.**
+Status: **Blocks A–E deployed to Production, 23/23 contract PASS, local and live Chromium E2E PASS; owner visual acceptance pending.**
 Date: 2026-11-23. Owner annotations: screenshots 18:06:20, 18:10:31, 18:12:07, 18:18:25, 18:19:58 and 18:21:03. Comparison: earlier approved concept 16:03:44.
 
 | ID | Severity | Defect from owner review | Fix and verification | Status |
@@ -13,12 +13,12 @@ Date: 2026-11-23. Owner annotations: screenshots 18:06:20, 18:10:31, 18:12:07, 1
 | A7 | P0 | Route dotted line leaves the actual bridges | Replaced coordinates with six explicit land/bridge paths in base image geometry; no inbound line to lesson 1; three bridge segments run along wooden planks. | DEPLOYED · local QA PASS · owner review pending |
 | A8 | P0 | Cat not grounded and rectangle/stone part of cat image | Transparent standalone cat asset `assets/mascot/cat-map.webp`, positioned over lower-left rock, no baked backdrop/stone; independent outfit overlay remains. | DEPLOYED · local QA PASS · owner review pending |
 
-## Blocks to follow as separate PR/release iterations
+## Block implementation history and final combined D/E release
 - **B (IMPLEMENTED in PR for Block B — P0)**: hearts belong only inside an individual lesson run. Top map and My Cat display only keys+coins; current attempts start with 3 hearts and losing a replay cannot alter permanent keys. Automated contract tests and browser smoke are required before production promotion.
 - **C (P1, DEPLOYED, CI PASS)**: canonical lesson/reward modals, correct/wrong overlays, four choices, 3-heart attempt loss with no answer reveal, accessible close icons and focus, per-task result summary. PR #19, Pages #13; independent hosted click acceptance pending.
-- **D (P1)**: World Map UI to match screenshot 16:03:44 (three distinct worlds, map presentation).
-- **E (P1)**: My Cat item inventory and equipment imagery, HUD consistency, one contextual action button, coin grammar.
-Block A is already deployed. Block B is deployed via PR #17, Action #12 with five passing contract tests, and public home-URL verification. Live clickable QA remains unverified due external browser-service credit blocker; owner acceptance pending. D–E remain pending separate releases. Block C is shipped, awaiting owner UI acceptance.
+- **D (P1, DEPLOYED / Browser E2E PASS)**: illustrated World Map with Adventure Island current and two distinct future-world images, both future worlds honestly locked; desktop/mobile atlas layout, progress and accessibility labels.
+- **E (P1, DEPLOYED / Browser E2E PASS)**: 15 real item assets, illustrated wearable layers on map/closet/reward, Shop+Inventory owned-only view, keys+coins HUD, one Buy/Wear/Wearing action, dynamic coin grammar, idempotent persistent purchases.
+Block A is already deployed. Block B is deployed via PR #17, Action #12 with five passing contract tests, and public home-URL verification. Live clickable QA remains unverified due external browser-service credit blocker; owner acceptance pending. D+E have now shipped **together** in PR #24 and Pages Action #15. All five technical blocks A–E are deployed; owner visual acceptance remains open.
 
 ## Regression checks completed (local pre-merge)
 Headless Chromium, 1920x1080, 1366x768, 1024x768, 1280x800:
@@ -75,7 +75,7 @@ Production GitHub Pages status MUST be recorded after successful Actions run and
 - **Hosted Chromium E2E PASS:** [PR #21](https://github.com/nikonovmike2737/kids-english/pull/21), [PR CI run #45223178696](https://github.com/nikonovmike2737/kids-english/actions/runs/45223178696), SUCCESS. Playwright runs identical real-click exercises both against a locally served PR tree and independently against **the public Production Pages URL**. Covered ENG-001 preview, wrong/correct choice, 3-life counter, keyboard Escape/focus, match/order to lesson completion, 4 per-task outcomes, key idempotency on failed replay, gameover/restart, 390px mobile and Classic. Zero JS exceptions/non-GET requests. The separately tried third-party browser agent was unavailable (wallet), but GitHub-hosted Chromium E2E did run successfully. Owner's manual visual acceptance still pending.
 - No changes in this C release to D (World Map), E (wardrobe visual corrections), METHOD content or `classic/index.html`.
 
-**Next:** Block D is the next technical unit. Block E follows independently. Verify owner acceptance for A/B/C separately; do not silently upgrade pending visual statuses.
+**Next:** Owner visual acceptance for A–E, then separate METHOD_PASS authoring of 9 still-locked lessons. The D/E implementation is complete; no third/fourth world falsely unlocked. Historical C information below reflects the C-only release.
 
 ### Block C live-browser proof — follow-up 2026-11-23
 - [PR #21](https://github.com/nikonovmike2737/kids-english/pull/21) merged; test-only commit `a6fd09da8ed963a7f59817f8a6e5affa38c54790` (does not alter production JS or CSS).
@@ -88,3 +88,27 @@ Production GitHub Pages status MUST be recorded after successful Actions run and
 - Latest deployed GitHub Pages tree SHA: `a6fd09da8ed963a7f59817f8a6e5affa38c54790`; [Pages Action #14 run 45223346682](https://github.com/nikonovmike2737/kids-english/actions/runs/45223346682) completed **SUCCESS**.
 - Application JS and CSS remain byte-identical to the original Block C code release `59e9d60c0700ef460ac26a04be2c6953fe6591cf`. PR #22 and this record are documentation-only and do not trigger a new Pages job.
 - Browser production acceptance (run #45223178696) was performed against the already deployed Block C application before the verification-only redeploy; the app code did not change in between. Manual owner visual sign-off remains pending.
+
+## Combined Block D + E — final Production register (2026-11-23)
+
+| ID | Priority | Defect / expected change | Verified implementation | Status |
+|---|---|---|---|---|
+| D1 | P1 | World Map looked like basic repeated thumbnails rather than approved illustrated world selection | Large distinct Adventure Island, Mystical Desert, Rainy Forest pictures; active vs future style, labels, native art | DEPLOYED · local + hosted Chromium PASS |
+| D2 | P1 | World gating / progress and mobile world cards | Exactly one current clickable world; two locked disabled previews; 0–12 key progress, English-only, 390px no horizontal overflow | DEPLOYED · local + hosted Chromium PASS |
+| E1 | P1 | Cat outfit rendered placeholder emoji rather than actual purchased item image | Transparent individual WebP layers for purchased equipment in closet, island and reward; all five slots share asset source | DEPLOYED · local + hosted Chromium PASS |
+| E2 | P1 | Shop had no owned-only Inventory mode | Shop displays 3 illustrated tiers per selected category; Inventory displays only owned items in that category, honest empty state | DEPLOYED · local + hosted Chromium PASS |
+| E3 | P1 | Confusing buttons, coin labels and HUD | Exactly ONE contextual Buy / Need N Coin(s) / Locked / Wear / Wearing action; keys + coins only outside lesson | DEPLOYED · local + hosted Chromium PASS |
+| E4 | P1 | Purchases, worn image and state must agree after reload | Atomic Buy charges exactly once and does not auto-equip; Wear/unwear free; equipped category exclusive; ownership, balance and apparel persist locally | DEPLOYED · local + hosted Chromium PASS |
+| DE-REG | P0 | Do not break A/B/C, teaching keys, chest ledger, Classic, privacy | Existing full ENG-001 path, lives, rewards, /classic, no POST, no uncaught JS errors | DEPLOYED · local + hosted Chromium PASS |
+
+**One product PR / one application release:**
+- [PR #24](https://github.com/nikonovmike2737/kids-english/pull/24) merged; Production application SHA `bf9925c7e1659f00bf0438390d81e40a448f5d17`.
+- [Pages Action #15](https://github.com/nikonovmike2737/kids-english/actions/runs/45228530252): **completed/success**. Single deployment workflow; binary/source validation, artifact upload and deploy all successful.
+- [PR CI run #45228152015](https://github.com/nikonovmike2737/kids-english/actions/runs/45228152015): **SUCCESS**. **23/23 native contract tests** (5 B, 10 C, 8 D/E), 9 lesson/Classic browser checkpoints locally and on then-current Production, 7 D/E browser checkpoints locally, responsive desktop/mobile screenshots.
+- [Visual QA artifact](https://github.com/nikonovmike2737/kids-english/actions/runs/45228152015/artifacts/14846765726): screenshots of World Map and My Cat at desktop/mobile, including equipped outfit.
+- [Independent postdeploy hosted Chromium QA](https://github.com/nikonovmike2737/kids-english/actions/runs/45228626645): **SUCCESS** following Pages Action #15. 9 A/B/C browser checkpoints plus 7 D/E checkpoints against **new public Production URL**. Tested illustrated worlds, locks, purchase→Wear→Wearing→unwear, two live outfit overlays, owned-only inventory, reload persistence, reward dressed cat, mobile overflow, legacy Classic. No JS exceptions or non-GET requests.
+- Independent public URL retrieval **PASS** for `https://nikonovmike2737.github.io/kids-english/` and `/kids-english/classic/` (correct Adventure Island / classic titles).
+- No new lesson content, no changes to answer keys, no localStorage schema migration; future-world thumbnails remain non-playable.
+- **Outstanding:** human owner visual acceptance to compare exact artwork composition and item placement against the earlier approved screenshot. Browser/CI success is technical acceptance, not a claim of owner artistic approval.
+
+**Canonical next work:** 9 distinct new lessons through METHOD_PASS; owner acceptance follow-up for A–E. Do not reopen D/E implementation automatically unless a new verified defect is reported.
