@@ -65,7 +65,7 @@ jobs:
               assert p.exists() and p.stat().st_size>100, name
               b=p.read_bytes()
               if p.suffix=='.webp':assert b[:4]==b'RIFF' and b[8:12]==b'WEBP',name
-              if p.suffix=='.png':assert b[:8]==b'\\x89PNG\\r\\n\\x1a\\n',name
+              if p.suffix=='.png':assert b[:8]==bytes([137,80,78,71,13,10,26,10]),name
           print('Game source and binary asset checks PASS')
           PY
 
