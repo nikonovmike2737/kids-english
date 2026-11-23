@@ -14,11 +14,11 @@ body{background:radial-gradient(circle at 50% 45%,#41a8eb 0%,#18418f 80%);min-he
 button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 button:focus-visible{outline:4px solid #fff18c;outline-offset:3px}
 button:disabled{cursor:not-allowed;opacity:.58}
-#game{position:fixed;inset:0;background:linear-gradient(160deg,rgba(33,17,105,.16),rgba(14,90,176,.22)),url('../maps/adventure-island.webp') center/cover;overflow:hidden}
-.stage{position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%);width:min(100vw,177.7778dvh);aspect-ratio:16/9;max-height:100dvh;overflow:hidden;container-type:size;isolation:isolate;background:#55b8e5;box-shadow:0 10px 45px rgba(22,7,110,.26)}
-.map-art{position:absolute;inset:0;background:url('../maps/adventure-island.webp') center center/100% 100% no-repeat;filter:saturate(1.05)}
+#game{position:fixed;inset:0;overflow:hidden;background:#51b4e6}
+.stage{position:absolute;inset:0;transform:none;width:100vw;height:100dvh;max-height:none;aspect-ratio:auto;overflow:hidden;container-type:size;isolation:isolate;background:#55b8e5;box-shadow:none}
+.map-art{position:absolute;inset:0;background:url('../maps/adventure-island.webp') center center/100% 100% no-repeat;filter:saturate(1.05);pointer-events:none}
 .route-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;filter:drop-shadow(0 4px 3px rgba(89,64,165,.72))}
-.route-lines path{fill:none;stroke:#fff;stroke-width:10;stroke-dasharray:13 14;stroke-linecap:round;stroke-linejoin:round}
+.route-lines path{fill:none;stroke:#fff;stroke-width:10;stroke-dasharray:12 15;stroke-linecap:round;stroke-linejoin:round}
 .topbar{position:absolute;top:1.2%;left:1.4%;right:1.4%;height:11%;display:flex;align-items:flex-start;justify-content:space-between;z-index:14;gap:1cqw}
 .brand-block{display:flex;align-items:center;gap:.7cqw;background:linear-gradient(110deg,#fffffff0,#e3d7ffdf);border:3px solid rgba(255,255,255,.72);border-radius:1.4cqw;padding:.25cqw .85cqw .3cqw .25cqw;box-shadow:0 .4cqw .9cqw rgba(49,39,124,.38)}
 .brand-logo{width:5.8cqw;height:5.8cqw;object-fit:cover;border-radius:1.2cqw}
@@ -44,17 +44,18 @@ button:disabled{cursor:not-allowed;opacity:.58}
 .node[data-state=available]{background:radial-gradient(circle at 45% 25%,#fffffd,#ffe7a2);border-color:#8b55e7;cursor:pointer}
 .node[data-state=completed]{border-color:#49c758;box-shadow:0 .5cqw 0 #248e3a,0 .4cqw 1.6cqw #fff89b,inset 0 0 0 .17cqw #fff}
 .node[data-state=locked]{background:radial-gradient(circle at 42% 25%,#fff,#c9baf2);border-color:#9890b6;filter:grayscale(.2);color:#5a37a4}
-.node:hover:not(:disabled),.chest-node:hover:not(:disabled){transform:translate(-50%,-56%) scale(1.07);filter:brightness(1.06)}
+.node:hover:not(:disabled){transform:translate(-50%,-56%) scale(1.07);filter:brightness(1.06)}
+.chest-node:hover:not(:disabled){transform:translate(-50%,-103%) scale(1.045);filter:brightness(1.06)}
 .node .key-mark{position:absolute;right:-20%;bottom:-12%;display:grid;place-items:center;background:#fff8d1;border:.17cqw solid #ffcb53;border-radius:50%;width:2.4cqw;height:2.4cqw}
 .node .key-mark img{width:85%;height:85%;object-fit:contain}
 .node .icon-emoji{line-height:1}
-.chest-node{background:none;width:8.2cqw;height:8.2cqw;filter:drop-shadow(0 .4cqw .4cqw rgba(85,48,125,.5))}
+.chest-node{background:none;width:7.4cqw;height:7.4cqw;transform:translate(-50%,-100%);filter:drop-shadow(0 .4cqw .4cqw rgba(85,48,125,.5))}
 .chest-node img{width:100%;height:100%;object-fit:contain}
 .chest-node[data-state=locked]{filter:grayscale(.28) drop-shadow(0 .3cqw .2cqw rgba(75,54,119,.27))}
 .chest-node[data-state=ready]{filter:drop-shadow(0 0 1.4cqw #ffff54)}
 .chest-node[data-state=opened]{filter:drop-shadow(0 0 1.1cqw #fff48c)}
-.chest-node.grand{width:12.7cqw;height:12.7cqw}
-.island-cat{position:absolute;left:1.9%;bottom:3.3%;width:22%;height:56%;z-index:6;display:grid;place-items:center;border:0;background:transparent;filter:drop-shadow(0 .9cqw .95cqw rgba(49,32,124,.35))}
+.chest-node.grand{width:11.4cqw;height:11.4cqw}
+.island-cat{position:absolute;left:4.4%;bottom:6.0%;width:21%;height:50%;z-index:6;display:grid;place-items:center;border:0;background:transparent;filter:drop-shadow(0 .9cqw .95cqw rgba(49,32,124,.35))}
 .island-cat img{width:100%;height:100%;object-fit:contain}
 .island-cat:hover{transform:scale(1.03)}
 .outfit-overlays{position:absolute;inset:0;pointer-events:none}

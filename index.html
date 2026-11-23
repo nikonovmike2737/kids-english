@@ -14,14 +14,15 @@
 <main id="game" aria-label="Kids English Adventure Island">
   <div id="stage" class="stage">
     <div class="map-art" aria-hidden="true"></div>
-    <svg class="route-lines" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
-      <!-- Lesson dots stay on the grass. Each bridge has its own dots placed on the wooden planks. -->
-      <path class="land-route" d="M 560 268 L 998 268"></path>
-      <path class="bridge-route" d="M 1030 305 C 1048 327 1082 361 1118 409"></path>
-      <path class="land-route" d="M 1060 480 L 510 480"></path>
-      <path class="bridge-route" d="M 324 527 C 289 547 261 597 247 624 L 292 676"></path>
-      <path class="land-route" d="M 544 692 L 1070 692"></path>
-      <path class="bridge-route" d="M 1179 704 C 1224 695 1274 674 1320 642"></path>
+    <svg class="route-lines" viewBox="0 0 1672 941" preserveAspectRatio="none" aria-hidden="true">
+      <!-- One authored route per grass tier; bridge dotted segments follow planks. -->
+      <!-- First lesson is the beginning: no inbound route. -->
+      <path class="land-route" d="M 502 281 H 914"></path>
+      <path class="bridge-route" d="M 1026 311 C 1062 339 1096 380 1135 424"></path>
+      <path class="land-route" d="M 1078 503 H 568"></path>
+      <path class="bridge-route" d="M 436 530 C 373 534 288 556 240 620 C 222 655 235 682 284 702"></path>
+      <path class="land-route" d="M 585 724 H 1014"></path>
+      <path class="bridge-route" d="M 1138 742 C 1191 739 1244 712 1293 688 L 1333 671"></path>
     </svg>
 
     <header class="topbar">
@@ -50,7 +51,7 @@
     <div id="island-nodes"></div>
 
     <button id="island-cat" class="island-cat" title="My Cat" aria-label="Open My Cat wardrobe">
-      <img src="assets/mascot/cat-explorer.png" alt="Kitten explorer">
+      <img src="assets/mascot/cat-map.webp" alt="Kitten explorer">
       <span id="island-outfit" class="outfit-overlays"></span>
     </button>
 
