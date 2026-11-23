@@ -464,43 +464,115 @@ function worldMap() {
   $('[data-world="adventure-island"]').addEventListener('click', closeModal);
 }
 
-function itemCode() { return `${currentCategory}-${selectedTier}`; }
-function itemCost() { return shopCatalog[currentCategory][selectedTier - 1][1]; }
+function itemCode() { return selectedTier ? `${currentCategory}-${selectedTier}` : null; }
+function itemCost() { return selectedTier ? shopCatalog[currentCategory][selectedTier - 1][1] : 0; }
 function itemState() {
   const id = itemCode();
+  if (!id) return 'empty';
   const owned = progress.purchasedItemIds.includes(id);
   if (owned) return progress.equippedBySlot[currentCategory] === id ? 'wearing' : 'wear';
+  if (currentShopView === 'inventory') return 'empty';
   if (selectedTier > 1) return 'locked';
   return progress.coinBalance >= itemCost() ? 'buy' : 'insufficient';
 }
 function coinNoun(n) { return n === 1 ? 'Coin' : 'Coins'; }
 function itemAction() {
   const st = itemState();
-  return st === 'wearing' ? ['Wearing ✓', 'green', false]
-    : st === 'wear' ? ['Wear', '', false]
-      : st === 'buy' ? ['Buy', 'green', false]
-        : st === 'locked' ? ['Locked', 'grey', true]
-          : [`Need ${itemCost() - progress.coinBalance} ${coinNoun(itemCost() - progress.coinBalance)}`, 'grey', true];
+  return st === 'empty' ? ['No Items Yet', 'grey', true]
+    : st === 'wearing' ? ['Wearing ✓', 'green', false]
+      : st === 'wear' ? ['Wear', '', false]
+        : st === 'buy' ? ['Buy', 'green', false]
+          : st === 'locked' ? ['Locked', 'grey', true]
+            : [`Need ${itemCost() - progress.coinBalance} ${coinNoun(itemCost() - progress.coinBalance)}`, 'grey', true];
+}
+function firstOwnedTier(slot) {
+  return [1, 2, 3].find((i) => progress.purchasedItemIds.includes(`${slot}-${i}`)) || 0;
 }
 
 function catProfile() {
-  const tab = slots.map((s) => `<button type="button" data-category="${s}" class="${currentCategory === s ? 'selected' : ''}">${{ hats: '🎩 Hats', scarves: '🧣 Scarves', shoes: '👟 Shoes', backpacks: '🎒 Backpacks', tools: '🔭 Tools' }[s]}</button>`).join('');
-  const cards = shopCatalog[currentCategory].map(([name, price], i) => {
-    const tier = i + 1;
+  const names = { hats: '🎩 Hats', scarves: '🧣 Scarves', shoes: '👟 Shoes', backpacks: '🎒 Backpacks', tools: '🧭 Tools' };
+  const tiers = [1, 2, 3].filter((tier) => currentShopView === 'shop' || progress.purchasedItemIds.includes(`${currentCategory}-${tier}`));
+  if (!tiers.includes(selectedTier)) selectedTier = tiers[0] || 0;
+  const tab = slots.map((s) =>
+    `<button type="button" data-category="${s}" class="${currentCategory === s ? 'selected' : ''}" aria-pressed="${currentCategory === s}">${names[s]}</button>`
+  ).join('');
+  const cards = tiers.map((tier) => {
+    const [name, price] = shopCatalog[currentCategory][tier - 1];
     const id = `${currentCategory}-${tier}`;
     const owned = progress.purchasedItemIds.includes(id);
     const equipped = progress.equippedBySlot[currentCategory] === id;
-    return `<button type="button" data-item="${tier}" class="shop-item ${selectedTier === tier ? 'selected' : ''}" aria-label="${esc(name)}, ${price} coins"><img src="assets/inventory/${currentCategory}/tier-${tier}.webp" alt="${esc(name)}"><span>${esc(name)}</span><span class="price">🪙 ${price}</span><span class="owned-indicator">${equipped ? '✓ Wearing' : owned ? '✓ Owned' : '&nbsp;'}</span></button>`;
+    const status = equipped ? 'Wearing' : owned ? 'Owned' : tier > 1 ? 'Locked' : 'Available';
+    return `<button type="button" data-item="${tier}" class="shop-item ${selectedTier === tier ? 'selected' : ''}"
+      aria-pressed="${selectedTier === tier}" aria-label="${esc(name)}, ${price} ${coinNoun(price)}, ${status}">
+      <img src="assets/inventory/${currentCategory}/tier-${tier}.webp" alt="" loading="eager">
+      <span class="shop-item-name">${esc(name)}</span>
+      <span class="price"><img src="assets/symbols/coin.webp" alt=""> ${price}</span>
+      <span class="owned-indicator">${equipped ? '✓ Wearing' : owned ? '✓ Owned' : tier > 1 ? '🔒' : '&nbsp;'}</span>
+    </button>`;
   }).join('');
   const [label, color, disabled] = itemAction();
-  setModal(`${modalX()}<div class="lesson-head wardrobe-header"><h2>🐱 My Cat</h2><div class="shop-wallet hud-scores" aria-label="Adventure progress"><span class="stat-item"><img src="assets/symbols/key.webp" alt="Keys"><b>${firstReady()}/12</b></span><span class="hud-rule"></span><span class="stat-item"><img src="assets/symbols/coin.webp" alt="Coins"><b>${progress.coinBalance}</b></span></div></div><div class="wardrobe-inner"><div class="cat-preview"><img src="assets/mascot/cat-wardrobe.webp" alt="My Cat"><span class="outfit-overlays">${outfittedCat()}</span></div><div class="shop-panel"><div class="category-tabs">${tab}</div><div class="shop-grid">${cards}</div><button id="item-action" class="btn item-action ${color}" ${disabled ? 'disabled' : ''}>${esc(label)}</button></div></div>`, 'wardrobe');
-  $$('[data-category]').forEach((b) => b.addEventListener('click', () => { currentCategory = b.dataset.category; selectedTier = 1; catProfile(); }));
-  $$('[data-item]').forEach((b) => b.addEventListener('click', () => { selectedTier = Number(b.dataset.item); catProfile(); }));
+  setModal(`
+    ${modalX()}
+    <div class="wardrobe-header">
+      <h2 class="modal-title">🐱 My Cat</h2>
+      <div class="shop-wallet hud-scores" aria-label="Adventure progress">
+        <span class="stat-item"><img src="assets/symbols/key.webp" alt="Keys"><b>${firstReady()}/12</b></span>
+        <span class="hud-rule"></span>
+        <span class="stat-item"><img src="assets/symbols/coin.webp" alt="Coins"><b>${progress.coinBalance}</b></span>
+      </div>
+    </div>
+    <div class="wardrobe-inner">
+      <div class="cat-preview" aria-label="Your dressed cat">
+        <div class="cat-figure">
+          <img class="cat-base" src="assets/mascot/cat-wardrobe.webp" alt="Explorer kitten" draggable="false">
+          <span class="outfit-overlays">${outfittedCat()}</span>
+        </div>
+      </div>
+      <div class="shop-panel">
+        <div class="shop-view-tabs" role="group" aria-label="Wardrobe view">
+          <button type="button" data-shop-view="shop" aria-pressed="${currentShopView === 'shop'}" class="${currentShopView === 'shop' ? 'selected' : ''}">Shop</button>
+          <button type="button" data-shop-view="inventory" aria-pressed="${currentShopView === 'inventory'}" class="${currentShopView === 'inventory' ? 'selected' : ''}">Inventory</button>
+        </div>
+        <div class="category-tabs" aria-label="Item categories">${tab}</div>
+        <div class="shop-grid ${!tiers.length ? 'shop-grid-empty' : ''}">
+          ${cards || '<p class="empty-inventory">No items in this category yet.</p>'}
+        </div>
+        <div class="shop-selected" aria-live="polite">
+          <span>${selectedTier ? esc(shopCatalog[currentCategory][selectedTier - 1][0]) : 'Inventory'}</span>
+          <span>${selectedTier ? itemCost() + ' ' + coinNoun(itemCost()) : ''}</span>
+        </div>
+        <button id="item-action" type="button" class="btn item-action ${color}" aria-label="${esc(label)}"
+          ${disabled ? 'disabled' : ''}>${esc(label)}</button>
+      </div>
+    </div>
+  `, 'wardrobe');
+  $$('[data-shop-view]').forEach((button) => button.addEventListener('click', () => {
+    currentShopView = button.dataset.shopView;
+    selectedTier = currentShopView === 'shop' ? 1 : firstOwnedTier(currentCategory);
+    wardrobeFocusTarget = `[data-shop-view="${currentShopView}"]`;
+    catProfile();
+  }));
+  $$('[data-category]').forEach((button) => button.addEventListener('click', () => {
+    currentCategory = button.dataset.category;
+    selectedTier = currentShopView === 'shop' ? 1 : firstOwnedTier(currentCategory);
+    wardrobeFocusTarget = `[data-category="${currentCategory}"]`;
+    catProfile();
+  }));
+  $$('[data-item]').forEach((button) => button.addEventListener('click', () => {
+    selectedTier = Number(button.dataset.item);
+    wardrobeFocusTarget = `[data-item="${selectedTier}"]`;
+    catProfile();
+  }));
   $('#item-action').addEventListener('click', performItemAction);
+  if (wardrobeFocusTarget) {
+    $(wardrobeFocusTarget, root)?.focus({ preventScroll: true });
+    wardrobeFocusTarget = null;
+  }
 }
 
 function performItemAction() {
   const id = itemCode();
+  if (!id) return;
   const st = itemState();
   if (st === 'buy') {
     if (progress.purchasedItemIds.includes(id) || progress.coinBalance < itemCost()) return;
@@ -508,18 +580,17 @@ function performItemAction() {
     progress.purchasedItemIds.push(id);
     persist();
     updateMap();
-    catProfile();
   } else if (st === 'wear') {
     progress.equippedBySlot[currentCategory] = id;
     persist();
     updateMap();
-    catProfile();
   } else if (st === 'wearing') {
     progress.equippedBySlot[currentCategory] = null;
     persist();
     updateMap();
-    catProfile();
-  }
+  } else return;
+  wardrobeFocusTarget = '#item-action';
+  catProfile();
 }
 
 function settings() {
@@ -534,8 +605,8 @@ function settings() {
 }
 
 $('#world-button').addEventListener('click', worldMap);
-$('#cat-button').addEventListener('click', catProfile);
-$('#island-cat').addEventListener('click', catProfile);
+$('#cat-button').addEventListener('click', () => { currentShopView = 'shop'; selectedTier = 1; catProfile(); });
+$('#island-cat').addEventListener('click', () => { currentShopView = 'shop'; selectedTier = 1; catProfile(); });
 $('#settings-button').addEventListener('click', settings);
 
 document.addEventListener('keydown', (e) => {
