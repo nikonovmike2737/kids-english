@@ -1,0 +1,119 @@
+{
+  "release": "G2-2026-11-23",
+  "origin": "Original 3D visual assets authored for Kids English from owner-provided references. All images encoded as transparent VP8X WebP and stored as native binaries in repository.",
+  "assetCount": 16,
+  "items": [
+    {
+      "path": "assets/inventory/backpacks/tier-1.webp",
+      "sha256": "9619493515abadac1db5cf00475b3032eb4fec2a7f8224e00115dad937cd2060",
+      "bytes": 12678,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/backpacks/tier-2.webp",
+      "sha256": "4e68b504977cfc2a63f539c9c1907de5e5d886a0e0d736ae060421ec84d5d48e",
+      "bytes": 14462,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/backpacks/tier-3.webp",
+      "sha256": "028b27dab3b9b03a4966e1875b0597459ea08366e67661feec36d0f43d2e6e24",
+      "bytes": 13740,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/hats/tier-1.webp",
+      "sha256": "b3d8fdfd27f440ecba5fda5aecb8bf702039357851a876afe277af26366ba866",
+      "bytes": 9278,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/hats/tier-2.webp",
+      "sha256": "115607ecb5fe0fe811fbf05eb9036e2240d1749d040c6cb77fe88704fc22d5a1",
+      "bytes": 7438,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/hats/tier-3.webp",
+      "sha256": "bcd8755b1da4f14efc122ad597e2189873ce9173b1e6abd2ed42263eaabd8229",
+      "bytes": 10652,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/scarves/tier-1.webp",
+      "sha256": "197c7b937317d22e4af72fb504dce9fc729f7e3019a2280aa4c7c2efe8d44005",
+      "bytes": 11420,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/scarves/tier-2.webp",
+      "sha256": "b4cb04b31b5d584f24f1572604903585d21da59109e897b327e22849119accf4",
+      "bytes": 14332,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/scarves/tier-3.webp",
+      "sha256": "4c30a190a8c26a08005ef218979c2bec228f53a1b8f84ac08f23e58bd79839c2",
+      "bytes": 14788,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/shoes/tier-1.webp",
+      "sha256": "df5c7c1c1001c28a21d4260a82ad19cd0beda1c3ae138a5e6be7461511dc8047",
+      "bytes": 13150,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/shoes/tier-2.webp",
+      "sha256": "5fc8e1eb5bfbcba3f3746c179b9d42cec267b68d571851995089fa503480e249",
+      "bytes": 12892,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/shoes/tier-3.webp",
+      "sha256": "9f8bcda32851755400a76a86956ef271c17d3916fa6ae789735c099c2cca2e15",
+      "bytes": 14596,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/tools/tier-1.webp",
+      "sha256": "4b597ea58ab2c62ba8b00d777423e2fb9605ace842c3725307b5d51e81e61e99",
+      "bytes": 12602,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/tools/tier-2.webp",
+      "sha256": "a114a73d64e13d14f319f1ade30ca3821b9b572375e4bdd98940a707c8053c6d",
+      "bytes": 12106,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/inventory/tools/tier-3.webp",
+      "sha256": "f367e64b015cb64c9f696d4c3cb75e51d3947c5976765435c8d58073e5d54c6d",
+      "bytes": 9222,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "path": "assets/mascot/cat-dressable.webp",
+      "sha256": "2f67dc87554c189e4df9cbb27e3b4dc7ba0243c5eb6778537e70b70c72b45691",
+      "bytes": 134796,
+      "width": 1024,
+      "height": 936
+    }
+  ]
+}
