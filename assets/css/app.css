@@ -1049,3 +1049,18 @@ button:disabled{cursor:not-allowed;opacity:.58}
   }
   .modal-panel.wardrobe .shop-item>img{width:min(92%,108px)}
 }
+
+/* G7 owner correction: equal edge gaps within each row and clean silhouettes. */
+.stage .stage-label{display:flex;align-items:center;gap:.65cqw;line-height:1.1;padding:.35cqw 1.25cqw .35cqw .55cqw}
+.stage .stage-label .stage-icon{display:block;flex:none;width:2.65cqw;height:2.65cqw;object-fit:contain;filter:drop-shadow(0 .1cqw .12cqw #65301740)}
+.stage .chest-node:not(.grand){width:5.78cqw;height:5.78cqw;top:calc(var(--row-y) + 2.89cqw)}
+.stage .chest-node[data-chest=chest-a]{--row-y:27.1%}
+.stage .chest-node[data-chest=chest-b]{--row-y:50.2%}
+.stage .chest-node[data-chest=chest-c]{--row-y:75.4%}
+.stage .chest-node{filter:none!important;background:transparent;box-shadow:none}
+.stage .chest-node::after{display:none}
+.stage .chest-node img{filter:none;object-fit:contain}
+.stage .chest-padlock{position:absolute;z-index:3;left:50%;top:73%;width:2.15cqw;height:2.15cqw;transform:translate(-50%,-50%);background:url('../symbols/g7-lock.svg') center/contain no-repeat;filter:drop-shadow(0 .1cqw .12cqw #38224c8a);pointer-events:none}
+.stage .chest-node.grand .chest-padlock{width:3.3cqw;height:3.3cqw;top:70%}
+.stage .chest-node[data-state=ready] .chest-padlock{background-image:url('../symbols/g7-unlock.svg')}
+.stage .chest-node[data-state=ready]:focus-visible{outline:2px solid #fff;outline-offset:4px}
