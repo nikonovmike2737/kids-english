@@ -14,18 +14,19 @@ An English-language, child-facing island adventure with three real lessons, thre
 Use any local static file server, e.g. `python -m http.server 8000`; open `http://localhost:8000/`. Client JavaScript modules load the data and map. No build step needed.
 
 ## Test
-- `node --test tests/*.test.mjs` — 30 native Node B/C/D/E/G1 source-contract checks.
+- `node --test tests/*.test.mjs` — 38 native Node B/C/D/E/G1/G2 source/binary-integrity contract checks.
 - `node tests/block-c-browser.smoke.mjs` — real Playwright Chromium lesson, hearts, results and Classic browser regression.
-- `node tests/block-de-browser.smoke.mjs` — real illustrated World Map, Shop/Inventory, purchasing, outfit layering, reload and mobile/browser regression.
+- `node tests/block-de-browser.smoke.mjs` — real illustrated World Map, five-category My Cat, purchasing, outfit layering, reload and mobile/browser regression.
+- `node tests/g2-art-browser.smoke.mjs` — real 15-image alpha/sprite QA, all five gear layers, wallet/close layout, 390px mobile and full-lesson reward.
 - Run locally with a static server and `KIDS_TEST_URL=http://127.0.0.1:8000/` (Playwright and Chromium required); browser tests run in isolated contexts.
 - PR workflow `.github/workflows/pr-ci.yml` runs source tests, local Chromium and screenshots. Production read-only workflow `.github/workflows/production-browser-smoke.yml` runs full live click-tests automatically **after** the single Pages deployment finishes successfully.
 - Test browsers never submit personal data; local smoke fixtures affect only their disposable browser contexts.
 
 ## Production D/E
-The World Map uses three distinct illustrated worlds with only Adventure Island playable. My Cat includes Shop, owned-only Inventory, and 15 image-backed accessories rendered over the kitten across map, wardrobe and lesson reward. Anonymous purchased/equipped state is local to the browser.
+The World Map uses three distinct illustrated worlds with only Adventure Island playable. My Cat has five direct categories and 15 transparent 3D accessories rendered over an accessory-free kitten across map, wardrobe and lesson reward. Anonymous purchased/equipped state is local to the browser.
 
 ## Next educational work
 Nine additional full lessons (not nine questions) need methodologist review; only after approval may their locked nodes become playable. Additional worlds Mystical Desert and Rainy Forest are locked previews, not released content.
 
 ## Owner visual QA, 2026-11-23
-The newest owner screenshot defects are tracked in [the G1–G4 visual register](docs/product/ADVENTURE_ISLAND_OWNER_VISUAL_QA_2026-11-23_CURRENT.md). G1 wardrobe layout/card fix deployed (PR #30); 15 updated 3D item assets G2, island positioning G3 and key reward G4 are separate outstanding work. The deployed game continues to use existing inventory image binaries until the G2 visual-art release.
+The newest owner screenshot defects are tracked in [the G1–G4 visual register](docs/product/ADVENTURE_ISLAND_OWNER_VISUAL_QA_2026-11-23_CURRENT.md). G1 wardrobe layout/card fix deployed (PR #30); G2 original 3D inventory art deployed (PR #32) and confirmed by live Chromium. G3 island positioning and G4 key reward composition remain outstanding; owner visual sign-off for G1/G2 is pending.
