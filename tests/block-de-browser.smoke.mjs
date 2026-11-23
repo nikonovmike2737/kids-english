@@ -157,7 +157,8 @@ try {
   assert.match(await page.locator('.modal-panel.reward h2').innerText(),/You Got a Key!/);
   assert.equal(await page.locator('.reward-avatar .equipped-item').count(),2);
   await verifyArt(page,'.reward-avatar .equipped-item');
-  assert.equal(await page.locator('.lesson-summary-list li').count(),4);
+  assert.equal(await page.locator('.lesson-summary, .lesson-summary-list').count(),0);
+  assert.equal(await page.locator('[data-celebration="key"]').count(),1);
   assert.equal(await page.locator('#hud-keys').innerText(),'1/12');
   await page.locator('#reward-continue').click();
   assert.equal(await page.locator('#hud-coins').innerText(),'1');
