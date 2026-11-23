@@ -16,6 +16,17 @@ const advance = async (page) => {
   await page.locator('#modal-next-action').click();
 };
 
+
+async function assertCloseCentered(page){
+ const coords=await page.locator('.modal-panel .close').evaluateAll(buttons=>buttons.map(b=>{
+  const r=b.getBoundingClientRect(),p=b.querySelector('.close-glyph path');
+  if(!p)return [Infinity,Infinity];
+  const bb=p.getBBox(),pt=new DOMPoint(bb.x+bb.width/2,bb.y+bb.height/2).matrixTransform(p.getScreenCTM());
+  return [Math.abs(pt.x-r.x-r.width/2),Math.abs(pt.y-r.y-r.height/2)];
+ }));
+ assert.ok(coords.length&&coords.every(([x,y])=>x<.5&&y<.5),'all normal/nested close glyphs centered '+JSON.stringify(coords));
+}
+
 try {
   const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   const page = await context.newPage();
@@ -31,8 +42,10 @@ try {
   check('public or local island loads; only keys/coins in HUD');
 
   await page.locator('[data-stop="1"]').click();
+  await assertCloseCentered(page);
   assert.match(await page.locator('.modal-panel.preview').innerText(), /Lesson Preview/);
   await page.locator('#start-lesson').click();
+  await assertCloseCentered(page);
   assert.equal(await page.locator('#lesson-hearts').innerText(), '❤️❤️❤️');
   assert.equal(await page.locator('[data-choice]').count(), 4);
   assert.match(await page.locator('.lesson-count').innerText(), /Task 1 of 4/);
@@ -44,6 +57,7 @@ try {
   assert.match(await page.locator('.modal-backdrop.nested').innerText(), /Wrong!/);
   assert.equal(await page.locator('.modal-backdrop.nested').innerText().then((s) => s.includes('happy')), false);
   assert.equal(await page.locator('.modal-backdrop.nested .nested-close').count(), 1);
+  await assertCloseCentered(page);
   await page.keyboard.press('Tab');
   assert.equal(await page.locator('.modal-backdrop.nested').evaluate((e) => e.contains(document.activeElement)), true);
   await page.keyboard.press('Escape');
@@ -54,6 +68,7 @@ try {
   await answer(page, 1);
   assert.equal(await page.locator('#lesson-hearts').innerText(), '❤️❤️🤍');
   assert.match(await page.locator('.modal-backdrop.nested').innerText(), /Correct!/);
+  await assertCloseCentered(page);
   await page.locator('#modal-next-action').click();
   assert.match(await page.locator('.lesson-count').innerText(), /Task 2 of 4/);
   check('Correct confirmation enables Next; lives carry across tasks');
@@ -76,6 +91,7 @@ try {
   await page.locator('#modal-next-action').click();
 
   assert.match(await page.locator('.modal-panel.reward h2').innerText(), /You Got a Key!/);
+  await assertCloseCentered(page);
   assert.equal(await page.locator('.lesson-summary, .lesson-summary-list').count(), 0);
   assert.equal(await page.locator('[data-celebration="key"]').count(), 1);
   assert.match(await page.locator('.key-progress').innerText(), /1 \/ 12 keys/);
@@ -95,6 +111,7 @@ try {
   }
   assert.equal(await page.locator('#lesson-hearts').innerText(), '🤍🤍🤍');
   assert.equal(await page.locator('#gameover-layer').count(), 1);
+  await assertCloseCentered(page);
   assert.equal(await page.locator('#gameover-layer img[src*="g5-sad-kitten"]').count(), 1);
   await page.locator('#retry').click();
   assert.equal(await page.locator('#lesson-hearts').innerText(), '❤️❤️❤️');

@@ -18,7 +18,7 @@ test('G7-03: four equal gaps per row, no changes to lesson/chest identifiers or 
   const d=a.slice(1).map((x,i)=>x-a[i]);assert.ok(d.every(v=>Math.abs(v-d[0])<.001),JSON.stringify(a));
  }
  assert.deepEqual(chests.map(c=>c.bonus),[1,1,1,5]);
- assert.match(js,/class="chest-padlock"/);assert.match(js,/st !== 'opened'/);
+ assert.doesNotMatch(js,/chest-padlock/);assert.equal(existsSync('assets/symbols/g7-lock.svg'),false);assert.equal(existsSync('assets/symbols/g7-unlock.svg'),false);
 });
 test('G7-04: native alpha WebP chests and sign icons, no external asset dependencies',()=>{
  for(const f of ['assets/chests/closed.webp','assets/chests/opened.webp','assets/chests/grand.webp','assets/symbols/g7-compass.webp','assets/symbols/g7-rocket.webp','assets/symbols/g7-mountain.webp']){
@@ -26,4 +26,21 @@ test('G7-04: native alpha WebP chests and sign icons, no external asset dependen
  }
  assert.equal((html.match(/class="stage-icon"/g)||[]).length,3);
  assert.equal((html.match(/class="bridge-route"/g)||[]).length,3);
+});
+
+test('G8-01: shared symmetric vector close glyph for main and nested modals',()=>{
+ assert.match(js,/M6 6L18 18M18 6L6 18/);
+ assert.equal((js.match(/\$\{closeGlyph\(\)\}/g)||[]).length,2);
+ const style=readFileSync('assets/css/app.css','utf8');
+ assert.match(style,/\.modal-panel \.close\{display:grid;place-items:center/);
+ assert.doesNotMatch(style,/chest-padlock/);
+});
+test('G8-02: existing wardrobe updates shop only, stable portrait is fitted from base once',()=>{
+ const cat=js.slice(js.indexOf('function catProfile()'),js.indexOf('function performItemAction()'));
+ assert.match(cat,/if \(existing\) \{/);assert.match(cat,/\$\('\.shop-panel', existing\)\.innerHTML = shop/);
+ assert.match(cat,/avatar\.dataset\.equipment !== equippedSignature/);
+ assert.equal((cat.match(/fitWardrobe\(root\)/g)||[]).length,1);
+ const fit=readFileSync('assets/animation/wardrobe-art.js','utf8');
+ assert.match(fit,/await alphaBounds\(base\)/);assert.match(fit,/if\(key===previous\)return/);
+ assert.doesNotMatch(fit,/querySelectorAll\('\.cat-base,\.equipped-item'\)/);
 });

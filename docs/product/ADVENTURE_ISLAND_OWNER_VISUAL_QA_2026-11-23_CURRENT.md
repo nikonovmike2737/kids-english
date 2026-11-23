@@ -122,3 +122,6 @@
 
 ## G7 owner visual correction — [#43](https://github.com/nikonovmike2737/kids-english/issues/43)
 Static mascot supersedes G6 gestures completely. Clean native WebP chests (closed, grand and opened; no background/rays), independent state lock; equal horizontal edge spacing at each row; physical bridge deck centerline, three illustrated label icons. Refined scene-only ambient motion, reduced-motion safety, PR and hosted Chromium/WebKit required. Owner visual acceptance separate.
+
+## G8 — owner visual correction [#45](https://github.com/nikonovmike2737/kids-english/issues/45)
+Remove G7 additional chest lock overlays (native art and locked/ready/opened state remain). Shared symmetric SVG cross centered in all modal close buttons. Preserve the same wardrobe portrait DOM and base scale during category/item browsing and wear actions; recalculate only on real panel size changes. Tests include immediate DOM/geometry assertions, bare and dressed desktop + mobile, normal and nested close buttons; owner visual sign-off remains separate.

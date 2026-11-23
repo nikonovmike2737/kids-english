@@ -1060,7 +1060,11 @@ button:disabled{cursor:not-allowed;opacity:.58}
 .stage .chest-node{filter:none!important;background:transparent;box-shadow:none}
 .stage .chest-node::after{display:none}
 .stage .chest-node img{filter:none;object-fit:contain}
-.stage .chest-padlock{position:absolute;z-index:3;left:50%;top:73%;width:2.15cqw;height:2.15cqw;transform:translate(-50%,-50%);background:url('../symbols/g7-lock.svg') center/contain no-repeat;filter:drop-shadow(0 .1cqw .12cqw #38224c8a);pointer-events:none}
-.stage .chest-node.grand .chest-padlock{width:3.3cqw;height:3.3cqw;top:70%}
-.stage .chest-node[data-state=ready] .chest-padlock{background-image:url('../symbols/g7-unlock.svg')}
 .stage .chest-node[data-state=ready]:focus-visible{outline:2px solid #fff;outline-offset:4px}
+
+/* G8 — symmetric vector cross: no font baseline or optical offset. */
+.modal-panel .close{display:grid;place-items:center;padding:0;line-height:0;box-sizing:border-box}
+.modal-panel .close-glyph{display:block;width:48%;height:48%;margin:0;pointer-events:none}
+/* The wardrobe's portrait is independent of the catalogue's intrinsic sizes. */
+.modal-panel.wardrobe .cat-preview{min-width:0;contain:size layout}
+.modal-panel.wardrobe .cat-avatar-canvas,.modal-panel.wardrobe .cat-avatar-canvas *{animation:none!important;transition:none!important}

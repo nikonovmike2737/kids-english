@@ -50,3 +50,6 @@ All production art is committed to GitHub as **native binary PNG/WebP** (not ext
 
 ## G7 revised asset set
 `assets/chests/{closed,grand,opened}.webp` replaces the contaminated old chest crops with independent transparent silhouettes. `assets/modals/chest-reward.webp` uses the clean opened sprite. `assets/symbols/g7-{compass,rocket,mountain}.webp` are reference-style standalone illustrations; `g7-lock.svg` / `g7-unlock.svg` are state overlays. G6 mascot motion retired and removed; only ambient CSS is loaded.
+
+## G8 owner correction
+G7 lock/unlock SVG overlays removed from the live tree; original chest keyholes are part of the clean chest art. Modal close icons now use one inline symmetric SVG. Wardrobe uses a persistent base portrait with outfit overlays and resize-only fit.
