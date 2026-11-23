@@ -81,7 +81,10 @@ test('G2-06: anatomically aligned 3D slots and stacking order',()=>{
   assert.match(css,/\.cat-preview \.outfit-behind/);
   assert.match(css,/\.reward-avatar \.outfit-behind/);
   assert.match(css,/\.island-cat \.outfit-overlays/);
-  assert.match(css,/width:61%;height:34%;left:20%;top:3\.2%/);
+  assert.match(css,/aspect-ratio:1024 \/ 936/);
+  assert.match(css,/width:53%;height:50%;left:22\.5%;top:-9\.4%/);
+  assert.match(html,/class="cat-avatar-canvas"/);
+  assert.match(js,/class="cat-avatar-canvas"/);
 });
 test('G2-07: no user data, no altered purchasing or reward ledger',()=>{
   const prog=cut('const emptyProgress = () =>','function readProgress()');
