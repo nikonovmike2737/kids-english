@@ -13,6 +13,7 @@ jobs:
   hosted-smoke:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,7 +21,7 @@ jobs:
       - name: Install Chromium browser test runtime
         run: |
           npm install --no-save playwright@1.56.1
-          npx playwright install --with-deps chromium
+          # Official container includes preinstalled Chromium/WebKit libraries.
       - name: Test existing lessons, hearts, rewards and classic on public Pages
         env:
           KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
@@ -46,3 +47,31 @@ jobs:
             sleep 15
           done
           exit 1
+
+      - name: Check G2R + G3 production landscape on Chromium at 5 viewports
+        env:
+          KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
+          KIDS_BROWSER: chromium
+        run: |
+          for attempt in 1 2 3; do
+            if node tests/g3-visual-browser.smoke.mjs; then exit 0; fi
+            echo "CDN image/JS rollout not complete; retry ${attempt}/3"
+            sleep 15
+          done
+          exit 1
+
+  hosted-safari:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-24.04
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Install pinned Playwright API
+        run: npm install --no-save playwright@1.56.1
+      - name: Independent public Safari/WebKit G2R and G3 visual QA
+        env:
+          KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
+          KIDS_BROWSER: webkit
+        run: node tests/g3-visual-browser.smoke.mjs

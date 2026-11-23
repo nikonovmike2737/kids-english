@@ -773,3 +773,152 @@ button:disabled{cursor:not-allowed;opacity:.58}
     max-width:calc(100% - 52px);
   }
 }
+
+
+/* OWNER 23:48 SAFARI QA — G2R P0
+ * The wardrobe is a CAT PORTRAIT, not a second view of Adventure Island.
+ * Constrain the intrinsic 1024×936 avatar to the preview's INNER width;
+ * Safari's intrinsic sizing of a percent-width grid child previously
+ * let the whole figure overflow the panel, cropping face and paws. */
+.modal-panel.wardrobe .cat-preview{
+  background:#f1e7ff !important;
+  background-image:radial-gradient(ellipse at 48% 42%,#fffdfd 2%,#f7f0ff 56%,#e7d9ff 100%) !important;
+  background-size:auto !important;
+  background-position:center !important;
+  padding:clamp(10px,1.3vw,20px);
+  display:flex !important;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+.modal-panel.wardrobe .cat-preview .cat-figure{
+  position:relative;
+  display:flex !important;
+  justify-content:center;
+  align-items:center;
+  flex:1 1 auto;
+  width:100% !important;
+  max-width:100% !important;
+  min-width:0;
+  height:100%;
+  max-height:100%;
+  min-height:0;
+  aspect-ratio:auto;
+  margin:0 !important;
+  transform:none !important;
+}
+.modal-panel.wardrobe .cat-preview .cat-figure .cat-avatar-canvas{
+  display:block;
+  position:relative;
+  flex:0 0 auto;
+  width:min(88%,320px,38vh) !important;
+  max-width:calc(100% - 16px) !important;
+  height:auto !important;
+  aspect-ratio:1024 / 936;
+  max-height:75%;
+  overflow:visible;
+  margin:auto;
+  transform:none !important;
+}
+/* This absolutely positioned sprite never dictates the grid or flex width. */
+.modal-panel.wardrobe .cat-preview .cat-figure .cat-avatar-canvas>.cat-base{
+  display:block;
+  position:absolute;
+  inset:0;
+  width:100% !important;
+  height:100% !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  object-fit:contain;
+  object-position:center;
+  transform:none !important;
+}
+@media(max-width:500px){
+  .modal-panel.wardrobe .cat-preview{padding:5px}
+  .modal-panel.wardrobe .cat-preview .cat-figure .cat-avatar-canvas{
+    width:min(82%,180px,20vh) !important;
+    max-height:88%;
+  }
+}
+
+/* G3 — terrain alignment, rounded route marks and layered interactive chests. */
+.stage .label-top{left:24.4%;top:14.7%;transform:rotate(-2.2deg)}
+.stage .label-mid{left:35.4%;top:36.5%;transform:rotate(-2deg)}
+.stage .label-low{left:34.5%;top:61.1%;transform:rotate(-2deg)}
+.stage .route-lines{
+  z-index:3;
+  filter:drop-shadow(0 1px 1.5px rgba(44,43,74,.66));
+}
+.stage .route-lines path{
+  fill:none;
+  stroke:#fffcdf;
+  stroke-width:8;
+  stroke-dasharray:2 15;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+  opacity:.97;
+}
+.stage .route-lines path.bridge-route{
+  stroke:#fffef6;
+  stroke-width:7.5;
+  stroke-dasharray:2 14;
+  filter:drop-shadow(0 1px 1px #4b2c62a1);
+}
+.stage .chest-node{
+  background:transparent;
+  border:0;
+  box-shadow:none;
+  isolation:isolate;
+  z-index:8;
+  transform:translate(-50%,-100%);
+  filter:drop-shadow(0 .38cqw .38cqw #46306d8c);
+}
+.stage .chest-node img{
+  display:block;
+  width:100%;
+  height:100%;
+  max-width:none;
+  object-fit:contain;
+  position:relative;
+  z-index:2;
+}
+.stage .chest-node::after{
+  content:"";
+  display:block;
+  position:absolute;
+  z-index:1;
+  bottom:1%;
+  left:22%;
+  width:56%;
+  height:9%;
+  border-radius:100%;
+  background:rgba(45,29,24,.38);
+  filter:blur(5px);
+  pointer-events:none;
+}
+.stage .chest-node.grand{width:10.8cqw;height:10.8cqw}
+.stage .chest-node:hover{transform:translate(-50%,-102%) scale(1.035)}
+.stage .island-cat{
+  left:.2%;
+  bottom:5.4%;
+  width:15.6%;
+  height:40%;
+  max-width:15.6vw;
+  border:0;
+  padding:0;
+  z-index:6;
+  overflow:visible;
+  transform:none;
+}
+.stage .island-cat .cat-avatar-canvas{
+  width:100%;
+  max-width:100%;
+  height:auto;
+  aspect-ratio:1024 / 936;
+}
+@media(max-width:700px){
+  .stage .route-lines path{stroke-width:5;stroke-dasharray:1.5 10}
+  .stage .route-lines path.bridge-route{stroke-width:5;stroke-dasharray:1.5 10}
+  .stage .island-cat{left:.2%;width:15.6%;height:38%}
+}
