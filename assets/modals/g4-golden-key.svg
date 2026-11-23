@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+<defs>
+ <linearGradient id="gold" x1="34" y1="34" x2="204" y2="216" gradientUnits="userSpaceOnUse"><stop stop-color="#fff9c1"/><stop offset=".2" stop-color="#ffe369"/><stop offset=".48" stop-color="#ffbf24"/><stop offset=".73" stop-color="#d6810d"/><stop offset="1" stop-color="#ffdf55"/></linearGradient>
+ <linearGradient id="rim" x1="60" y1="24" x2="190" y2="218" gradientUnits="userSpaceOnUse"><stop stop-color="#fff6b1"/><stop offset=".48" stop-color="#f2ac24"/><stop offset="1" stop-color="#a65a0b"/></linearGradient>
+ <radialGradient id="light"><stop stop-color="#fffde4"/><stop offset="1" stop-color="#ffdd70" stop-opacity="0"/></radialGradient>
+ <filter id="shadow" x="-25%" y="-25%" width="160%" height="165%"><feDropShadow dx="0" dy="7" stdDeviation="5" flood-color="#915007" flood-opacity=".32"/></filter>
+</defs>
+<circle cx="125" cy="113" r="106" fill="url(#light)" opacity=".8"/>
+<g filter="url(#shadow)" transform="rotate(42 120 120)">
+ <path d="M120 20a48 48 0 0 1 16 93v75h21v20h-21v13h-32V113a48 48 0 0 1 16-93Zm0 24a24 24 0 1 0 0 48 24 24 0 0 0 0-48Z" transform="translate(2 5)" fill="#a35b0b" stroke="#914a08" stroke-width="3" fill-rule="evenodd"/>
+ <path d="M120 20a48 48 0 0 1 16 93v75h21v20h-21v13h-32V113a48 48 0 0 1 16-93Zm0 24a24 24 0 1 0 0 48 24 24 0 0 0 0-48Z" fill="url(#gold)" stroke="url(#rim)" stroke-width="4" stroke-linejoin="round" fill-rule="evenodd"/>
+ <path d="M87 46a39 39 0 0 1 52-13M111 120v91M142 193h9" stroke="#fff4a1" stroke-width="6" stroke-linecap="round" opacity=".88"/>
+ <path d="M140 90a29 29 0 0 0-9-49M128 120v58" stroke="#b87510" stroke-width="3" stroke-linecap="round" opacity=".65"/>
+ <path d="M101 116h38v12h-38z" fill="#f7b82c" stroke="#c48711" stroke-width="2" rx="4"/>
+ <path d="M107 119h25" stroke="#fff3a3" stroke-width="3" stroke-linecap="round"/>
+</g>
+<path d="M188 22q2 15 16 17-14 3-16 17-3-14-17-17 14-2 17-17Z" fill="#fffdf1" stroke="#ffd760" stroke-width="1.5"/>
+</svg>
