@@ -206,3 +206,15 @@ button:disabled{cursor:not-allowed;opacity:.58}
 .shop-item .price{background:#fff5cc;padding:.2rem .62rem;border-radius:999px}
 .shop-item .owned-indicator{min-height:1.25em}
 .cat-preview img{width:118%;max-width:none;height:95%;max-height:none}
+
+/* Block C: accessible, scroll-safe lesson feedback and per-task completion report. */
+.modal-panel[tabindex="-1"]:focus{outline:none}
+.modal-panel.result-card{max-height:90dvh;overflow:auto;padding-top:clamp(44px,5vh,55px)}
+.modal-panel.reward{width:min(560px,94vw);max-height:94dvh;overflow-y:auto;overscroll-behavior:contain}
+.lesson-summary{margin:1rem auto;text-align:left;border-radius:1rem;background:#ffffffd9;border:2px solid #ddccff;padding:.8rem 1rem}
+.lesson-summary h3{margin:0 0 .3rem;text-align:center;font-size:clamp(17px,2.3vh,22px);color:#5629ac}
+.lesson-summary p{font-size:.97rem;text-align:center;margin:.35rem 0 .65rem;color:#57388a}
+.lesson-summary-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}
+.lesson-summary-list li{background:#f3edff;border-radius:.7rem;padding:.48rem .55rem;display:flex;flex-direction:column;gap:.16rem;font-size:.91rem}
+.lesson-summary-list li span{font-size:.8rem;color:#5b427e}
+@media(max-width:500px){.modal-panel.reward{padding:16px}.modal-panel.reward .reward-art{height:min(19vh,120px)}.lesson-summary-list{grid-template-columns:1fr 1fr}.lesson-summary{padding:.6rem}}
