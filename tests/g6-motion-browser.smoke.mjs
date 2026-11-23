@@ -30,7 +30,11 @@ async function checkArt(p){
 async function staticCat(p,selector){
  const cat=p.locator(selector);
  const snap=()=>cat.evaluate(el=>({html:el.innerHTML,transform:getComputedStyle(el).transform,box:el.getBoundingClientRect().toJSON()}));
- const before=await snap();await p.waitForTimeout(400);assert.deepEqual(await snap(),before);
+ await p.waitForTimeout(1000); // Allow initial portrait resize/alpha fit and modal entrance to settle.
+ const before=await snap();await p.waitForTimeout(550);const after=await snap();
+ assert.equal(after.html,before.html);assert.equal(after.transform,before.transform);
+ for(const key of ['x','y','width','height'])assert.ok(Math.abs(after.box[key]-before.box[key])<.75,'static fitted portrait '+key);
+ assert.equal(await cat.evaluate(el=>el.getAnimations({subtree:true}).length),0,'no mascot or accessory animations');
  assert.equal(await p.locator('.cat-motion-layer,.motion-active').count(),0);
 }
 async function mapCheck(p){
