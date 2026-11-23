@@ -738,7 +738,7 @@ button:disabled{cursor:not-allowed;opacity:.58}
 .island-cat .outfit-overlays .equipped-item[data-slot=hat],
 .cat-preview .cat-figure .outfit-overlays .equipped-item[data-slot=hat],
 .reward-avatar .outfit-overlays .equipped-item[data-slot=hat]{
-  width:53%;height:50%;left:22.5%;top:-9.4%;bottom:auto;right:auto;transform:rotate(-7deg);
+  width:53%;height:50%;left:22.5%;top:-12%;bottom:auto;right:auto;transform:rotate(-7deg);
 }
 .island-cat .outfit-overlays .equipped-item[data-slot=neck],
 .cat-preview .cat-figure .outfit-overlays .equipped-item[data-slot=neck],
@@ -758,5 +758,5 @@ button:disabled{cursor:not-allowed;opacity:.58}
 .island-cat .outfit-overlays .equipped-item[data-slot=tool],
 .cat-preview .cat-figure .outfit-overlays .equipped-item[data-slot=tool],
 .reward-avatar .outfit-overlays .equipped-item[data-slot=tool]{
-  width:22%;height:26%;left:77%;top:42%;bottom:auto;right:auto;transform:rotate(10deg);
+  width:22%;height:26%;left:72%;top:34%;bottom:auto;right:auto;transform:rotate(10deg);
 }
