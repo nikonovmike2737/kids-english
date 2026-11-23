@@ -27,6 +27,47 @@ async function checkArt(p){
  await p.waitForSelector('[data-art-centered="true"]');
 }
 
+
+async function closeCentered(p){
+ const result=await p.locator('.modal-panel .close').evaluateAll(buttons=>buttons.map(b=>{
+  const r=b.getBoundingClientRect(),svg=b.querySelector('.close-glyph'),path=svg?.querySelector('path');
+  if(!path)return {missing:true};
+  const box=path.getBBox(),m=path.getScreenCTM(),center=new DOMPoint(box.x+box.width/2,box.y+box.height/2).matrixTransform(m);
+  return {x:Math.abs(center.x-r.x-r.width/2),y:Math.abs(center.y-r.y-r.height/2),label:b.getAttribute('aria-label')};
+ }));
+ assert.ok(result.length&&result.every(v=>!v.missing&&v.x<.5&&v.y<.5&&v.label),'centered cross: '+JSON.stringify(result));
+}
+async function stableTabs(p){
+ await p.waitForSelector('[data-portrait-fitted="true"]');
+ await p.waitForTimeout(150);
+ await closeCentered(p);
+ await p.evaluate(()=>{
+  const a=document.querySelector('.cat-preview .cat-avatar-canvas');
+  const snapshot=()=>{const b=a.getBoundingClientRect();return [b.x,b.y,b.width,b.height]};
+  const baseline=snapshot(),base=a.querySelector('.cat-base'),panel=a.closest('.modal-panel');
+  window.__g8Portrait={a,base,panel,baseline,fail:[]};
+  window.__g8Portrait.check=()=>{
+   const s=window.__g8Portrait;
+   if(document.querySelector('.cat-preview .cat-avatar-canvas')!==a||a.querySelector('.cat-base')!==base||a.closest('.modal-panel')!==panel||!a.isConnected)s.fail.push('portrait or modal remounted');
+   if(snapshot().some((v,i)=>Math.abs(v-baseline[i])>.5))s.fail.push('portrait bounds changed '+snapshot());
+  };
+  window.__g8Portrait.observer=new MutationObserver(()=>window.__g8Portrait.check());
+  window.__g8Portrait.observer.observe(panel,{subtree:true,childList:true,attributes:true});
+ });
+ for(const category of ['scarves','shoes','backpacks','tools','hats','tools','scarves','hats']){
+  await p.locator('[data-category="'+category+'"]').click();
+  await p.evaluate(()=>window.__g8Portrait.check());
+  for(const tier of [2,3,1]){
+   await p.locator('[data-item="'+tier+'"]').click();
+   await p.evaluate(()=>window.__g8Portrait.check());
+  }
+ }
+ await p.waitForTimeout(250);
+ const failures=await p.evaluate(()=>{const s=window.__g8Portrait;s.check();s.observer.disconnect();return s.fail});
+ assert.deepEqual(failures,[],'no intermediate remount or resize across category and item switches');
+ pass('G8 stable same portrait DOM and geometry across 8 categories and 24 item changes');
+}
+
 async function staticCat(p,selector){
  const cat=p.locator(selector);
  const snap=()=>cat.evaluate(el=>({html:el.innerHTML,transform:getComputedStyle(el).transform,box:el.getBoundingClientRect().toJSON()}));
@@ -67,10 +108,10 @@ async function mapCheck(p){
   assert.ok(Math.max(...row.gaps)-Math.min(...row.gaps)<3,'equal edge gaps '+JSON.stringify(row));
   assert.ok(Math.max(...row.ys)-Math.min(...row.ys)<3,'row centerline '+JSON.stringify(row));
  }
- assert.equal(m.art.length,4);assert.ok(m.art.every(x=>x.alpha>.10&&x.corner===0&&x.lock&&x.filter==='none'),JSON.stringify(m.art));
+ assert.equal(m.art.length,4);assert.ok(m.art.every(x=>x.alpha>.10&&x.corner===0&&!x.lock&&x.filter==='none'),JSON.stringify(m.art));
  assert.equal(m.icons.length,3);assert.ok(m.icons.every(x=>x>0));assert.equal(m.bridge.length,3);assert.ok(m.bridge.every(x=>x>100));
  await shot(p,'g7-map');
- pass('4 clean transparent chest sprites with independent locks, equal row gaps and 3 local sign icons');
+ pass('4 clean transparent chest sprites without extra locks, equal row gaps and 3 local sign icons');
 }
 try{
  const c=await browser.newContext({viewport:{width:1649,height:837}});
@@ -81,14 +122,15 @@ try{
  const props=()=>p.locator('.island-ambient').evaluate(el=>[getComputedStyle(el.querySelector('.fall-stream')).strokeDashoffset,getComputedStyle(el.querySelector('.shore-wave')).transform,...[...el.querySelectorAll('.foliage-sway')].map(x=>getComputedStyle(x).transform)]);
  const a=await props();await p.waitForTimeout(520);const b=await props();assert.notEqual(a[0],b[0]);assert.notEqual(a[1],b[1]);
  await p.waitForTimeout(1800);const d=await props();assert.ok(a.slice(2).some((x,i)=>x!==b[i+2]||x!==d[i+2]));
- await p.locator('#cat-button').click();await p.waitForSelector('[data-portrait-fitted="true"]');await checkArt(p);await shot(p,'wardrobe-scarves');await p.locator('#close-modal').click();
+ await p.locator('#cat-button').click();await p.waitForSelector('[data-portrait-fitted="true"]');await checkArt(p);await stableTabs(p);await shot(p,'wardrobe-scarves');await p.locator('#close-modal').click();
  await p.evaluate(()=>window.__kidsSmoke.forceProgress({purchasedItemIds:['hats-1','scarves-1','shoes-1','backpacks-1','tools-1'],equippedBySlot:{hats:'hats-1',scarves:'scarves-1',shoes:'shoes-1',backpacks:'backpacks-1',tools:'tools-1'}}));
  assert.equal(await p.locator('#island-cat .equipped-item').count(),5);await staticCat(p,'#island-cat .cat-avatar-canvas');
- await p.locator('#cat-button').click();await p.waitForSelector('[data-portrait-fitted="true"]');assert.equal(await p.locator('.cat-preview .equipped-item').count(),5);await staticCat(p,'.cat-preview .cat-avatar-canvas');await p.locator('#close-modal').click();
+ await p.locator('#cat-button').click();await p.waitForSelector('[data-portrait-fitted="true"]');assert.equal(await p.locator('.cat-preview .equipped-item').count(),5);await stableTabs(p);await staticCat(p,'.cat-preview .cat-avatar-canvas');await p.locator('#close-modal').click();
  assert.equal(await p.evaluate(()=>typeof window.__kidsSmoke.playCatMotion),'undefined');
+ for(const button of ['#world-button','#settings-button','[data-stop="1"]']){await p.locator(button).click();await closeCentered(p);await p.locator('#close-modal').click();}
  await c.close();
  const mobile=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
- const m=await mobile.newPage();watch(m);await m.goto(url,{waitUntil:'networkidle'});await mapCheck(m);await m.locator('#cat-button').click();await m.waitForSelector('[data-portrait-fitted="true"]');await staticCat(m,'.cat-preview .cat-avatar-canvas');await mobile.close();
+ const m=await mobile.newPage();watch(m);await m.goto(url,{waitUntil:'networkidle'});await mapCheck(m);await m.locator('#cat-button').click();await m.waitForSelector('[data-portrait-fitted="true"]');await stableTabs(m);await staticCat(m,'.cat-preview .cat-avatar-canvas');await mobile.close();
  const reduced=await browser.newContext({viewport:{width:1280,height:800},reducedMotion:'reduce'});
  const r=await reduced.newPage();watch(r);await r.goto(url,{waitUntil:'networkidle'});assert.equal(await r.locator('.island-ambient').evaluate(el=>getComputedStyle(el).display),'none');await reduced.close();
  const normal=await browser.newContext({viewport:{width:1280,height:800}});
