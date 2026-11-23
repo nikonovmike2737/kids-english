@@ -6,7 +6,7 @@ URL: https://nikonovmike2737.github.io/kids-english/
 Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 
 ## Production commit and Action
-- Current deployed Pages tree SHA: `a6fd09da8ed963a7f59817f8a6e5affa38c54790` (Action #14), with unchanged Block C application code originally introduced in `59e9d60c0700ef460ac26a04be2c6953fe6591cf` (Action #13). Earlier entries below are historical.
+- **Current Production application/tree SHA:** `bf9925c7e1659f00bf0438390d81e40a448f5d17` (combined D+E PR #24, successful Pages Action #15). Earlier entries below are historical.
 - Release PR #10: https://github.com/nikonovmike2737/kids-english/pull/10
 - Visual hotfix PR #11: https://github.com/nikonovmike2737/kids-english/pull/11
 - Final Pages workflow #10: https://github.com/nikonovmike2737/kids-english/actions/runs/45188625945 — **SUCCESS**; validate JS and asset binary signatures: PASS; artifact upload: PASS; Pages deployment: PASS.
@@ -82,3 +82,15 @@ Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 - Browser checked every task type in ENG-001, one wrong then correct, remaining heart carried to end, full lesson result for all four tasks, key credit exactly once, failed replay and restart, close/Escape/focus, mobile 390px, Classic route, no runtime exceptions or non-GET requests.
 - This upgrades automated browser evidence from NOT VERIFIED to **E2E PASS**. Do not claim owner visual approval (screenshots/proportions) without explicit sign-off.
 - **Correction:** the test-only PR #21 did trigger the Pages workflow, because `tests/**` is included in its site path filter. [Pages Action #14 (45223346682)](https://github.com/nikonovmike2737/kids-english/actions/runs/45223346682) SUCCESS published tree `a6fd09da8ed963a7f59817f8a6e5affa38c54790`. No game JS/CSS changed from Block C app commit `59e9d60c0700ef460ac26a04be2c6953fe6591cf`. Documentation-only PRs #22 and this one do not trigger Pages.
+
+## Combined D+E Production — DEPLOYED / HOSTED E2E PASS (2026-11-23)
+- Owner-directed **one-pass combined release PR #24**: https://github.com/nikonovmike2737/kids-english/pull/24 ; SHA `bf9925c7e1659f00bf0438390d81e40a448f5d17`.
+- **One successful Pages workflow run #45228530252**: https://github.com/nikonovmike2737/kids-english/actions/runs/45228530252 — SUCCESS, deployed the exact production application revision above.
+- **PR regression #45228152015**: https://github.com/nikonovmike2737/kids-english/actions/runs/45228152015 — SUCCESS, 23/23 Node tests, local C and D/E browser interaction checks, hosted C regression, responsive screenshot artifact #14846765726.
+- **Independent post-release browser QA #45228626645**: https://github.com/nikonovmike2737/kids-english/actions/runs/45228626645 — SUCCESS, all existing lesson/Classic browser steps plus actual hosted D/E shop/world interaction steps on deployed URL.
+- D World Map: three distinct original illustrated preview thumbnails, one playable/current Adventure Island, two genuinely locked future worlds, accessible labels and responsive atlas layout.
+- E My Cat: 5 categories × 3 tiers with original WebP product art; Shop & owned-only Inventory; item sprites mounted over the map cat, wardrobe cat and successful-lesson reward cat. One contextual action, dynamic singular/plural, no global hearts.
+- Currency/achievements: buying once debits exact cost and persists ownership without auto-equip; Wear / Wearing/unwear free; worn items and balance survive reload. LocalStorage remains anonymous achievements only.
+- Verification fixtures are **isolated browser contexts**, no user state, no accounts, no server answer submissions. Real QA also verified no outgoing POST or uncaught JS exceptions. All three authored lessons, original 3-life logic, 12 route slots/chests and /classic untouched.
+- Public main and Classic routes externally retrieved. Owner visual/artistic approval **still pending**, and new lessons/worlds still require independent METHOD_PASS.
+- This documentation-only update is not a new application/Pages deployment.
