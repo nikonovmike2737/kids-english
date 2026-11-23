@@ -1,30 +1,20 @@
-# Kids English
+# Kids English — Adventure Island
 
-Открытый интерактивный тренажёр английского для детей. Один публичный репозиторий. Учебные материалы, сайт, методология и техническая документация версионируются в GitHub.
+An English-language, child-facing island adventure with three real lessons, three hearts per attempt, permanent keys and local progression. The first 3 of 12 full lessons are playable in **Getting Started**. Other stops are intentionally locked pending educational authoring. No registration, analytics, advertising or server-side feedback collection.
 
-## Сайт
-- GitHub Pages: https://nikonovmike2737.github.io/kids-english/
-- Стартовая версия: 3 темы, 12 заданий; выбор ответа, сопоставление слов с картинками/эмодзи, составление фраз.
-- Вся логика правильных и неправильных ответов, индивидуальный разбор заданий и повторное прохождение реализованы на клиенте.
-- Сайт не собирает и не передаёт ответы/результаты и не содержит форм обратной связи. Результат существует только на открытой вкладке.
-- При отсутствии публикации: Settings → Pages → Source: GitHub Actions, затем перезапустить workflow Deploy Kids English Pages.
+- **New island**: https://nikonovmike2737.github.io/kids-english/
+- **Preserved classic game**: https://nikonovmike2737.github.io/kids-english/classic/
+- **Approved product canon**: [Adventure Island](docs/source-of-truth/ADVENTURE_ISLAND_APPROVED_CANON.md)
+- **Asset manifest**: [Assets](docs/product/ASSET_MANIFEST.md)
+- **Rollback**: [Release and rollback](docs/source-of-truth/RELEASE_AND_ROLLBACK.md)
+- **Methodologist**: [Role](docs/source-of-truth/ROLE_METHODOLOGIST.md)
+- **Technical partner**: [Role](docs/source-of-truth/ROLE_TECHNICAL.md)
 
-## Роли и ветки
-- `main` — опубликованный, принятый релиз.
-- `canon/source-of-truth` — канонические роли, требования и правила, предложения изменений через PR.
-- `role/methodologist` — программа, учебный контент, приёмка, обработка обезличенных отзывов родителей через чат.
-- `role/technical` — интерфейс, технические тесты, GitHub Pages и эксплуатация.
+## Run locally
+Use any local static file server, e.g. `python -m http.server 8000`; open `http://localhost:8000/`. Client JavaScript modules load the data and map. No build step needed.
 
-Основные документы: [канон проекта](docs/source-of-truth/PROJECT_CHARTER.md), [методолог](docs/source-of-truth/ROLE_METHODOLOGIST.md), [технический партнёр](docs/source-of-truth/ROLE_TECHNICAL.md), [приватность](docs/source-of-truth/CONTENT_AND_PRIVACY_CANON.md), [реестр источников](docs/source-of-truth/SOURCE_INVENTORY.md).
-Инструкции агентам: [AGENTS.md](AGENTS.md).
+## Test
+`python tests/test_inline.py` and `python tests/test_extended.py` run automated Chromium scenarios against a local, isolated copy of the JS/HTML. Tests require Playwright and a local Chromium binary; they never contact GitHub or send user data.
 
-## Материалы
-- [Программа](docs/methodology/CURRICULUM.md)
-- [Словарь](docs/methodology/VOCABULARY.md)
-- [Сценарии занятий](docs/methodology/LESSON_PLANS.md)
-- [Рубрика заданий](docs/methodology/QUESTION_DESIGN.md)
-- [Обезличенные методические сигналы](docs/methodology/PRODUCT_FEEDBACK.md)
-- [Приёмка](docs/methodology/RELEASE_ACCEPTANCE.md)
-- [Уроки ENG-001–003](content/lessons/)
-
-**Происхождение**: восстановлено по доступному контексту проекта ChatGPT и стартовому HTML. Не путать с дословным экспортом оригинальных чатов. До документальной сверки: RECONSTRUCTED.
+## Next educational work
+Nine additional full lessons (not nine questions) need methodologist review; only after approval may their locked nodes become playable. Additional worlds Mystical Desert and Rainy Forest are locked previews, not released content.
