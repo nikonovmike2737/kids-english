@@ -13,6 +13,7 @@ jobs:
   hosted-smoke:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,7 +21,7 @@ jobs:
       - name: Install Chromium browser test runtime
         run: |
           npm install --no-save playwright@1.56.1
-          npx playwright install --with-deps chromium
+          # Official container includes preinstalled Chromium/WebKit libraries.
       - name: Test existing lessons, hearts, rewards and classic on public Pages
         env:
           KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
