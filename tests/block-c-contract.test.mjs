@@ -73,7 +73,7 @@ test('C6: terminal loss keeps the sad cat above lesson; restart resets three liv
   assert.match(gameOver, /gameover-layer/);
   assert.match(gameOver, /wrong-card gameover-card/);
   assert.match(gameOver, /startLesson\(active\.lessonId\)/);
-  const keys = section("document.addEventListener('keydown'", 'updateMap();\nif (new URLSearchParams');
+  const keys = section("document.addEventListener('keydown'", '\n\nupdateMap();\n');
   assert.match(keys, /if \(\$\('#gameover-layer', root\)\) closeModal\(\)/);
 });
 
@@ -99,7 +99,7 @@ test('C8: reward key is minted once; chest is credited only if ready', () => {
 });
 
 test('C9: Tab and Shift+Tab trap focus only in frontmost dialog', () => {
-  const keys = section("document.addEventListener('keydown'", 'updateMap();\nif (new URLSearchParams');
+  const keys = section("document.addEventListener('keydown'", '\n\nupdateMap();\n');
   assert.match(keys, /const nested = \$\$\('\.modal-backdrop\.nested', root\)\.at\(-1\)/);
   assert.match(keys, /if \(e\.key !== 'Tab'\) return/);
   assert.match(keys, /panel\.contains\(document\.activeElement\)/);
