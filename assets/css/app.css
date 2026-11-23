@@ -218,3 +218,131 @@ button:disabled{cursor:not-allowed;opacity:.58}
 .lesson-summary-list li{background:#f3edff;border-radius:.7rem;padding:.48rem .55rem;display:flex;flex-direction:column;gap:.16rem;font-size:.91rem}
 .lesson-summary-list li span{font-size:.8rem;color:#5b427e}
 @media(max-width:500px){.modal-panel.reward{padding:16px}.modal-panel.reward .reward-art{height:min(19vh,120px)}.lesson-summary-list{grid-template-columns:1fr 1fr}.lesson-summary{padding:.6rem}}
+
+
+/* Combined Block D + E: approved world atlas and illustrated local wardrobe.
+   Existing Adventure Island and lesson geometry intentionally remain unchanged. */
+.modal-panel.worldmap{width:min(1110px,96vw);max-height:95dvh;overflow-y:auto;overscroll-behavior:contain;
+  background:linear-gradient(155deg,#fff8e8 0%,#f3eaff 57%,#d6e9ff 100%);border-color:#ffe5a8}
+.world-heading{text-align:center;margin:0 auto .9rem}
+.world-heading .modal-title{font-size:clamp(27px,4vh,45px);margin:0;color:#53219e;line-height:1.1}
+.world-kicker{display:inline-block;letter-spacing:.17em;text-transform:uppercase;color:#9767bc;font-weight:950;font-size:.72rem;margin:.2rem 0 .3rem}
+.modal-panel.worldmap .world-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.55rem,1.4vw,1.4rem);margin:.7rem 0 0;align-items:stretch}
+.modal-panel.worldmap .world-card{display:flex;flex-direction:column;justify-content:start;gap:0;width:100%;min-height:0;padding:.6rem;
+  border:3px solid #d8c5f0;border-radius:1.45rem;background:#fffefa;color:#3d276f;text-align:center;overflow:hidden;transition:transform .16s,box-shadow .16s}
+.modal-panel.worldmap .world-card.current{border-color:#f4b83f;box-shadow:0 .4rem 0 #daa04a,0 .75rem 1.3rem #a57dc03a;background:#fffcee}
+.modal-panel.worldmap .world-card.future{background:#f7f4ff;border-color:#d4c9ed;opacity:1}
+.modal-panel.worldmap .world-card.current:hover{transform:translateY(-3px);box-shadow:0 .55rem 0 #daa04a,0 1rem 1.7rem #9b73be50}
+.world-picture{position:relative;display:block;flex-shrink:0;width:100%;aspect-ratio:16/10;overflow:hidden;border-radius:1rem;background:#e8e2f5}
+.modal-panel.worldmap .world-picture>img{width:100%;height:100%;object-fit:cover;display:block;border-radius:0}
+.world-card.future .world-picture>img{filter:saturate(.82) brightness(.87)}
+.world-picture::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 -2.1rem 2rem #351e5138}
+.world-current-badge{position:absolute;left:.6rem;top:.6rem;z-index:2;color:#623983;background:#fff3bc;border:2px solid #fff;border-radius:99px;
+  padding:.3rem .65rem;font-size:clamp(.7rem,1.15vw,.85rem);font-weight:950;box-shadow:0 2px 6px #3025543a}
+.modal-panel.worldmap .world-lock{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;display:grid;place-items:center;
+  background:#fff9f1e6;border:3px solid #fff;border-radius:50%;width:4rem;height:4rem;font-size:2rem;filter:drop-shadow(0 4px 4px #422b5c50)}
+.world-details{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.55rem;min-height:6rem;padding:.65rem .15rem}
+.world-details strong{font-size:clamp(1rem,1.5vw,1.3rem);line-height:1.1;font-weight:1000}
+.world-status{display:inline-flex;align-items:center;justify-content:center;gap:.25rem;min-height:1.75rem;padding:.23rem .65rem;
+  border-radius:99px;background:#f0e5ff;color:#644493;font-weight:900;font-size:.85rem;white-space:nowrap}
+.world-card.current .world-status{background:#fff0b6;color:#7c4d0e}
+.world-status img{width:1.45rem;height:1.45rem;object-fit:contain}
+.world-atlas-footer{display:flex;justify-content:center;gap:7rem;margin:.7rem 0 0;font-size:1.3rem;color:#c6a3d9}
+
+/* Both map and wardrobe render the actual purchased accessory art, never an emoji. */
+.outfit-overlays{position:absolute;inset:0;pointer-events:none}
+.outfit-overlays img.equipped-item{position:absolute;display:block;width:auto;height:auto;max-width:none;max-height:none;object-fit:contain;
+  pointer-events:none;user-select:none;filter:drop-shadow(0 2px 3px #261a5560)}
+.cat-figure{width:min(100%,390px);height:100%;max-height:57vh;min-height:0;aspect-ratio:1/1.25;position:relative;margin:auto}
+.cat-preview{overflow:hidden;min-height:0;background:radial-gradient(ellipse at 50% 50%,#fff 0%,#faf1ff 67%,#e7d6ff 100%)}
+.cat-preview .cat-figure>.cat-base{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;object-position:center;display:block}
+.cat-preview .cat-figure .equipped-item[data-slot=hat]{width:38%;height:30%;left:30%;top:9%;transform:rotate(-6deg);z-index:6}
+.cat-preview .cat-figure .equipped-item[data-slot=neck]{width:34%;height:23%;left:33%;top:38%;z-index:7}
+.cat-preview .cat-figure .equipped-item[data-slot=shoes]{width:43%;height:23%;left:29%;bottom:5%;z-index:7}
+.cat-preview .cat-figure .equipped-item[data-slot=back]{width:37%;height:38%;left:7%;top:40%;z-index:3}
+.cat-preview .cat-figure .equipped-item[data-slot=tool]{width:29%;height:28%;left:66%;top:44%;transform:rotate(12deg);z-index:8}
+.island-cat .equipped-item[data-slot=hat]{width:35%;height:28%;top:13%;left:32%;transform:rotate(-6deg);z-index:6}
+.island-cat .equipped-item[data-slot=neck]{width:33%;height:22%;top:41%;left:35%;z-index:6}
+.island-cat .equipped-item[data-slot=shoes]{width:44%;height:21%;bottom:8%;left:30%;z-index:7}
+.island-cat .equipped-item[data-slot=back]{width:35%;height:33%;top:41%;left:9%;z-index:4}
+.island-cat .equipped-item[data-slot=tool]{width:27%;height:27%;top:45%;left:67%;z-index:7}
+.reward-illustrations{display:flex;justify-content:center;align-items:center;gap:.5rem;max-height:23vh}
+.modal-panel.reward .reward-illustrations>.reward-art{height:min(20vh,155px);max-width:45%;margin:0;flex-shrink:0}
+.reward-avatar{position:relative;width:min(30vw,145px);height:min(22vh,170px);flex:0 0 auto}
+.reward-avatar>.cat-base{width:100%;height:100%;object-fit:contain}
+.reward-avatar .equipped-item[data-slot=hat]{width:39%;height:30%;top:9%;left:30%}
+.reward-avatar .equipped-item[data-slot=neck]{width:34%;height:22%;top:39%;left:34%}
+.reward-avatar .equipped-item[data-slot=shoes]{width:43%;height:20%;bottom:6%;left:29%}
+.reward-avatar .equipped-item[data-slot=back]{width:34%;height:33%;top:41%;left:10%}
+.reward-avatar .equipped-item[data-slot=tool]{width:28%;height:28%;top:45%;left:66%}
+
+/* Shop / Inventory share the exact same catalogue, selected slot and single action. */
+.modal-panel.wardrobe{width:min(1200px,97vw);height:min(89dvh,840px);overflow:hidden;background:linear-gradient(160deg,#fffdf8,#eee4ff 75%)}
+.modal-panel.wardrobe .wardrobe-header{display:flex;justify-content:space-between;align-items:center;gap:.5rem;min-height:3rem;
+  padding:0 clamp(2.5rem,4vw,3.3rem) .65rem 0}
+.wardrobe-header>.modal-title{margin:0;color:#5027a2;font-size:clamp(20px,3vh,32px);white-space:nowrap}
+.shop-wallet.hud-scores{margin:0;min-width:0}
+.modal-panel.wardrobe .wardrobe-inner{display:grid;grid-template-columns:36% minmax(0,1fr);gap:clamp(.6rem,1.5vw,1.3rem);flex:1;min-height:0}
+.modal-panel.wardrobe .cat-preview{border:2px solid #dcd0ef;border-radius:1.5rem;display:grid;place-items:center;padding:.5rem;min-height:0}
+.modal-panel.wardrobe .shop-panel{min-width:0;min-height:0;display:flex;flex-direction:column;gap:clamp(.25rem,.8vh,.6rem)}
+.shop-view-tabs{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;background:#e4d8f9;border-radius:1rem;padding:.3rem}
+.shop-view-tabs button{min-height:36px;border:0;border-radius:.75rem;color:#65409f;background:transparent;font-weight:950;font-size:clamp(13px,1.5vw,18px)}
+.shop-view-tabs button.selected{color:white;background:linear-gradient(130deg,#8c56ef,#5632b6);box-shadow:0 3px 0 #3f278b}
+.modal-panel.wardrobe .category-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.3rem}
+.modal-panel.wardrobe .category-tabs button{min-width:0;min-height:38px;font-size:clamp(11px,1.1vw,15px);padding:.35rem .15rem}
+.modal-panel.wardrobe .shop-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.3rem,.7vw,.7rem);
+  flex:1;min-height:0;align-items:stretch}
+.modal-panel.wardrobe .shop-item{min-width:0;min-height:0;justify-content:center;gap:clamp(.12rem,.4vh,.4rem);
+  padding:.35rem .25rem;border:3px solid #ddd2ef;border-radius:1rem;background:#fff;color:#4e2788;overflow:hidden}
+.modal-panel.wardrobe .shop-item.selected{border-color:#45b543;box-shadow:inset 0 0 0 2px #cbf6c0}
+.modal-panel.wardrobe .shop-item>img{display:block;width:min(96%,160px);height:clamp(60px,17vh,165px);object-fit:contain;flex-shrink:1;min-height:0}
+.shop-item-name{font-size:clamp(.74rem,1.15vw,.99rem);font-weight:950;line-height:1.1;overflow-wrap:anywhere}
+.shop-item .price{display:inline-flex;align-items:center;justify-content:center;gap:.13rem;color:#83520a;background:#fff2cc;
+  border-radius:99px;padding:.1rem .5rem;font-weight:1000;font-size:.94rem}
+.shop-item .price img{width:20px;height:20px;object-fit:contain}
+.modal-panel.wardrobe .shop-item .owned-indicator{min-height:1rem;font-size:clamp(.65rem,.95vw,.81rem);font-weight:900}
+.modal-panel.wardrobe .shop-grid-empty{display:grid;grid-template-columns:1fr;place-items:center;border:2px dashed #cfbfea;border-radius:1rem;
+  background:#faf6ff;min-height:110px}
+.empty-inventory{font-size:1rem;font-weight:850;color:#6e519d;padding:1rem}
+.shop-selected{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.3rem .55rem;background:#fff8ec;border-radius:.75rem;
+  color:#613995;font-size:clamp(.72rem,1.1vw,.94rem);font-weight:900}
+.shop-selected span:last-child{color:#94640f;white-space:nowrap}
+.modal-panel.wardrobe .item-action{display:block;width:min(100%,390px);min-height:50px;max-height:56px;flex:0 0 auto;
+  margin:.1rem auto .25rem;padding:.6rem;font-size:clamp(17px,2.4vh,23px)}
+.modal-panel.wardrobe .item-action:disabled{opacity:.82}
+@media(max-width:750px){
+  .modal-panel.worldmap{width:97vw;padding:18px}
+  .modal-panel.worldmap .world-grid{gap:.6rem}
+  .world-status{font-size:.71rem;padding:.2rem .35rem}
+  .world-lock{width:3rem;height:3rem}
+  .modal-panel.wardrobe{width:98vw;height:94dvh;padding:12px}
+  .modal-panel.wardrobe .wardrobe-inner{grid-template-columns:35% minmax(0,1fr);gap:.45rem}
+  .modal-panel.wardrobe .shop-item>img{height:clamp(55px,15vh,125px)}
+  .shop-item-name{font-size:.71rem}
+  .modal-panel.wardrobe .category-tabs button{font-size:.7rem}
+  .wardrobe-header>.modal-title{font-size:1.2rem}
+}
+@media(max-width:500px){
+  .modal-panel.worldmap .world-grid{grid-template-columns:1fr;gap:.65rem}
+  .modal-panel.worldmap .world-card{display:grid;grid-template-columns:minmax(0,46%) minmax(0,1fr);align-items:stretch;padding:.4rem;
+    min-height:0;text-align:left;border-radius:1rem}
+  .world-picture{aspect-ratio:16/10;min-height:106px;border-radius:.7rem}
+  .world-details{min-height:0;align-items:flex-start;padding:.45rem .45rem .45rem .75rem;gap:.5rem}
+  .world-details strong{font-size:1rem}
+  .world-status{font-size:.76rem;white-space:normal;text-align:left}
+  .world-current-badge{font-size:.55rem;top:.3rem;left:.3rem;padding:.18rem .25rem}
+  .modal-panel.worldmap .world-lock{width:2.5rem;height:2.5rem;font-size:1.3rem}
+  .world-atlas-footer{margin:.35rem 0 0}
+  .modal-panel.wardrobe{width:99vw;height:96dvh;overflow:auto;padding:12px}
+  .modal-panel.wardrobe .wardrobe-inner{display:flex;flex-direction:column;gap:.5rem;min-height:auto}
+  .modal-panel.wardrobe .cat-preview{height:clamp(145px,26dvh,220px);max-height:none;flex:0 0 auto}
+  .modal-panel.wardrobe .cat-figure{width:min(68%,190px);height:100%;aspect-ratio:1/1.25}
+  .modal-panel.wardrobe .shop-panel{min-height:0;flex:0 0 auto}
+  .modal-panel.wardrobe .shop-grid{min-height:165px;flex:0 0 auto}
+  .modal-panel.wardrobe .shop-item>img{height:clamp(60px,12dvh,100px)}
+  .modal-panel.wardrobe .category-tabs button{min-height:36px}
+  .modal-panel.wardrobe .shop-selected{min-height:27px}
+  .modal-panel.wardrobe .wardrobe-header{padding:0 2.3rem .4rem 0;gap:.3rem}
+  .modal-panel.wardrobe .shop-wallet.hud-scores{font-size:.69rem;padding:.2rem .35rem}
+  .modal-panel.wardrobe .item-action{margin-bottom:.4rem}
+}
