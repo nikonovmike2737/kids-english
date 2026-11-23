@@ -6,7 +6,7 @@ URL: https://nikonovmike2737.github.io/kids-english/
 Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 
 ## Production commit and Action
-- **Current Production application/tree SHA:** `c39e9338c46dad6d4c5522d1610119007127caa1` (owner visual Safari G2R + scene G3 PR #35, Pages SUCCESS #45266932360). Earlier entries below are historical.
+- **Current Production application/tree SHA:** `e49e168e519d70903d1af0968b43c93fa530c94a` (G4 key celebration PR #37, Pages SUCCESS #45269141023). Earlier entries below are historical.
 - Release PR #10: https://github.com/nikonovmike2737/kids-english/pull/10
 - Visual hotfix PR #11: https://github.com/nikonovmike2737/kids-english/pull/11
 - Final Pages workflow #10: https://github.com/nikonovmike2737/kids-english/actions/runs/45188625945 — **SUCCESS**; validate JS and asset binary signatures: PASS; artifact upload: PASS; Pages deployment: PASS.
@@ -120,3 +120,10 @@ Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 - Original CSS and source layout kept clean; adapted CI to pinned Playwright container to remove apt stall. No new image assets or production data collection.
 - Owner artistic sign-off for G2R/G3 still OPEN; G4 reward modal [#29](https://github.com/nikonovmike2737/kids-english/issues/29) remains OPEN.
 - This docs-only update is not an application/Pages deployment.
+
+## G4 key celebration — Production verified, 2026-11-24
+- Owner issue [#29](https://github.com/nikonovmike2737/kids-english/issues/29), implementation [PR #37](https://github.com/nikonovmike2737/kids-english/pull/37), application SHA `e49e168e519d70903d1af0968b43c93fa530c94a`.
+- [Pages deploy #45269141023](https://github.com/nikonovmike2737/kids-english/actions/runs/45269141023) SUCCESS; [premerge #45268695084](https://github.com/nikonovmike2737/kids-english/actions/runs/45268695084) Chromium and WebKit SUCCESS, 49/49 native contracts; [independent hosted QA #45269242613](https://github.com/nikonovmike2737/kids-english/actions/runs/45269242613) both jobs SUCCESS.
+- One large illustrated celebration with shared transparent dressable kitten, new original scalable golden key/star artwork, simple total and Continue. No Lesson Results table, wrong-attempt report or remaining lives in reward. Replay shows Great Job! and a star, no additional key. Actual complete/repeat/reload flows verified at 1649×928, 1280×800, 390×844 and 844×390 (repeat on desktop and portrait mobile). Existing quiz scoring, 3 hearts, chest/coin economy, outfits and Classic regressions PASS; no personal data network requests.
+- [WebKit screenshots](https://github.com/nikonovmike2737/kids-english/actions/runs/45268695084/artifacts/14864142682) manually reviewed at 1649×928 and 390×844, with replay screenshot checked at desktop. [Chromium visual artifacts](https://github.com/nikonovmike2737/kids-english/actions/runs/45268695084/artifacts/14863568743).
+- G1, G2, G2R, G3 and G4 technical delivery complete. Owner visual acceptance remains pending; no claim that owner has approved screenshots. No new lessons unlocked. Nine additional full lessons remain methodologist scope.
