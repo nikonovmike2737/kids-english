@@ -95,7 +95,7 @@ try {
   }
   assert.equal(await page.locator('#lesson-hearts').innerText(), '🤍🤍🤍');
   assert.equal(await page.locator('#gameover-layer').count(), 1);
-  assert.equal(await page.locator('#gameover-layer img[src*="sad-cat"]').count(), 1);
+  assert.equal(await page.locator('#gameover-layer img[src*="g5-sad-kitten"]').count(), 1);
   await page.locator('#retry').click();
   assert.equal(await page.locator('#lesson-hearts').innerText(), '❤️❤️❤️');
   assert.match(await page.locator('.lesson-count').innerText(), /Task 1 of 4/);

@@ -34,9 +34,8 @@ async function checkMap(page,width,height){
   assert.equal(await page.locator('.node[data-state="locked"]').count(),9);
   const nodes=await page.locator('.node').evaluateAll(els=>els.map(x=>({n:Number(x.dataset.stop),x:Number.parseFloat(x.style.getPropertyValue('--x')),y:Number.parseFloat(x.style.getPropertyValue('--y'))})));
   assert.deepEqual(nodes.map(n=>n.n),Array.from({length:12},(_,i)=>i+1));
-  assert.ok(nodes.slice(0,4).every(n=>n.y===29.8));
-  assert.ok(nodes.slice(4,8).every(n=>n.y===53.2));
-  assert.ok(nodes.slice(8).every(n=>n.y===76.3));
+  assert.deepEqual(nodes.map(n=>[n.x,n.y]),[[25.5,27.1],[32.5,27.1],[39.5,27.1],[46.5,27.1],[55.4,50.2],[47.9,50.2],[40.4,50.2],[32.9,50.2],[28.5,75.4],[36,75.4],[43.5,75.4],[51,75.4]]);
+  assert.match(await page.locator('.map-art').evaluate(el=>getComputedStyle(el).backgroundImage),/g5-adventure-island\.webp/);
   const names=['.label-top','.label-mid','.label-low'];
   for(let row=0;row<3;row++){
     const label=await page.locator(names[row]).boundingBox();
@@ -76,12 +75,15 @@ async function checkMap(page,width,height){
     assert.ok(x.points.every(pt=>pt.x>=0&&pt.x<=1672&&pt.y>=0&&pt.y<=941),'route stays in stage '+x.id);
   }
   const first=pathGeometry[0].points[0];
-  assert.ok(Math.abs(first.x-1672*.30)<7 && Math.abs(first.y-941*.298)<7,'route starts AT first lesson, no incoming segment');
+  assert.ok(Math.abs(first.x-1672*.255)<7 && Math.abs(first.y-941*.271)<7,'route starts AT first lesson, no incoming segment');
   const cat=await page.locator('#island-cat').boundingBox();
   const bridge=await page.locator('#route-bridge-b').boundingBox();
   assert.ok(cat&&bridge);
   // Use the route's entire second bridge corridor as exclusion zone for the clickable kitten.
-  assert.ok(cat.x+cat.width<=bridge.x+4,'cat hides bridge B: '+JSON.stringify({cat,bridge}));
+  const opaque=await page.locator('#island-cat .cat-base').evaluate(async img=>{await img.decode();const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;const g=c.getContext('2d',{willReadFrequently:true});g.drawImage(img,0,0);const a=g.getImageData(0,0,c.width,c.height).data;let l=c.width,r=0,t=c.height,b=0;for(let y=0;y<c.height;y++)for(let x=0;x<c.width;x++)if(a[(y*c.width+x)*4+3]>32){l=Math.min(l,x);r=Math.max(r,x);t=Math.min(t,y);b=Math.max(b,y);}const box=img.getBoundingClientRect();return {x:box.x+l*box.width/c.width,y:box.y+t*box.height/c.height,right:box.x+r*box.width/c.width,bottom:box.y+b*box.height/c.height};});
+  assert.ok(opaque.right<=bridge.x+4,'visible cat hides bridge B: '+JSON.stringify({opaque,bridge}));
+  assert.ok(opaque.x>=map.x-2,'visible cat clipped at left');
+  assert.ok(Math.abs((opaque.bottom-map.y)/map.height-.90)<.055,'kitten feet stay on lower-left rock: '+JSON.stringify({opaque,map}));
   assert.ok(cat.x>=map.x-2,'cat clipped left');
   assert.ok(cat.x+cat.width<=map.x+map.width+2,'cat clipped right');
   const src=await page.locator('#island-cat .cat-base').getAttribute('src');

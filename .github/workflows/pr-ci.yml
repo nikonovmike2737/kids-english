@@ -57,6 +57,11 @@ jobs:
           KIDS_TEST_URL: http://127.0.0.1:8765/
           KIDS_BROWSER: chromium
         run: node tests/g4-reward-browser.smoke.mjs
+      - name: G5 retry illustration Chromium
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+          KIDS_BROWSER: chromium
+        run: node tests/g5-retry-browser.smoke.mjs
       - name: Upload D/E visual evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -89,6 +94,11 @@ jobs:
           KIDS_TEST_URL: http://127.0.0.1:8765/
           KIDS_BROWSER: webkit
         run: node tests/g4-reward-browser.smoke.mjs
+      - name: G5 retry illustration WebKit
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+          KIDS_BROWSER: webkit
+        run: node tests/g5-retry-browser.smoke.mjs
       - name: Upload Safari desktop and mobile screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -97,4 +107,5 @@ jobs:
           path: |
             artifacts/g3-webkit-*.png
             artifacts/g4-webkit-*.png
+            artifacts/g5-webkit-*.png
           if-no-files-found: ignore

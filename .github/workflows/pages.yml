@@ -52,6 +52,7 @@ jobs:
           from pathlib import Path
           expected=[
             'assets/maps/adventure-island.webp',
+            'assets/maps/g5-adventure-island.webp',
             'assets/mascot/cat-explorer.png',
             'assets/brand/abc-cat-logo.png',
             'assets/chests/closed.webp',
@@ -60,6 +61,7 @@ jobs:
             'assets/symbols/key.webp',
             'assets/symbols/coin.webp',
             'assets/modals/sad-cat.webp',
+            'assets/modals/g5-sad-kitten.webp',
             'assets/inventory/hats/tier-1.webp',
           ]
           for name in expected:

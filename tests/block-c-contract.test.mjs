@@ -69,7 +69,7 @@ test('C5: correct confirmation advances only after successful Check', () => {
 
 test('C6: terminal loss keeps the sad cat above lesson; restart resets three lives', () => {
   const gameOver = section('function showGameOver()', 'function finishLesson()');
-  assert.match(gameOver, /assets\/modals\/sad-cat\.webp/);
+  assert.match(gameOver, /assets\/modals\/g5-sad-kitten\.webp/);
   assert.match(gameOver, /gameover-layer/);
   assert.match(gameOver, /wrong-card gameover-card/);
   assert.match(gameOver, /startLesson\(active\.lessonId\)/);
