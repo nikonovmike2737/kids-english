@@ -20,7 +20,7 @@ jobs:
       - name: Install Chromium browser test runtime
         run: |
           npm install --no-save playwright@1.56.1
-          npx playwright install --with-deps chromium webkit
+          npx playwright install --with-deps chromium
       - name: Test existing lessons, hearts, rewards and classic on public Pages
         env:
           KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
@@ -58,7 +58,18 @@ jobs:
             sleep 15
           done
           exit 1
-      - name: Check G2R Safari/WebKit production layout and transparent independent chests
+
+  hosted-safari:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-24.04
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Install pinned Playwright API
+        run: npm install --no-save playwright@1.56.1
+      - name: Independent public Safari/WebKit G2R and G3 visual QA
         env:
           KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
           KIDS_BROWSER: webkit
