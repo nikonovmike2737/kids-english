@@ -100,6 +100,23 @@ try {
     front:getComputedStyle(el.querySelector('.outfit-overlays')).zIndex
   }));
   assert.deepEqual(stack,{behind:'1',cat:'2',front:'3'});
+  const geometry=await page.locator('.cat-preview .cat-avatar-canvas').evaluate(el=>{
+    const root=el.getBoundingClientRect();
+    const measure=slot=>{
+      const item=el.querySelector('.equipped-item[data-slot="'+slot+'"]');
+      const r=item.getBoundingClientRect();
+      return {x:(r.left-root.left)/root.width,y:(r.top-root.top)/root.height,
+        width:r.width/root.width,height:r.height/root.height};
+    };
+    return {ratio:root.width/root.height,
+      hat:measure('hat'),scarf:measure('neck'),shoes:measure('shoes'),
+      backpack:measure('back'),tool:measure('tool')};
+  });
+  assert.ok(Math.abs(geometry.ratio-(1024/936))<.02,'avatar must match actual kitten aspect ratio: '+JSON.stringify(geometry));
+  assert.ok(geometry.hat.y<0 && geometry.hat.y>-.16,'hat should sit on top of head, not float in upper panel');
+  assert.ok(geometry.scarf.y>.39 && geometry.scarf.y<.50,'scarf should sit below kitten face');
+  assert.ok(geometry.shoes.y>.60 && geometry.shoes.y<.73,'shoes should sit at kitten paws');
+  assert.ok(geometry.backpack.x<.05,'backpack should appear behind the torso to its left');
   await screenshot(page,'g2-dressable-cat-all-five-1280');
   assert.equal(await page.locator('.shop-wallet .stat-item').last().innerText(),'3');
   pass('five 3D wearables align on kitten with backpack strictly behind, no extra coin charges');
