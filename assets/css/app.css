@@ -769,7 +769,7 @@ button:disabled{cursor:not-allowed;opacity:.58}
     align-items:start;gap:0;min-height:67px;padding:0 0 5px;
   }
   .modal-panel.wardrobe .wardrobe-header .shop-wallet.hud-scores{
-    justify-self:end;align-self:start;margin-right:44px;margin-top:0;
-    max-width:calc(100% - 44px);
+    justify-self:end;align-self:start;margin-right:52px;margin-top:0;
+    max-width:calc(100% - 52px);
   }
 }
