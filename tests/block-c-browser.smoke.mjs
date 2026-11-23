@@ -76,14 +76,14 @@ try {
   await page.locator('#modal-next-action').click();
 
   assert.match(await page.locator('.modal-panel.reward h2').innerText(), /You Got a Key!/);
-  assert.equal(await page.locator('.lesson-summary-list li').count(), 4);
-  assert.match(await page.locator('.lesson-summary-list').innerText(), /Task 1[\s\S]*1 mistake/);
-  assert.match(await page.locator('.lesson-summary').innerText(), /Lives left in this lesson: 2 of 3/);
+  assert.equal(await page.locator('.lesson-summary, .lesson-summary-list').count(), 0);
+  assert.equal(await page.locator('[data-celebration="key"]').count(), 1);
+  assert.match(await page.locator('.key-progress').innerText(), /1 \/ 12 keys/);
   assert.equal(await page.locator('#hud-keys').innerText(), '1/12');
   const stored = await page.evaluate(() => localStorage.getItem('kids-english.progress.v1'));
   assert.equal(JSON.parse(stored).completedLessonIds.length, 1);
   assert.doesNotMatch(stored, /"answers"|"results"|"lives"/);
-  check('match/order succeed; four per-task results and one permanent key in reward');
+  check('match/order succeed; simplified celebration and one permanent key in reward');
 
   await page.locator('#reward-continue').click();
   await page.locator('[data-stop="1"]').click();
