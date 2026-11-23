@@ -525,9 +525,11 @@ function catProfile() {
     <div class="wardrobe-inner">
       <div class="cat-preview" aria-label="Your dressed cat">
         <div class="cat-figure">
-          <span class="outfit-behind">${outfittedCat('behind')}</span>
-          <img class="cat-base" src="assets/mascot/cat-dressable.webp" alt="Explorer kitten" draggable="false">
-          <span class="outfit-overlays">${outfittedCat()}</span>
+          <div class="cat-avatar-canvas">
+            <span class="outfit-behind">${outfittedCat('behind')}</span>
+            <img class="cat-base" src="assets/mascot/cat-dressable.webp" alt="Explorer kitten" draggable="false">
+            <span class="outfit-overlays">${outfittedCat()}</span>
+          </div>
         </div>
       </div>
       <div class="shop-panel">
