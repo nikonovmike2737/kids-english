@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#6c50c9"><meta name="description" content="Kids English — Adventure Island: play, learn, unlock keys and dress up your cat.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6c50c9">
+<meta name="description" content="Kids English — Adventure Island: play, learn, unlock keys and dress up your cat.">
 <title>Kids English — Adventure Island</title>
 <link rel="icon" type="image/png" href="assets/brand/abc-cat-logo.png">
 <link rel="apple-touch-icon" href="assets/brand/abc-cat-logo.png">
@@ -10,27 +12,50 @@
 </head>
 <body>
 <main id="game" aria-label="Kids English Adventure Island">
-<div id="stage" class="stage">
- <div class="map-art" aria-hidden="true"></div>
- <svg class="route-lines" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="routeArrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9" fill="none" stroke="white" stroke-width="2"/></marker></defs>
- <path d="M 590 265 L 688 265 L 816 265 L 944 265 L 1110 265 L 1240 340 L 1056 475 L 928 475 L 800 475 L 672 475 L 500 475 L 400 590 L 544 680 L 672 680 L 800 680 L 928 680 L 1090 680 L 1250 700 L 1410 680"/></svg>
- <header class="topbar">
-  <div class="brand-block"><img class="brand-logo" src="assets/brand/abc-cat-logo.png" alt="ABC kitten logo"><div class="brand-text"><strong>Kids English</strong><span>Adventure Island</span></div></div>
-  <nav class="top-controls" aria-label="Game navigation">
-   <button id="world-button" class="hud-button world" type="button">🌐 <span>World Map</span></button>
-   <div class="hud-scores" aria-live="polite"><span id="top-hearts" aria-label="3 lives">❤️❤️❤️</span><span class="hud-rule"></span><span class="stat-item"><img src="assets/symbols/key.webp" alt=""> <b id="hud-keys">0/12</b></span><span class="hud-rule"></span><span class="stat-item"><img src="assets/symbols/coin.webp" alt=""><b id="hud-coins">0</b></span></div>
-   <button id="cat-button" class="hud-button cat-link" type="button">🐱 <span>My Cat</span></button>
-   <button id="settings-button" class="hud-button settings" type="button" aria-label="Settings">⚙️</button>
-  </nav>
- </header>
- <div class="stage-label label-top">Getting Started</div>
- <div class="stage-label label-mid">Next Level</div>
- <div class="stage-label label-low">Final Challenge</div>
- <div id="island-nodes"></div>
- <button id="island-cat" class="island-cat" title="My Cat" aria-label="Open My Cat wardrobe"><img src="assets/mascot/cat-explorer.png" alt="Kitten explorer"><span id="island-outfit" class="outfit-overlays"></span></button>
- <div id="map-status" class="map-status" role="status" aria-live="polite"></div>
- <div class="frame-corner corner-one" aria-hidden="true">🌿</div><div class="frame-corner corner-two" aria-hidden="true">🌿</div>
-</div>
+  <div id="stage" class="stage">
+    <div class="map-art" aria-hidden="true"></div>
+    <svg class="route-lines" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
+      <!-- Lesson dots stay on the grass. Each bridge has its own dots placed on the wooden planks. -->
+      <path class="land-route" d="M 560 268 L 998 268"></path>
+      <path class="bridge-route" d="M 1030 305 C 1048 327 1082 361 1118 409"></path>
+      <path class="land-route" d="M 1060 480 L 510 480"></path>
+      <path class="bridge-route" d="M 324 527 C 289 547 261 597 247 624 L 292 676"></path>
+      <path class="land-route" d="M 544 692 L 1070 692"></path>
+      <path class="bridge-route" d="M 1179 704 C 1224 695 1274 674 1320 642"></path>
+    </svg>
+
+    <header class="topbar">
+      <div class="brand-block">
+        <img class="brand-logo" src="assets/brand/abc-cat-logo.png" alt="ABC kitten logo">
+        <div class="brand-text"><strong>Kids English</strong><span>Adventure Island</span></div>
+      </div>
+      <nav class="top-controls" aria-label="Game navigation">
+        <button id="world-button" class="hud-button world" type="button">🌐 <span>World Map</span></button>
+        <div class="hud-scores" aria-live="polite">
+          <span id="top-hearts" aria-label="3 lives">❤️❤️❤️</span>
+          <span class="hud-rule"></span>
+          <span class="stat-item"><img src="assets/symbols/key.webp" alt=""><b id="hud-keys">0/12</b></span>
+          <span class="hud-rule"></span>
+          <span class="stat-item"><img src="assets/symbols/coin.webp" alt=""><b id="hud-coins">0</b></span>
+        </div>
+        <button id="cat-button" class="hud-button cat-link" type="button">🐱 <span>My Cat</span></button>
+        <button id="settings-button" class="hud-button settings" type="button" aria-label="Settings">⚙️</button>
+      </nav>
+    </header>
+
+    <div class="stage-label label-top">Getting Started</div>
+    <div class="stage-label label-mid">Next Level</div>
+    <div class="stage-label label-low">Final Challenge</div>
+
+    <div id="island-nodes"></div>
+
+    <button id="island-cat" class="island-cat" title="My Cat" aria-label="Open My Cat wardrobe">
+      <img src="assets/mascot/cat-explorer.png" alt="Kitten explorer">
+      <span id="island-outfit" class="outfit-overlays"></span>
+    </button>
+
+    <div id="map-status" class="map-status" role="status" aria-live="polite"></div>
+  </div>
 </main>
 <div id="modal-root" aria-live="polite"></div>
 <script type="module" src="assets/js/app.js"></script>
