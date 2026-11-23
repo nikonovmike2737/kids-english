@@ -14,7 +14,7 @@ An English-language, child-facing island adventure with three real lessons, thre
 Use any local static file server, e.g. `python -m http.server 8000`; open `http://localhost:8000/`. Client JavaScript modules load the data and map. No build step needed.
 
 ## Test
-- `node --test tests/*.test.mjs` — 23 native Node B/C/D/E source-contract checks.
+- `node --test tests/*.test.mjs` — 30 native Node B/C/D/E/G1 source-contract checks.
 - `node tests/block-c-browser.smoke.mjs` — real Playwright Chromium lesson, hearts, results and Classic browser regression.
 - `node tests/block-de-browser.smoke.mjs` — real illustrated World Map, Shop/Inventory, purchasing, outfit layering, reload and mobile/browser regression.
 - Run locally with a static server and `KIDS_TEST_URL=http://127.0.0.1:8000/` (Playwright and Chromium required); browser tests run in isolated contexts.
@@ -26,3 +26,6 @@ The World Map uses three distinct illustrated worlds with only Adventure Island 
 
 ## Next educational work
 Nine additional full lessons (not nine questions) need methodologist review; only after approval may their locked nodes become playable. Additional worlds Mystical Desert and Rainy Forest are locked previews, not released content.
+
+## Owner visual QA, 2026-11-23
+The newest owner screenshot defects are tracked in [the G1–G4 visual register](docs/product/ADVENTURE_ISLAND_OWNER_VISUAL_QA_2026-11-23_CURRENT.md). G1 wardrobe layout/card fix deployed (PR #30); 15 updated 3D item assets G2, island positioning G3 and key reward G4 are separate outstanding work. The deployed game continues to use existing inventory image binaries until the G2 visual-art release.
