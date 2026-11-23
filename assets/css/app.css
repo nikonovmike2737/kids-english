@@ -978,3 +978,49 @@ button:disabled{cursor:not-allowed;opacity:.58}
   .lesson-celebration .key-progress{font-size:18px}
   .lesson-celebration #reward-continue{min-height:40px;padding:6px 20px}
 }
+
+/* G5 owner green-box coordinate correction — 2026-11-24.
+   The map is the single coordinate space; all three labels, four lesson
+   circles and small chest per group are moved together in data.js. */
+.stage .label-top{left:19.9%;top:13.4%}
+.stage .label-mid{left:26.3%;top:33.5%}
+.stage .label-low{left:28.0%;top:60.2%}
+.stage .island-cat{
+  left:0;bottom:8.5%;width:13.5%;height:auto;aspect-ratio:.88;
+  max-width:none;display:block;overflow:visible;
+}
+.stage .island-cat .cat-avatar-canvas{
+  position:absolute;left:-16%;bottom:0;top:auto;width:125%;max-width:none;
+  height:auto;max-height:none;aspect-ratio:1024 / 936;
+}
+@media(max-width:700px){
+  .stage .island-cat{left:0;bottom:8.5%;width:13.5%;height:auto}
+}
+/* G5: dedicated large retry artwork, not the tiny cropped legacy reward-art. */
+.modal-panel.result-card.gameover-card{
+  width:min(470px,94vw);max-width:470px;max-height:94dvh;
+  overflow-y:auto;overflow-x:hidden;box-sizing:border-box;
+  padding:clamp(14px,2.7vh,28px);display:flex;flex-direction:column;
+  align-items:center;gap:clamp(7px,1.3vh,13px);
+  background:linear-gradient(160deg,#fff2f8,#ffd8ec 65%,#f6c6e6);
+}
+.gameover-card h2{margin:0 39px;line-height:1.1;font-size:clamp(26px,4.2vh,43px)}
+.retry-illustration{
+  position:relative;isolation:isolate;width:min(100%,330px,34dvh);
+  aspect-ratio:1;flex:none;
+  background:radial-gradient(circle at 50% 53%,#fff7de 0%,#ffecf5 46%,transparent 75%);
+}
+.retry-cat{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 5px 8px #8e4b8430)}
+.retry-spark{position:absolute;color:#ffba45;z-index:2;text-shadow:0 1px 6px #fff;line-height:1;font-size:clamp(20px,3vh,36px)}
+.retry-spark-left{top:24%;left:1%}
+.retry-spark-right{top:13%;right:3%}
+.gameover-card .reward-sub{margin:0;font-size:clamp(16px,2.4vh,22px)}
+.gameover-card .btn-row{flex-direction:column;width:100%;gap:10px}
+.gameover-card .btn-row .btn{width:min(100%,260px);min-height:46px;margin:0}
+@media(max-height:520px){
+  .modal-panel.result-card.gameover-card{padding:10px;gap:5px}
+  .gameover-card h2{font-size:25px}
+  .retry-illustration{width:min(100%,145px,32dvh)}
+  .gameover-card .btn-row{flex-direction:row;gap:8px}
+  .gameover-card .btn-row .btn{width:auto;min-height:39px;padding:7px 12px}
+}
