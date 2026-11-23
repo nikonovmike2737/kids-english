@@ -2,11 +2,11 @@
 
 **Authority:** newest owner annotations attached to this conversation, reviewed against Production SHA `bf9925c7` and approved Adventure Island canon. The latest explicit visual instruction prevails over the earlier Shop/Inventory UX illustration, **without changing progress/game economy**.
 
-**Workflow:** one bounded technical production release per group; G1 is NOW, G2/G3/G4 remain separate. TECH_PASS requires source-level contract, real Chromium interaction at desktop and 390px mobile, A/B/C/D/E gameplay regression and postdeploy hosted public-site smoke. Screenshots must be compared to owner references; no claim of owner visual acceptance unless explicitly signed off.
+**Workflow:** one bounded technical production release per group; G1 was delivered in PR #30, G2/G3/G4 remain separate. TECH_PASS requires source-level contract, real Chromium interaction at desktop and 390px mobile, A/B/C/D/E gameplay regression and postdeploy hosted public-site smoke. Screenshots must be compared to owner references; no claim of owner visual acceptance unless explicitly signed off.
 
 | Group | GitHub | Priority | Scope | Source screenshots | State |
 |---|---|---|---|---|---|
-| **G1 — Wardrobe interface** | [#26](https://github.com/nikonovmike2737/kids-english/issues/26) | P0 | My Cat composition, tabs, cards, sizing, price, locked state, single action | 22:10:20, 22:14:39, 22:15:18, 22:15:56, 22:16:30 | IN PROGRESS |
+| **G1 — Wardrobe interface** | [#26](https://github.com/nikonovmike2737/kids-english/issues/26) | P0 | My Cat composition, tabs, cards, sizing, price, locked state, single action | 22:10:20, 22:14:39, 22:15:18, 22:15:56, 22:16:30 | **DEPLOYED · TECH_PASS · owner visual sign-off pending** |
 | **G2 — Inventory artwork** | [#27](https://github.com/nikonovmike2737/kids-english/issues/27) | P0 | Replace 15 placeholder item graphics with original, consistent, rich 3D transparent art; test outfit anchoring on cat | 22:10–22:16, 22:33:28, 22:34:47 | OPEN |
 | **G3 — Island composition** | [#28](https://github.com/nikonovmike2737/kids-english/issues/28) | P1 | Chests, independent sprites, lesson anchors, row signs, bridge routes, leftward cat placement | 22:18:33, 22:29:23 | OPEN |
 | **G4 — Key reward** | [#29](https://github.com/nikonovmike2737/kids-english/issues/29) | P1 | Polished key/cat reward art; remove overly dense Lesson Results panel as annotated, retain actual award logic | 22:29:23 | OPEN |
@@ -41,3 +41,14 @@
 
 - Source `22:29:23`: owner labels `Lesson Results` area «убрать». Remove it from the large celebratory modal in this later group, not during G1. Simplify rewards to one harmonious cat + key illustration (avoid mismatched miniature and duplicated cat), remain responsive.
 - Do not remove the permanent key award, quiz validation or one-key-per-full-lesson rule. Automated Block C assertions currently expect 4 result lines and must be deliberately revised in the **G4** PR.
+
+## G1 — immutable release and acceptance evidence, 2026-11-23
+- **Application PR #30:** https://github.com/nikonovmike2737/kids-english/pull/30
+- **Production application SHA:** `6198b5c6a68a74b3a40ec2ce26ee7266dc3a0554`
+- **GitHub Pages release:** https://github.com/nikonovmike2737/kids-english/actions/runs/45254267042 — **completed/success**. Single normal deployment, JS/assets validation and artifact publication PASS.
+- **Pre-merge PR CI:** https://github.com/nikonovmike2737/kids-english/actions/runs/45253956678 — **SUCCESS**, 30/30 native contract tests + local Chromium A/B/C/D/E replay, including G1 UX and mobile geometry.
+- **Independent hosted Production Chromium:** https://github.com/nikonovmike2737/kids-english/actions/runs/45254355140 — **SUCCESS**, 9 A/B/C lesson+Classic checkpoints and 7 D/E/G1 wardrobe+world checkpoints. Checks include live category switching, three cards/two locks, price icon, centered cat, single action, buy/wear/reload, no horizontal overflow, no JS errors, no non-GET requests.
+- **Screenshots reviewed directly by technical partner:** https://github.com/nikonovmike2737/kids-english/actions/runs/45253919818/artifacts/14855343940 — desktop 1280 and mobile 390; after initial self-QA identified excessive empty card area and blank mobile modal footer, revised CSS and geometry assertions and re-reviewed actual screenshots from final PR. Owner artistic approval remains unclaimed.
+- **G1 status: TECH_PASS / DEPLOYED / HOSTED_E2E_PASS.** Owner visual review remains open; issue #26 should not be closed until that confirmation.
+- **G2 P0:** generated 15 original glossy 3D accessory image candidates from owner reference. Candidates are **not deployed in GitHub**, not artistically approved, and current G1 screenshot still uses older flat binary artwork. Keep issue #27 OPEN; full binary replacement + visual alpha/overlay QA required in its own release.
+- **G3 and G4** remain OPEN and untouched in this release. No scoring, currency, key, lesson, map geometry, chest or reward logic changed.
