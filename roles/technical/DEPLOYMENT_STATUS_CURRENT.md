@@ -6,7 +6,7 @@ URL: https://nikonovmike2737.github.io/kids-english/
 Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 
 ## Production commit and Action
-- **Current Production application/tree SHA:** `6198b5c6a68a74b3a40ec2ce26ee7266dc3a0554` (owner visual Group G1, PR #30, Pages SUCCESS run #45254267042). Earlier entries below are historical.
+- **Current Production application/tree SHA:** `9fd1f0b2ccd8dde2ab95a42a5bd1a7e0317be58e` (owner visual G2 3D inventory release, PR #32, Pages SUCCESS #45262374460). Earlier entries below are historical.
 - Release PR #10: https://github.com/nikonovmike2737/kids-english/pull/10
 - Visual hotfix PR #11: https://github.com/nikonovmike2737/kids-english/pull/11
 - Final Pages workflow #10: https://github.com/nikonovmike2737/kids-english/actions/runs/45188625945 — **SUCCESS**; validate JS and asset binary signatures: PASS; artifact upload: PASS; Pages deployment: PASS.
@@ -101,3 +101,12 @@ Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 - Pages [run 45254267042](https://github.com/nikonovmike2737/kids-english/actions/runs/45254267042) **SUCCESS**; hosted public-site Chromium [run 45254355140](https://github.com/nikonovmike2737/kids-english/actions/runs/45254355140) **SUCCESS**, 9 lesson/Classic + 7 wardrobe/world checks.
 - 30/30 Node contracts in PR, desktop/mobile screenshots actually reviewed by technical partner and geometry assertions extended for vertical dead space. Actual screenshots are attached to PR CI Artifacts.
 - **Owner artistic sign-off pending**. New inventory binary illustrations G2 (#27), map G3 (#28) and reward G4 (#29) remain OPEN. G1 release did not change source teaching, progress schema, key/chest economy or older 15 item binaries.
+
+## Owner visual G2 — verified binary art release (2026-11-23)
+- G2 P0 source issue #27; [PR #32](https://github.com/nikonovmike2737/kids-english/pull/32) merged to main, production commit `9fd1f0b2ccd8dde2ab95a42a5bd1a7e0317be58e`.
+- [Pages SUCCESS #45262374460](https://github.com/nikonovmike2737/kids-english/actions/runs/45262374460) published all 15 new real 3D transparent item WebPs (256×256) and the new transparent accessory-free kitten (1024×936). SHA-256 source: [G2 asset manifest](../docs/product/G2_ART_MANIFEST_2026-11-23.json).
+- [Pre-merge CI SUCCESS #45261967812](https://github.com/nikonovmike2737/kids-english/actions/runs/45261967812): JS syntax, 38/38 Node source/binary contracts, complete older C/D/E/G1 browser regression plus G2 graphics/5-layer buying/reload/reward/browser alpha checks.
+- [Post-deploy hosted Chromium SUCCESS #45262486687](https://github.com/nikonovmike2737/kids-english/actions/runs/45262486687): 9 C/Classic + 7 D/E/G1 + 7 G2 = **23/23** live browser checks on newly published public URL.
+- [Visual QA artifact #14859529735](https://github.com/nikonovmike2737/kids-english/actions/runs/45261967812/artifacts/14859529735): actual Playwright screenshots visually checked at 1280 and 390; outfit alignment repaired via shared kitten canvas; mobile header wallet-vs-close overlap fixed before merge.
+- No new network/analytics; no changes to economy/lesson keys/score or source-of-truth roles. Old mascot binaries remain in repo for rollback; all new art is local, not hotlinked.
+- Owner visual/artistic acceptance still OPEN; G3 (#28) map island coordinate/chest/route visual work and G4 (#29) key reward modal redesign are not addressed by G2.
