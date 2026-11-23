@@ -423,7 +423,8 @@ function showReward(title, sub, art, report = null) {
         <li><strong>Task ${i + 1}</strong><span>Solved · ${r.attempts === 1 ? "First try" : `${r.attempts - 1} ${r.attempts === 2 ? "mistake" : "mistakes"}`}</span></li>
       `).join('')}</ol>
     </section>` : '';
-  setModal(`${modalX()}<h2>${esc(title)}</h2><img class="reward-art" src="${esc(art)}" alt=""><p class="reward-sub">${esc(sub)}</p>${summary}<button class="btn" id="reward-continue" type="button">Continue →</button>`, "reward");
+  const rewardArt = report ? `<div class="reward-illustrations"><img class="reward-art" src="${esc(art)}" alt=""><div class="reward-avatar" aria-label="Your explorer cat"><img class="cat-base" src="assets/mascot/cat-wardrobe.webp" alt="Explorer kitten"><span class="outfit-overlays">${outfittedCat()}</span></div></div>` : `<img class="reward-art" src="${esc(art)}" alt="">`;
+  setModal(`${modalX()}<h2>${esc(title)}</h2>${rewardArt}<p class="reward-sub">${esc(sub)}</p>${summary}<button class="btn" id="reward-continue" type="button">Continue →</button>`, "reward");
   $('#reward-continue').addEventListener('click', closeModal);
 }
 
