@@ -45,6 +45,7 @@ jobs:
           set -euo pipefail
           node --check assets/js/app.js
           node --check assets/js/data.js
+          node --test tests/block-b-contract.test.mjs
           test -s classic/index.html
           python3 - <<'PY'
           from pathlib import Path
