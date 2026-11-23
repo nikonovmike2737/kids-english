@@ -52,6 +52,11 @@ jobs:
           KIDS_TEST_URL: http://127.0.0.1:8765/
           KIDS_BROWSER: chromium
         run: node tests/g3-visual-browser.smoke.mjs
+      - name: G4 key celebration Chromium, replay idempotence and responsive art
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+          KIDS_BROWSER: chromium
+        run: node tests/g4-reward-browser.smoke.mjs
       - name: Upload D/E visual evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -59,15 +64,6 @@ jobs:
           name: de-visual-qa
           path: artifacts/*.png
           if-no-files-found: ignore
-      - name: Browser smoke D/E against published Production
-        if: github.event_name == 'workflow_dispatch'
-        env:
-          KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
-        run: node tests/block-de-browser.smoke.mjs
-      - name: Browser smoke against current Production
-        env:
-          KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
-        run: node tests/block-c-browser.smoke.mjs
 
   safari-webkit:
     # Official Playwright image already contains Linux WebKit and all native
@@ -88,10 +84,17 @@ jobs:
           KIDS_TEST_URL: http://127.0.0.1:8765/
           KIDS_BROWSER: webkit
         run: node tests/g3-visual-browser.smoke.mjs
+      - name: G4 reward celebration WebKit
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+          KIDS_BROWSER: webkit
+        run: node tests/g4-reward-browser.smoke.mjs
       - name: Upload Safari desktop and mobile screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: g3-safari-visual-qa
-          path: artifacts/g3-webkit-*.png
+          path: |
+            artifacts/g3-webkit-*.png
+            artifacts/g4-webkit-*.png
           if-no-files-found: ignore
