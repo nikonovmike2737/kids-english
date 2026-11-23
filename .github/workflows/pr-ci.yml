@@ -1,0 +1,25 @@
+name: Kids English PR regression checks
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'assets/**'
+      - 'tests/**'
+      - '.github/workflows/**'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JavaScript syntax
+        run: |
+          node --check assets/js/app.js
+          node --check assets/js/data.js
+      - name: Run Block B and C regression contracts
+        run: node --test tests/*.test.mjs
