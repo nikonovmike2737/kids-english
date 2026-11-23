@@ -1,5 +1,9 @@
+
 # Adventure Island — Visual Bugfix Register (CURRENT)
-Status: **Blocks A–E deployed to Production, 23/23 contract PASS, local and live Chromium E2E PASS; owner visual acceptance pending.**
+
+**Latest owner visual acceptance (22:38, supersedes prior automated PASS for visual aspects):** [New four-group canonical register](ADVENTURE_ISLAND_OWNER_VISUAL_QA_2026-11-23_CURRENT.md) · [G1 #26](https://github.com/nikonovmike2737/kids-english/issues/26) · [G2 #27](https://github.com/nikonovmike2737/kids-english/issues/27) · [G3 #28](https://github.com/nikonovmike2737/kids-english/issues/28) · [G4 #29](https://github.com/nikonovmike2737/kids-english/issues/29). Prior A–E technical passes do **not** constitute owner approval of the visual design.
+
+Status: **A–E technical baseline previously deployed; newer owner visual QA is OPEN — G1 in progress, G2/G3/G4 open. See owner issue register linked below.**
 Date: 2026-11-23. Owner annotations: screenshots 18:06:20, 18:10:31, 18:12:07, 18:18:25, 18:19:58 and 18:21:03. Comparison: earlier approved concept 16:03:44.
 
 | ID | Severity | Defect from owner review | Fix and verification | Status |
