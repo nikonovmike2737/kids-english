@@ -612,3 +612,21 @@ button:disabled{cursor:not-allowed;opacity:.58}
   .modal-panel.wardrobe .item-lock-mark{width:37px;height:37px;font-size:21px;top:30%}
   .modal-panel.wardrobe .item-action{min-height:44px;margin:3px auto 8px}
 }
+
+
+/* G1 visual self-QA: center the PRODUCT GROUP, not only its image,
+   and do not leave a tall empty mobile modal beneath the only CTA. */
+@media(min-width:501px){
+  .modal-panel.wardrobe .shop-item{justify-content:center}
+  .modal-panel.wardrobe .shop-item>img{height:clamp(155px,27vh,260px)}
+}
+@media(max-width:500px){
+  .modal-panel.wardrobe{
+    height:auto;
+    min-height:0;
+    max-height:96dvh;
+    overflow-y:auto;
+    overflow-x:hidden;
+  }
+  .modal-panel.wardrobe .shop-item{justify-content:center}
+}
