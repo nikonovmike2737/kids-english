@@ -102,3 +102,9 @@
 - **G3:** use exact source-coordinate routes/labels for 3 stages with 12 lesson nodes and four native transparent chests; no decorative or baked duplicate, three bounded cubic bridge route segments; maple mascot moved left and scaled to free up wooden bridge. **No new assets, lessons, question answers, economies, or chest awards.**
 - **Release architecture hardening:** Chromium and WebKit both test using version-pinned official Playwright containers. This avoids a blocked apt installer in the earlier superseded CI runs; final PR + hosted verification are both green. The stalled runs for older SHA do not represent current-release failure.
 - **Remaining:** owner human artistic acceptance for G1/G2/G2R/G3 still open. G4 [#29](https://github.com/nikonovmike2737/kids-english/issues/29) remains OPEN (key reward illustration and Lesson Results removal) and was **not** implemented or verified by this release.
+
+## G4 — release-specific acceptance criteria (2026-11-24)
+- One coherent gold-key and dressed-kitten composition in the completion modal; no miniature duplicate mascot. New original scalable prize artwork, shared existing alpha mascot and outfit layers. Large key and visible Continue at desktop, portrait mobile and short landscape; keyboard focus/close remain available.
+- Remove Lesson Results table, per-task report, remaining lives and wrong-try count from celebration. Do not change scoring or reveal correct answers. No attempt report in localStorage or network.
+- First full lesson success: You Got a Key! + permanent total. Replay: Great Job! + distinct star, same permanent total; no duplicate award. Coins and chests unaffected. Existing Classic unchanged.
+- Require native contracts, real complete/repeat lesson flows in Chromium and WebKit, screenshot review, regression across prior G1–G3 and deployed-site tests. Owner final artistic sign-off separate.
