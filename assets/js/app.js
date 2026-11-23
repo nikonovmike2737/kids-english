@@ -550,7 +550,7 @@ function catProfile() {
   `, 'wardrobe');
   void centerShopArt(root);
   void fitWardrobe(root);
-  $('[data-category]').forEach((button) => button.addEventListener('click', () => {
+  $$('[data-category]').forEach((button) => button.addEventListener('click', () => {
     currentCategory = button.dataset.category;
     selectedTier = 1;
     wardrobeFocusTarget = `[data-category="${currentCategory}"]`;
