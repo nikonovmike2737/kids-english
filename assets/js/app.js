@@ -159,13 +159,14 @@ function modalX() {
 function nestedCard(html, cls = '') {
   const layer = document.createElement('div');
   layer.className = 'modal-backdrop nested';
-  layer.innerHTML = `<section class="modal-panel result-card ${cls}" role="alertdialog" aria-modal="true">${html}</section>`;
+  layer.innerHTML = `<section class="modal-panel result-card ${cls}" role="alertdialog" aria-modal="true"><button class="close nested-close" type="button" aria-label="${cls.includes('gameover-card') ? 'Back to Map' : 'Close result'}">×</button>${html}</section>`;
   root.append(layer);
   const parentPanel = $('.modal-backdrop:not(.nested) .modal-panel', root);
   parentPanel?.setAttribute('aria-hidden', 'true');
   const panel = $('.modal-panel', layer);
   panel.tabIndex = -1;
-  panel.setAttribute('aria-label', cls === 'correct-card' ? 'Correct answer' : cls === 'wrong-card' ? 'Try again' : 'Lesson result');
+  panel.setAttribute('aria-label', cls.includes('gameover-card') ? 'No lives left' : cls.includes('correct-card') ? 'Correct answer' : 'Try again');
+  $('.nested-close', layer).addEventListener('click', () => cls.includes('gameover-card') ? closeModal() : clearNested());
   panel.focus({ preventScroll: true });
   return layer;
 }
@@ -395,7 +396,7 @@ function showGameOver() {
     <img class="reward-art" src="assets/modals/sad-cat.webp" alt="Sad kitten">
     <p class="reward-sub">You can do it!</p>
     <div class="btn-row"><button class="btn" id="retry">Play Again ↻</button><button class="btn white" id="exit-fail">Back to Map</button></div>
-  `, 'wrong-card');
+  `, 'wrong-card gameover-card');
   layer.id='gameover-layer';
   $('#retry', layer).addEventListener('click', () => startLesson(active.lessonId));
   $('#exit-fail', layer).addEventListener('click', closeModal);
