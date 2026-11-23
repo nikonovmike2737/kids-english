@@ -28,7 +28,7 @@ jobs:
       - name: Install Playwright Chromium for real browser checks
         run: |
           npm install --no-save playwright@1.56.1
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps chromium webkit
       - name: Start local static site
         run: |
           nohup python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/kids-english-http.log 2>&1 &
@@ -46,6 +46,16 @@ jobs:
         env:
           KIDS_TEST_URL: http://127.0.0.1:8765/
         run: node tests/g2-art-browser.smoke.mjs
+      - name: G2R/G3 Chromium desktop, 390px mobile and map geometry
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+          KIDS_BROWSER: chromium
+        run: node tests/g3-visual-browser.smoke.mjs
+      - name: G2R/G3 Safari WebKit clipping and route smoke
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+          KIDS_BROWSER: webkit
+        run: node tests/g3-visual-browser.smoke.mjs
       - name: Upload D/E visual evidence
         if: always()
         uses: actions/upload-artifact@v4
