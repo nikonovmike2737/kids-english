@@ -2,12 +2,13 @@
 
 **Authority:** newest owner annotations attached to this conversation, reviewed against Production SHA `bf9925c7` and approved Adventure Island canon. The latest explicit visual instruction prevails over the earlier Shop/Inventory UX illustration, **without changing progress/game economy**.
 
-**Workflow:** one bounded technical production release per group; G1 was delivered in PR #30, G2 in PR #32, G3/G4 remain independent open groups. TECH_PASS requires source-level contract, real Chromium interaction at desktop and 390px mobile, A/B/C/D/E gameplay regression and postdeploy hosted public-site smoke. Screenshots must be compared to owner references; no claim of owner visual acceptance unless explicitly signed off.
+**Workflow:** one bounded technical production release per group; G1 was delivered in PR #30, G2 in PR #32, G2R Safari owner regression and G3 route/scene correction are the next technical delivery; G4 remains separately open. TECH_PASS requires source-level contract, real Chromium interaction at desktop and 390px mobile, A/B/C/D/E gameplay regression and postdeploy hosted public-site smoke. Screenshots must be compared to owner references; no claim of owner visual acceptance unless explicitly signed off.
 
 | Group | GitHub | Priority | Scope | Source screenshots | State |
 |---|---|---|---|---|---|
 | **G1 — Wardrobe interface** | [#26](https://github.com/nikonovmike2737/kids-english/issues/26) | P0 | My Cat composition, tabs, cards, sizing, price, locked state, single action | 22:10:20, 22:14:39, 22:15:18, 22:15:56, 22:16:30 | **DEPLOYED · TECH_PASS · owner visual sign-off pending** |
 | **G2 — Inventory artwork** | [#27](https://github.com/nikonovmike2737/kids-english/issues/27) | P0 | Replace 15 placeholder item graphics with original, consistent, rich 3D transparent art; test outfit anchoring on cat | 22:10–22:16, 22:33:28, 22:34:47 | **DEPLOYED · TECH_PASS · HOSTED E2E PASS · owner visual sign-off pending** |
+| **G2R — Safari wardrobe regression** | [#34](https://github.com/nikonovmike2737/kids-english/issues/34) | P0 | Entire kitten must fit centered inside neutral, non-island backdrop at desktop and mobile; tested in Chromium/WebKit | Safari 23:48:34 | **OPEN — this release** |
 | **G3 — Island composition** | [#28](https://github.com/nikonovmike2737/kids-english/issues/28) | P1 | Chests, independent sprites, lesson anchors, row signs, bridge routes, leftward cat placement | 22:18:33, 22:29:23 | OPEN |
 | **G4 — Key reward** | [#29](https://github.com/nikonovmike2737/kids-english/issues/29) | P1 | Polished key/cat reward art; remove overly dense Lesson Results panel as annotated, retain actual award logic | 22:29:23 | OPEN |
 
@@ -76,3 +77,17 @@
 - **Binary-integrity evidence:** 15 native 256×256 transparent VP8X WebP item files with unique SHA-256 plus one 1024×936 transparent dressable cat, recorded in [G2 asset manifest](G2_ART_MANIFEST_2026-11-23.json); no remote image dependencies.
 - **Unchanged:** all 3 authored English lessons, 3 lives per attempt, 12 permanent-key system, 3 small/1 grand chest coin ledger, tier prices 1/3/5, Buy/Wear/Wearing, localStorage v1, classic fallback.
 - **Owner visual sign-off remains PENDING.** G2 engineering gate = **TECH_PASS / DEPLOYED / HOSTED_E2E_PASS**. Keep issue #27 open until owner checks artistic fidelity. G3 (#28) map layout and G4 (#29) reward layout remain OPEN and are not reclassified by G2 success.
+
+## G2R + G3 joint owner-directed correction — acceptance ledger (2026-11-23, 23:48 MSK)
+| ID | Priority | Screenshot failure / invariant | Release gate |
+|---|---|---|---|
+| **G2R-01** | P0 | Safari screenshot 23:48:34 shows half of cat clipped beyond the right side of My Cat preview; body, paws and ears must be inside left panel | Computed `.cat-avatar-canvas` and image bounding rectangles are at least 8px inset from preview; alpha canvas subject center within 10% of panel; desktop 1649×928 and 1280×800, 390px mobile; native Chromium **and WebKit** |
+| **G2R-02** | P0 | Island photo visible in preview; owner requests neutral backdrop | Computed `.cat-preview` background-image is `none`, smooth neutral lavender gradient; no photo, no truncated figure; existing 3D equipment remains aligned |
+| **G3-01** | P1 | Chests look baked into scenery or float above surface | Exactly 4 independent `.chest-node` interactive DOM objects with transparent WebP images; three small chests planted on green terraces and the grand on its own islet; alpha test; no square image mats, no unrelated duplicate decorative chest |
+| **G3-02** | P1 | Lesson circles / sign labels not aligned to land contour and overlap | Terrain-adjusted 12 canonical lesson coordinates in 3 rows, 4 per row, row signs above nodes; desktop 2048×1152, 1649×928, 1280×800, 1024×768; state 3 authored, other 9 locked |
+| **G3-03** | P1 | Dotted path has sharp corners, disconnections and goes outside bridge planks | Smooth cubic grass segments connecting ordered node → chest without inbound path at L1; 3 distinct `.bridge-route` path sections with round dots and no long over-water spill; follow actual bridge endpoints; no arrow glyph or extra route |
+| **G3-04** | P1 | Oversized kitten overlaps first bridge and route | Move map kitten left without clipping and within stage; desktop bridge B / cat bounding boxes non-overlapping; My Cat remains clickable and shows dressed state |
+| **G3-05** | P0 regression | Product progression or existing lesson behavior changes | Unchanged 12 stop IDs, 4 chest IDs, serpentine order, 3 authored lessons and coin/key economy, G1/G2 outfit/price tests, Classic, 3 hearts per attempt, no POST, no JS errors; live browser checks on new Pages SHA |
+| **G3-06** | P0 release | Site and artifacts reflect true latest deployment | One regular PR/merge/Pages workflow, Pages SUCCESS, independent public URL 3-browser-viewport visual/interaction smoke SUCCESS; owner artistic sign-off separate |
+
+**Art policy:** for G3, reuse already separated local chest WebPs and existing clean scenery; do not claim regeneration of the entire scene when changing SVG paths, CSS, DOM anchors and their styling. If a chest WebP has opaque image corners or the background includes a baked-in chest, block acceptance and treat that as an image-level defect requiring separate editing, not a CSS pretense.
