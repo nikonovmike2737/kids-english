@@ -82,3 +82,9 @@ Production GitHub Pages status MUST be recorded after successful Actions run and
 - [GitHub Actions PR run #45223178696](https://github.com/nikonovmike2737/kids-english/actions/runs/45223178696): **SUCCESS** on pinned Ubuntu 24.04 with Playwright Chromium.
 - Two independent browser smoke rounds (local PR static server and live `https://nikonovmike2737.github.io/kids-english/`): each recorded nine `BROWSER PASS` checkpoints; Node B/C 15/15; no uncaught JS errors, no non-GET network requests.
 - Thus C automated browser acceptance is **PASS**, beyond source-only/URL checks. Owner visual acceptance and future-world/cat feature D/E are **not** inferred as PASS.
+
+## Block C follow-up Pages verification deployment — 2026-11-23
+- Adding test coverage in PR #21 **did trigger** the existing Pages workflow (the workflow watches `tests/**`), despite no changes to the game source files.
+- Latest deployed GitHub Pages tree SHA: `a6fd09da8ed963a7f59817f8a6e5affa38c54790`; [Pages Action #14 run 45223346682](https://github.com/nikonovmike2737/kids-english/actions/runs/45223346682) completed **SUCCESS**.
+- Application JS and CSS remain byte-identical to the original Block C code release `59e9d60c0700ef460ac26a04be2c6953fe6591cf`. PR #22 and this record are documentation-only and do not trigger a new Pages job.
+- Browser production acceptance (run #45223178696) was performed against the already deployed Block C application before the verification-only redeploy; the app code did not change in between. Manual owner visual sign-off remains pending.
