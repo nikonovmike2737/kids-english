@@ -55,3 +55,11 @@ Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 - Local Chromium 1920×1080, 1366×768, 1280×800, 1024×768, stage and scroll geometry PASS, zero JavaScript page errors.
 - Public root and /classic/ accessible via external HTTP. **Independent live visual and interaction acceptance still pending.**
 - Follow-up release block B will change hearts to lesson-only; this action intentionally does not change them.
+
+## Block B — deployed, lesson-scoped hearts (2026-11-23)
+- PR #17 https://github.com/nikonovmike2737/kids-english/pull/17
+- Production SHA `1dd48eac7dd4ce8a6a12d40a402664545c5d1fee`
+- Pages Action #12 https://github.com/nikonovmike2737/kids-english/actions/runs/45215128388 — **SUCCESS**, native Node `tests/block-b-contract.test.mjs` 5 checks passed during predeploy stage.
+- Map HUD and My Cat display **keys + coins only**. 3 hearts exist inside a lesson run, wrong Check costs one, Next preserves the remaining count, fresh lesson/restart returns to 3. Rewards and the map do not display lives. Persistent key/coin progress is unchanged.
+- Production page and /classic/ reachable in independent external fetch; no heart glyph in the rendered homepage. Remote hosted interaction smoke unavailable owing to browser service balance; **do not claim live clicked verification**.
+- Bug register: `docs/product/ADVENTURE_ISLAND_BUGFIX_BACKLOG_CURRENT.md`, items B1–B4 **DEPLOYED · CI PASS; owner acceptance pending**. Next C/D/E separately.
