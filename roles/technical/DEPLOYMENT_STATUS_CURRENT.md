@@ -73,5 +73,12 @@ Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 - Separate accessible close button on stacked result overlays; keyboard focus trapped in topmost dialog and restored to map opener on exit, including rebuilt nodes. Escape from Game Over exits to map instead of exposing a dead lesson.
 - Reward includes a RAM-only result per each of four solved tasks, mistake counts, and the remaining lives for that particular attempt. **No heart icons outside lesson**. Local persistence remains only keys/coins/inventory; answer keys and individual replies not stored.
 - Mobile results card can scroll. No changes to curriculum, World Map (D), wardrobe (E), assets or Classic.
-- Independent HTTP GET of homepage and /classic: PASS (correct page titles). **Remote production click-tests NOT verified**; external browser agent has insufficient funds. Owner visual acceptance remains pending. Tests are 15 static contracts, not proof of end-to-end browser behavior.
+- Independent HTTP GET of homepage and /classic: PASS (correct page titles). Follow-up **real Chromium hosted production click-tests PASS** in PR #21 / run #45223178696: full ENG-001 lesson, wrong/correct, match/order, key, hearts, gameover, restart, focus/Escape, 390px mobile, Classic, zero JS errors/non-GET requests. 15 static Node tests additionally pass. External third-party browser agent has insufficient funds, but GitHub Actions ran its own real browser E2E. Owner manual visual acceptance remains pending.
 - Next distinct product release: **D**, then **E**; keep A/B/C owner acceptance open until explicitly confirmed.
+
+## Block C follow-up — actual local and public Production browser E2E PASS (2026-11-23)
+- Verification PR [#21](https://github.com/nikonovmike2737/kids-english/pull/21), test-only merged commit `a6fd09da8ed963a7f59817f8a6e5affa38c54790`.
+- [CI run #45223178696](https://github.com/nikonovmike2737/kids-english/actions/runs/45223178696) SUCCESS; Ubuntu 24.04 + Playwright Chromium, 15/15 Node B/C static contracts, **9 browser checkpoints locally + 9 against public Production**.
+- Browser checked every task type in ENG-001, one wrong then correct, remaining heart carried to end, full lesson result for all four tasks, key credit exactly once, failed replay and restart, close/Escape/focus, mobile 390px, Classic route, no runtime exceptions or non-GET requests.
+- This upgrades automated browser evidence from NOT VERIFIED to **E2E PASS**. Do not claim owner visual approval (screenshots/proportions) without explicit sign-off.
+- Verification-only changes did not trigger another Pages deploy; production app remains `59e9d60c0700ef460ac26a04be2c6953fe6591cf` from Action #13.
