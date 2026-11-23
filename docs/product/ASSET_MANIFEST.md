@@ -44,3 +44,6 @@ All production art is committed to GitHub as **native binary PNG/WebP** (not ext
 
 ## G4 reward artwork (2026-11-24)
 - `assets/modals/g4-golden-key.svg` and `assets/modals/g4-golden-star.svg`: original scalable local celebration art; shared `cat-dressable.webp` and owned outfit layers. Prior `reward-key.webp` retained for history/rollback. Chest and sad-cat assets unchanged.
+
+## G6 local motion sources
+- `assets/animation/cat-poses.js`: four normalized source-space pose definitions; `cat-motion.js`: alpha-safe shared canvas deformation for body + equipped accessories, 24 fps cap, random 13–17s scheduling; `wardrobe-art.js`: alpha measurement and fit; `ambient.css`: waterfall/foam/foliage effects (SVG geometry in `index.html`). Original mascot and fifteen wearables remain canonical. No third-party animation dependencies.

@@ -62,6 +62,11 @@ jobs:
           KIDS_TEST_URL: http://127.0.0.1:8765/
           KIDS_BROWSER: chromium
         run: node tests/g5-retry-browser.smoke.mjs
+      - name: G6 living island, all four dressed gestures and wardrobe chromium
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+          KIDS_BROWSER: chromium
+        run: node tests/g6-motion-browser.smoke.mjs
       - name: Upload D/E visual evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -99,6 +104,11 @@ jobs:
           KIDS_TEST_URL: http://127.0.0.1:8765/
           KIDS_BROWSER: webkit
         run: node tests/g5-retry-browser.smoke.mjs
+      - name: G6 living island, all four dressed gestures and wardrobe webkit
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+          KIDS_BROWSER: webkit
+        run: node tests/g6-motion-browser.smoke.mjs
       - name: Upload Safari desktop and mobile screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -108,4 +118,5 @@ jobs:
             artifacts/g3-webkit-*.png
             artifacts/g4-webkit-*.png
             artifacts/g5-webkit-*.png
+            artifacts/g6-webkit-*.png
           if-no-files-found: ignore

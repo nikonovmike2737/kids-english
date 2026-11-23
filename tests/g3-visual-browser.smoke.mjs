@@ -93,27 +93,25 @@ async function checkMap(page,width,height){
 }
 async function checkWardrobe(page,width,height){
   await page.locator('#cat-button').click();
+  await page.waitForSelector('.cat-avatar-canvas[data-portrait-fitted="true"]');
   const result=await page.locator('.cat-preview').evaluate(async el=>{
-    const p=el.getBoundingClientRect();
-    const avatar=el.querySelector('.cat-avatar-canvas').getBoundingClientRect();
-    const fig=el.querySelector('.cat-figure').getBoundingClientRect();
-    const img=el.querySelector('.cat-base');
+    const p=el.getBoundingClientRect(),img=el.querySelector('.cat-base');
     await img.decode();
-    const background=getComputedStyle(el).backgroundImage;
-    return {p:{left:p.left,right:p.right,top:p.top,bottom:p.bottom,width:p.width},
-      avatar:{left:avatar.left,right:avatar.right,top:avatar.top,bottom:avatar.bottom,width:avatar.width},
-      figure:{left:fig.left,right:fig.right,top:fig.top,bottom:fig.bottom},
-      background,image:{width:img.naturalWidth,height:img.naturalHeight}};
+    const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
+    const ctx=c.getContext('2d');ctx.drawImage(img,0,0);
+    const data=ctx.getImageData(0,0,c.width,c.height).data;
+    let l=c.width,r=0,t=c.height,b=0;
+    for(let y=0;y<c.height;y++)for(let x=0;x<c.width;x++)if(data[(y*c.width+x)*4+3]>36){l=Math.min(l,x);r=Math.max(r,x);t=Math.min(t,y);b=Math.max(b,y);}
+    const a=img.getBoundingClientRect(),s=Math.min(a.width/c.width,a.height/c.height),ox=a.x+(a.width-c.width*s)/2,oy=a.y+(a.height-c.height*s)/2;
+    return {p:p.toJSON(),visible:{left:ox+l*s,right:ox+(r+1)*s,top:oy+t*s,bottom:oy+(b+1)*s,width:(r-l+1)*s,height:(b-t+1)*s},background:getComputedStyle(el).backgroundImage,image:{width:c.width,height:c.height}};
   });
-  assert.ok(!/url\s*\(/i.test(result.background),'island photo still in My Cat backdrop: '+result.background);
-  assert.ok(result.background.includes('gradient'),'expected neutral gradient');
+  assert.ok(!/url\s*\(/i.test(result.background),'neutral backdrop');
   assert.equal(result.image.width,1024);assert.equal(result.image.height,936);
-  assert.ok(result.avatar.left>=result.p.left+5,'cat avatar spills outside panel left '+JSON.stringify(result));
-  assert.ok(result.avatar.right<=result.p.right-5,'cat avatar spills outside panel right '+JSON.stringify(result));
-  assert.ok(result.avatar.top>=result.p.top+3,'cat avatar spills above panel '+JSON.stringify(result));
-  assert.ok(result.avatar.bottom<=result.p.bottom-3,'cat avatar spills below panel '+JSON.stringify(result));
-  const centerDelta=Math.abs((result.avatar.left+result.avatar.right)/2-(result.p.left+result.p.right)/2)/result.p.width;
-  assert.ok(centerDelta<.1,'cat must be visually centered: '+JSON.stringify(result));
+  const {p,visible:v}=result;
+  assert.ok(v.left>=p.left+3&&v.right<=p.right-3&&v.top>=p.top+3&&v.bottom<=p.bottom-3,'actual kitten must fit, not the transparent canvas: '+JSON.stringify(result));
+  assert.ok(Math.abs((v.left+v.right)/2-(p.left+p.right)/2)<p.width*.035,'visible silhouette centered: '+JSON.stringify(result));
+  assert.ok(Math.abs((v.top+v.bottom)/2-(p.top+p.bottom)/2)<p.height*.04,'visible silhouette centered vertically');
+  assert.ok(v.width/p.width>=(width>500?.70:.40)||v.height/p.height>=.62,'portrait visibly enlarged: '+JSON.stringify(result));
   assert.equal(await page.locator('.shop-item').count(),3);
   assert.equal(await page.locator('[data-category]').count(),5);
   await shot(page,'wardrobe-'+width+'x'+height);
