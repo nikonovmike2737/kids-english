@@ -1,4 +1,4 @@
-# Kids English — Adventure Island / Product Concept v3
+# Kids English — Adventure Island / Product Concept v4
 **Status: PROPOSED / FOR OWNER APPROVAL. NOT CANONICAL; NOT PRODUCTION.**
 Updated 2026-11-23 based on three annotated screenshots and owner review.
 This document supersedes the v2 proposal **on this concept branch only**. Production `main` is unchanged until explicit approval, METHOD_PASS and TECH_PASS.
@@ -103,7 +103,7 @@ Proposed `localStorage`, no HTTP cookies; all data local to the current browser/
 6. **Sad Cat Modal**: stacked on lesson, redesigned 3D plush mascot; `Try Again` restores hearts, prior permanent keys untouched.
 7. **Small Chest Modal**: +1 coin once after four **lessons**.
 8. **Final Chest Modal**: +5 coins once after all 12 keys + three chests, on independent islet.
-9. **My Cat**: large dressed cat, coin balance, 5 category tabs, inventory/shop; tier prices 1/3/5, states `Buy/Owned/Equip`.
+9. **My Cat**: large dressed cat, coin balance, 5 category tabs, inventory/shop; tier prices 1/3/5, exactly ONE contextual action button, states `Buy / Need Coins / Wear / Wearing`.
 10. **Return Later**: all permanent items, equipped assets, opened chests and completed lessons persist in same browser.
 
 ## 11. Acceptance, out of scope and approval questions
@@ -111,5 +111,43 @@ Proposed `localStorage`, no HTTP cookies; all data local to the current browser/
 **TECH acceptance:** exact route graph and click targets, hover/click/touch contract, near-full-width accessible modal, nested sad-cat/key/chest overlays and focus management, idempotent keys/coins/shop, persistent cat layers, mobile/desktop, localStorage no telemetry; all completed units survive reload and failed replay.
 **OUT OF SCOPE until further approval:** creating second/third playable world, identity/login/cloud sync, buying coins, paid upgrades, extraneous tutorials, production deployment.
 **Need owner approval:** (A) Theme signs and 12-lesson curriculum mapping; (B) first island 5 categories × 3 tiers (1/3/5 coin), first world level-1 primarily; (C) next world unlock after grand chest; (D) localStorage without login and without cross-device sync; (E) English-only child-facing UI. The owner comments appear to support these; retain proposal status until explicit approval.
+
+
+## 12. Owner annotation — exact UI revision v4 (2026-11-23)
+This section supersedes any contradictory v3 wardrobe button illustrations and 3-choice question illustration. Explicitly approved for **concept revision only**; not an authorization to deploy.
+
+### A. Exactly ONE main wardrobe action button
+- The cat closet panel shows item thumbnails and prices; selecting a product updates one shared item-detail/action area. **Never display separate `Owned`, `Equip`, `Buy` buttons together beneath a row of products.** No independent `Owned` action button.
+- Each item has **one** contextual action button reflecting the state of the *currently selected* item:
+
+| Item state | Button label (English UI) | Visual state | On click |
+|---|---|---|---|
+| Not owned, enough coins, currently unlocked | `Buy` | Green, active | Debit exact item price once; persist ownership, then immediately change that SAME button to `Wear`. Do not automatically equip unless owner later requests it. |
+| Not owned, insufficient coins | `Need 2 Coins` (dynamic shortage) | Grey, disabled | Nothing. Do not deduct, and do not navigate. If unavailable because of world, use `Locked` disabled. |
+| Owned, not currently equipped | `Wear` | Purple, active | Equip item to its exclusive slot, instantly redraw mascot in closet and on island map; same button becomes `Wearing ✓`. |
+| Owned and equipped | `Wearing ✓` | Positive / neutral selected state, clickable for removal | Toggle off (if allowed for this slot) and change the same button back to `Wear`. No separate `Remove` button. |
+
+- Product tile may show a small checkmark when owned or fitted, but **not a third action button**. All UI copy in English. The selected item, cost, coin balance and button must agree.
+- Buying must be atomic and idempotent: prevent double-tap double charge. `Wear` never costs coins. Switching items in one slot unequips the prior accessory but never destroys it. Progress persists with localStorage.
+- Buttons stay in a single consistent physical location; switching product changes label/color/action in place. Give the one button an accessible text label and keyboard access.
+
+### B. Four answer choices on the lesson quiz modal
+- Every `choice` question in the lesson modal must display **four distinct answer options** as a **2 × 2** grid at desktop/tablet widths, arranged as stable rectangular touch targets. Never show three options as depicted in the previous illustration.
+- On a narrow phone, the four answers remain visible and tappable without clipping; use a 2 × 2 grid if readable, otherwise 1 × 4. Do not hide an option below a fixed overlay.
+- The quiz remains a wide focused modal over a dim island, with hearts, `Task 1 of 4`, stimulus image/phrase, four options, and one `Check` control. Correct choice is **not visually disclosed before verification**.
+- Before a selection, `Check` is disabled; after selection, enabled. On `Check` correct: show short `Correct!` and then `Next` (or on final task, complete lesson and show key reward). On wrong: `Wrong. Try again!`, burn exactly one heart, clear the wrong selection, stay on the same task, show no answer reveal or hint. On 0 hearts, show sad-cat modal above the quiz, with a restart.
+- Other question types (`match`, `order`) preserve their authored structures and no-hint contract; the **four answer option** rule applies to `choice` cards, not four pair columns for all task types.
+- Audit existing `choice` content before implementation; each must have four semantically plausible, nonduplicate and methodologically accepted options. Do not add a throwaway distractor solely to reach four.
+
+### C. Concept review acceptance checklist
+- [ ] My Cat has exactly one contextual action button, never adjacent Owned+Equip+Buy buttons.
+- [ ] Buy enabled/disabled according to the current balance; after purchase button becomes Wear; after wear button becomes Wearing.
+- [ ] Worn outfit is immediately reflected on same cat in My Cat and island map, and survives reload.
+- [ ] All `choice` quiz cards visibly show four options, including the Feelings card depicted in the updated concept.
+- [ ] Incorrect verification costs one heart with **zero clue**, recheck the same task, correct verification advances.
+- [ ] All child-facing labels English-only; no extra explainer/rules blocks on the live island screen.
+- [ ] Game map / World Map entry and route after every chest remain as specified in v3.
+
+**Scope:** design concept and method/technical requirements only. No GitHub Pages deployment, persistence or shop logic until the product concept is explicitly accepted.
 
 **Do not merge this document into main as accepted canon and do not change production assets or Pages until approved.**
