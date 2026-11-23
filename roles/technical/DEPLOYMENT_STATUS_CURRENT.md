@@ -6,7 +6,7 @@ URL: https://nikonovmike2737.github.io/kids-english/
 Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 
 ## Production commit and Action
-- Current production release: `c9f3df44f153b4789fd23985f78134160e33a88c`
+- Current production release: `59e9d60c0700ef460ac26a04be2c6953fe6591cf` (Block C, Pages run #13). Earlier commits below are historical.
 - Release PR #10: https://github.com/nikonovmike2737/kids-english/pull/10
 - Visual hotfix PR #11: https://github.com/nikonovmike2737/kids-english/pull/11
 - Final Pages workflow #10: https://github.com/nikonovmike2737/kids-english/actions/runs/45188625945 — **SUCCESS**; validate JS and asset binary signatures: PASS; artifact upload: PASS; Pages deployment: PASS.
@@ -63,3 +63,15 @@ Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 - Map HUD and My Cat display **keys + coins only**. 3 hearts exist inside a lesson run, wrong Check costs one, Next preserves the remaining count, fresh lesson/restart returns to 3. Rewards and the map do not display lives. Persistent key/coin progress is unchanged.
 - Production page and /classic/ reachable in independent external fetch; no heart glyph in the rendered homepage. Remote hosted interaction smoke unavailable owing to browser service balance; **do not claim live clicked verification**.
 - Bug register: `docs/product/ADVENTURE_ISLAND_BUGFIX_BACKLOG_CURRENT.md`, items B1–B4 **DEPLOYED · CI PASS; owner acceptance pending**. Next C/D/E separately.
+
+## Block C — deployed canonical lesson and reward modals (2026-11-23)
+- **Production PR #19:** https://github.com/nikonovmike2737/kids-english/pull/19
+- **Production SHA:** `59e9d60c0700ef460ac26a04be2c6953fe6591cf`
+- **PR CI:** https://github.com/nikonovmike2737/kids-english/actions/runs/45221634938 — SUCCESS
+- **Pages Action #13:** https://github.com/nikonovmike2737/kids-english/actions/runs/45221739204 — SUCCESS, including published artifact; runs `node --check` and all 15 B+C native contract tests.
+- Canonical Preview → Lesson → Correct/Wrong → Next/Retry → Reward flows; 4-option choices, no-hint Check, shared three hearts, gameover sad cat.
+- Separate accessible close button on stacked result overlays; keyboard focus trapped in topmost dialog and restored to map opener on exit, including rebuilt nodes. Escape from Game Over exits to map instead of exposing a dead lesson.
+- Reward includes a RAM-only result per each of four solved tasks, mistake counts, and the remaining lives for that particular attempt. **No heart icons outside lesson**. Local persistence remains only keys/coins/inventory; answer keys and individual replies not stored.
+- Mobile results card can scroll. No changes to curriculum, World Map (D), wardrobe (E), assets or Classic.
+- Independent HTTP GET of homepage and /classic: PASS (correct page titles). **Remote production click-tests NOT verified**; external browser agent has insufficient funds. Owner visual acceptance remains pending. Tests are 15 static contracts, not proof of end-to-end browser behavior.
+- Next distinct product release: **D**, then **E**; keep A/B/C owner acceptance open until explicitly confirmed.
