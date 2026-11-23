@@ -23,8 +23,11 @@
 - Кнопки «Далее» нет до правильного ответа и после неправильно проверенного ответа. Последний экран использует «Показать результат».
 - Ошибочный ответ — только бинарное сообщение о неверности, никаких подсказок.
 - На главной, в шапке и модальном окне можно использовать существующий кото-бренд; для `gameover` использовать грустного котика 😿.
-- Никаких сетевых отправок, аналитики, cookie/localStorage, идентифицируемых результатов.
-- Состояние только в RAM вкладки; перезагрузка страницы обнуляет попытку.
+- Никаких сетевых отправок ответов, аналитики, cookies или идентифицируемых результатов. После утверждения Adventure Island локальное сохранение обезличенных **достижений** в `localStorage` разрешено отдельным каноном; это не сохранение ответов.
+- Состояние **текущей попытки** (ответы, жизни, ошибки, индекс карточки) хранится только в RAM вкладки и сбрасывается при новой попытке; постоянные ключи, сундуки, монеты и инвентарь хранятся локально по `ADVENTURE_ISLAND_APPROVED_CANON.md`.
 
 ## Обязательная регрессия перед prod
 Для каждого текущего урока (ENG-001, ENG-002, ENG-003): все 4 вопроса пройти успешно; один неправильный и затем верный ответ для каждого типа; три неверных ответа подряд → 0 жизней и modal; перезапуск → 3 жизни и первое задание; правильный выбор не списывает жизнь; сверить отсутствие вопроса-спойлера, включая ENG-002 Swim; нет JS exceptions или исходящих POST. Обязательно проверить мобильную ширину.
+
+## Approved Adventure Island extension (2026-11-23)
+The gameplay canon for question scoring continues to apply inside the new modal. See `ADVENTURE_ISLAND_APPROVED_CANON.md`: 4 answer choices for every choice card, three shared hearts per attempt, no leaks, permanent key only for entire full lesson on its first success, open chest after 4 unique full lessons, shop with one context-sensitive button, and localStorage of **achievements only**. No backend or browser cookies.

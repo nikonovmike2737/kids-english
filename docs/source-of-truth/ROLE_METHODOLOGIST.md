@@ -30,3 +30,6 @@
 
 ## Обязательный игровой методический контракт (2026-11-23)
 Руководствоваться `docs/methodology/QUESTION_DESIGN.md` и `docs/source-of-truth/GAMEPLAY_CANON.md`. Перед каждым METHOD_PASS проверять отсутствие ответов-спойлеров, отсутствие подсказок при неверной проверке, три общие жизни на урок, возможность повторных попыток и переход только после правильного решения. Новые задания **не утверждать** без этих проверок.
+
+## Adventure Island — approved methodological routing
+Current authored lessons ENG-001 Feelings, ENG-002 Move & Play, ENG-003 Animal Theatre all live in stage Getting Started. Stage 1 has a fourth locked slot; stages 2–3 contain eight more locked slots. Methodologist must author and pass **nine distinct full lessons** before their locks disappear, preserve no-hint 4-choice cards and grouping into Getting Started / Next Level / Final Challenge. A lesson key is minted only after all tasks within that lesson are solved with at least one remaining heart; never on individual tasks. Detailed specification: `ADVENTURE_ISLAND_APPROVED_CANON.md`.

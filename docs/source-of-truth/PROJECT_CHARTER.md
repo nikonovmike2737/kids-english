@@ -30,3 +30,6 @@ role/technical: реализация сайта и тесты; принятые 
 2. 10–15 минут, игровая/двигательная/театральная форма; не сводить всё к экрану.
 3. Самостоятельная интерактивная проверка, разбор ответов и неограниченное повторение.
 4. Предсказуемость GitHub workflow без избыточной инфраструктуры.
+
+## Approved Adventure Island release (2026-11-23)
+New site mode Adventure Island is the principal GitHub Pages homepage, with classic version available at `/classic/`. The owner explicitly approved the concept, including map, World Map previews, local achievements, My Cat wardrobe and 1/3/5 coin pricing. Enforce `ADVENTURE_ISLAND_APPROVED_CANON.md` and `RELEASE_AND_ROLLBACK.md`. Deployment must verify both public URLs and preserve the pre-island immutable rollback branch.
