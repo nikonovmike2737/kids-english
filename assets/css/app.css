@@ -630,3 +630,74 @@ button:disabled{cursor:not-allowed;opacity:.58}
   }
   .modal-panel.wardrobe .shop-item{justify-content:center}
 }
+
+
+/* G2 verified 3D artwork (2026-11-23).
+   Neutral kitten is shared between island, wardrobe and completion reward;
+   independent 256px RGBA accessories are never embedded in the kitten.
+   Each percentage is relative to the cat figure, not the entire stage. */
+.island-cat,.cat-figure,.reward-avatar{isolation:isolate}
+.island-cat>.cat-base{
+  position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;
+  object-fit:contain;object-position:center;z-index:2;pointer-events:none;
+}
+.cat-preview .cat-figure>.cat-base{
+  position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;
+  object-fit:contain;object-position:center;z-index:2;pointer-events:none;
+}
+.reward-avatar>.cat-base{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:2}
+.island-cat .outfit-behind,
+.cat-preview .outfit-behind,
+.reward-avatar .outfit-behind{
+  position:absolute;inset:0;display:block;z-index:1;pointer-events:none;
+}
+.island-cat .outfit-overlays,
+.cat-preview .outfit-overlays,
+.reward-avatar .outfit-overlays{
+  position:absolute;inset:0;display:block;z-index:3;pointer-events:none;
+}
+.island-cat .outfit-behind .equipped-item,
+.cat-preview .outfit-behind .equipped-item,
+.reward-avatar .outfit-behind .equipped-item{
+  position:absolute;display:block;object-fit:contain;max-width:none;max-height:none;
+  pointer-events:none;filter:drop-shadow(0 2px 3px #25155735);
+}
+.island-cat .outfit-overlays .equipped-item,
+.cat-preview .outfit-overlays .equipped-item,
+.reward-avatar .outfit-overlays .equipped-item{
+  position:absolute;display:block;object-fit:contain;max-width:none;max-height:none;
+  pointer-events:none;filter:drop-shadow(0 2px 3px #25155735);
+}
+/* Common anatomically aligned accessory anchors for 3D neutral mascot. */
+.island-cat .outfit-overlays .equipped-item[data-slot=hat],
+.cat-preview .cat-figure .outfit-overlays .equipped-item[data-slot=hat],
+.reward-avatar .outfit-overlays .equipped-item[data-slot=hat]{
+  width:61%;height:34%;left:20%;top:3.2%;bottom:auto;right:auto;transform:rotate(-7deg);
+}
+.island-cat .outfit-overlays .equipped-item[data-slot=neck],
+.cat-preview .cat-figure .outfit-overlays .equipped-item[data-slot=neck],
+.reward-avatar .outfit-overlays .equipped-item[data-slot=neck]{
+  width:40%;height:21%;left:34.5%;top:42.2%;bottom:auto;right:auto;transform:none;
+}
+.island-cat .outfit-overlays .equipped-item[data-slot=shoes],
+.cat-preview .cat-figure .outfit-overlays .equipped-item[data-slot=shoes],
+.reward-avatar .outfit-overlays .equipped-item[data-slot=shoes]{
+  width:48%;height:28.5%;left:29.4%;bottom:8.7%;top:auto;right:auto;transform:none;
+}
+.island-cat .outfit-behind .equipped-item[data-slot=back],
+.cat-preview .cat-figure .outfit-behind .equipped-item[data-slot=back],
+.reward-avatar .outfit-behind .equipped-item[data-slot=back]{
+  width:43%;height:35.4%;left:1.4%;top:43.2%;bottom:auto;right:auto;transform:none;
+}
+.island-cat .outfit-overlays .equipped-item[data-slot=tool],
+.cat-preview .cat-figure .outfit-overlays .equipped-item[data-slot=tool],
+.reward-avatar .outfit-overlays .equipped-item[data-slot=tool]{
+  width:26%;height:20.5%;left:71.7%;top:52.1%;bottom:auto;right:auto;transform:rotate(10deg);
+}
+/* Only item sprites receive drop shadows; all original source WebPs have real alpha. */
+.modal-panel.wardrobe .shop-item>img{
+  image-rendering:auto;filter:drop-shadow(0 4px 5px #32245722);transform:scale(1.06)
+}
+.modal-panel.wardrobe .shop-item.locked-tier>img{
+  filter:grayscale(.18) saturate(.58) drop-shadow(0 3px 4px #32245710)
+}
