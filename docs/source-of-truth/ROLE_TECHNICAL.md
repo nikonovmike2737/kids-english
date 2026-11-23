@@ -26,3 +26,6 @@
 
 ## Обязательный игровой контракт (2026-11-23)
 Весь сайт следует `docs/source-of-truth/GAMEPLAY_CANON.md`: общий для урока лимит 3 ошибки, явная проверка для choice/match/order, ноль подсказок при неверном ответе, «Далее» только после успеха, модальный грустный кот 😿 на нуле, неограниченный restart. Вся проверка локальна, без сохранения и отправки данных. До объединения PR проверять регрессию каждого типа и каждого урока.
+
+## Adventure Island release v1 — approved technical scope
+Full-screen 16:9 framed map, separate binary asset groups, actual ready lessons only, two-step lesson preview + large modal, no-hint check, three lives, first-full-lesson keys, chests and local-only wardrobe economy. Technical partner owns `index.html`, `assets/js`, `assets/maps`, inventory sprites, World Map and live Pages verification. Follow `ADVENTURE_ISLAND_APPROVED_CANON.md` and preserve `classic/` plus rollback branch. The earlier blanket prohibition on localStorage is superseded **only for anonymous achievement state**, not for individual task answers.
