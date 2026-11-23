@@ -14,7 +14,15 @@ An English-language, child-facing island adventure with three real lessons, thre
 Use any local static file server, e.g. `python -m http.server 8000`; open `http://localhost:8000/`. Client JavaScript modules load the data and map. No build step needed.
 
 ## Test
-`python tests/test_inline.py` and `python tests/test_extended.py` run automated Chromium scenarios against a local, isolated copy of the JS/HTML. Tests require Playwright and a local Chromium binary; they never contact GitHub or send user data.
+- `node --test tests/*.test.mjs` — 23 native Node B/C/D/E source-contract checks.
+- `node tests/block-c-browser.smoke.mjs` — real Playwright Chromium lesson, hearts, results and Classic browser regression.
+- `node tests/block-de-browser.smoke.mjs` — real illustrated World Map, Shop/Inventory, purchasing, outfit layering, reload and mobile/browser regression.
+- Run locally with a static server and `KIDS_TEST_URL=http://127.0.0.1:8000/` (Playwright and Chromium required); browser tests run in isolated contexts.
+- PR workflow `.github/workflows/pr-ci.yml` runs source tests, local Chromium and screenshots. Production read-only workflow `.github/workflows/production-browser-smoke.yml` runs full live click-tests automatically **after** the single Pages deployment finishes successfully.
+- Test browsers never submit personal data; local smoke fixtures affect only their disposable browser contexts.
+
+## Production D/E
+The World Map uses three distinct illustrated worlds with only Adventure Island playable. My Cat includes Shop, owned-only Inventory, and 15 image-backed accessories rendered over the kitten across map, wardrobe and lesson reward. Anonymous purchased/equipped state is local to the browser.
 
 ## Next educational work
 Nine additional full lessons (not nine questions) need methodologist review; only after approval may their locked nodes become playable. Additional worlds Mystical Desert and Rainy Forest are locked previews, not released content.
