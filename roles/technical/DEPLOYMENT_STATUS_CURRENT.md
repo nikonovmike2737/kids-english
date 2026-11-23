@@ -6,7 +6,7 @@ URL: https://nikonovmike2737.github.io/kids-english/
 Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 
 ## Production commit and Action
-- **Current Production application/tree SHA:** `bf9925c7e1659f00bf0438390d81e40a448f5d17` (combined D+E PR #24, successful Pages Action #15). Earlier entries below are historical.
+- **Current Production application/tree SHA:** `6198b5c6a68a74b3a40ec2ce26ee7266dc3a0554` (owner visual Group G1, PR #30, Pages SUCCESS run #45254267042). Earlier entries below are historical.
 - Release PR #10: https://github.com/nikonovmike2737/kids-english/pull/10
 - Visual hotfix PR #11: https://github.com/nikonovmike2737/kids-english/pull/11
 - Final Pages workflow #10: https://github.com/nikonovmike2737/kids-english/actions/runs/45188625945 — **SUCCESS**; validate JS and asset binary signatures: PASS; artifact upload: PASS; Pages deployment: PASS.
@@ -94,3 +94,10 @@ Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 - Verification fixtures are **isolated browser contexts**, no user state, no accounts, no server answer submissions. Real QA also verified no outgoing POST or uncaught JS exceptions. All three authored lessons, original 3-life logic, 12 route slots/chests and /classic untouched.
 - Public main and Classic routes externally retrieved. Owner visual/artistic approval **still pending**, and new lessons/worlds still require independent METHOD_PASS.
 - This documentation-only update is not a new application/Pages deployment.
+
+## Owner visual G1 — independent live release PASS, 2026-11-23
+- G1 wardrobe/card visual changes: removed Shop/Inventory segmented switch; retained 5 direct categories, 3 item cards, local owned/worn states and one context CTA. Centered figure, resized item images/coins, fully muted locked cards and oversized lock; removed duplicate detail row and excess empty desktop/mobile space.
+- PR [#30](https://github.com/nikonovmike2737/kids-english/pull/30), production SHA `6198b5c6a68a74b3a40ec2ce26ee7266dc3a0554`.
+- Pages [run 45254267042](https://github.com/nikonovmike2737/kids-english/actions/runs/45254267042) **SUCCESS**; hosted public-site Chromium [run 45254355140](https://github.com/nikonovmike2737/kids-english/actions/runs/45254355140) **SUCCESS**, 9 lesson/Classic + 7 wardrobe/world checks.
+- 30/30 Node contracts in PR, desktop/mobile screenshots actually reviewed by technical partner and geometry assertions extended for vertical dead space. Actual screenshots are attached to PR CI Artifacts.
+- **Owner artistic sign-off pending**. New inventory binary illustrations G2 (#27), map G3 (#28) and reward G4 (#29) remain OPEN. G1 release did not change source teaching, progress schema, key/chest economy or older 15 item binaries.
