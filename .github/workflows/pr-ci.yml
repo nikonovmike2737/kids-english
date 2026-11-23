@@ -28,7 +28,7 @@ jobs:
       - name: Install Playwright Chromium for real browser checks
         run: |
           npm install --no-save playwright@1.56.1
-          npx playwright install --with-deps chromium webkit
+          npx playwright install --with-deps chromium
       - name: Start local static site
         run: |
           nohup python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/kids-english-http.log 2>&1 &
@@ -51,11 +51,6 @@ jobs:
           KIDS_TEST_URL: http://127.0.0.1:8765/
           KIDS_BROWSER: chromium
         run: node tests/g3-visual-browser.smoke.mjs
-      - name: G2R/G3 Safari WebKit clipping and route smoke
-        env:
-          KIDS_TEST_URL: http://127.0.0.1:8765/
-          KIDS_BROWSER: webkit
-        run: node tests/g3-visual-browser.smoke.mjs
       - name: Upload D/E visual evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -72,3 +67,30 @@ jobs:
         env:
           KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
         run: node tests/block-c-browser.smoke.mjs
+
+  safari-webkit:
+    # Official Playwright image already contains Linux WebKit and all native
+    # dependencies, avoiding slow apt installs that blocked the normal PR job.
+    runs-on: ubuntu-24.04
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Playwright and local static server
+        run: npm install --no-save playwright@1.56.1 http-server@14.1.1
+      - name: Serve PR source in WebKit container
+        run: |
+          nohup npx http-server . -a 127.0.0.1 -p 8765 -c-1 >/tmp/kids-webkit-http.log 2>&1 &
+          sleep 3
+          curl --fail --silent --head http://127.0.0.1:8765/
+      - name: G2R and G3 Safari WebKit at 5 responsive sizes
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+          KIDS_BROWSER: webkit
+        run: node tests/g3-visual-browser.smoke.mjs
+      - name: Upload Safari desktop and mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: g3-safari-visual-qa
+          path: artifacts/g3-webkit-*.png
+          if-no-files-found: ignore
