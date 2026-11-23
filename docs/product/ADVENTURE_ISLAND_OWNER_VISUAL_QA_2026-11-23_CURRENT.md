@@ -2,7 +2,7 @@
 
 **Authority:** newest owner annotations attached to this conversation, reviewed against Production SHA `bf9925c7` and approved Adventure Island canon. The latest explicit visual instruction prevails over the earlier Shop/Inventory UX illustration, **without changing progress/game economy**.
 
-**Workflow:** one bounded technical production release per group; G1 was delivered in PR #30, G2 in PR #32, G2R Safari regression and G3 scene geometry are deployed and independently browser-verified; G4 remains separately OPEN. TECH_PASS requires source-level contract, real Chromium interaction at desktop and 390px mobile, A/B/C/D/E gameplay regression and postdeploy hosted public-site smoke. Screenshots must be compared to owner references; no claim of owner visual acceptance unless explicitly signed off.
+**Workflow:** one bounded technical production release per group; G1 was delivered in PR #30, G2 in PR #32, G2R Safari regression and G3 scene geometry are deployed and independently browser-verified; G4 is now deployed and independently browser-verified; all visual groups await owner final visual sign-off. TECH_PASS requires source-level contract, real Chromium interaction at desktop and 390px mobile, A/B/C/D/E gameplay regression and postdeploy hosted public-site smoke. Screenshots must be compared to owner references; no claim of owner visual acceptance unless explicitly signed off.
 
 | Group | GitHub | Priority | Scope | Source screenshots | State |
 |---|---|---|---|---|---|
@@ -10,7 +10,7 @@
 | **G2 — Inventory artwork** | [#27](https://github.com/nikonovmike2737/kids-english/issues/27) | P0 | Replace 15 placeholder item graphics with original, consistent, rich 3D transparent art; test outfit anchoring on cat | 22:10–22:16, 22:33:28, 22:34:47 | **DEPLOYED · TECH_PASS · HOSTED E2E PASS · owner visual sign-off pending** |
 | **G2R — Safari wardrobe regression** | [#34](https://github.com/nikonovmike2737/kids-english/issues/34) | P0 | Entire kitten fits centered inside neutral, non-island backdrop at desktop and mobile; verified in Chromium/WebKit | Safari 23:48:34 | **DEPLOYED · TECH_PASS · OWNER VISUAL SIGN-OFF PENDING** |
 | **G3 — Island composition** | [#28](https://github.com/nikonovmike2737/kids-english/issues/28) | P1 | Independent chests, lesson anchors, stage titles, three cubic bridges, leftward kitten | 22:18:33, 22:29:23 | **DEPLOYED · TECH_PASS · OWNER VISUAL SIGN-OFF PENDING** |
-| **G4 — Key reward** | [#29](https://github.com/nikonovmike2737/kids-english/issues/29) | P1 | Polished key/cat reward art; remove overly dense Lesson Results panel as annotated, retain actual award logic | 22:29:23 | OPEN |
+| **G4 — Key reward** | [#29](https://github.com/nikonovmike2737/kids-english/issues/29) | P1 | Polished key/cat reward art; remove overly dense Lesson Results panel as annotated, retain actual award logic | 22:29:23 | **DEPLOYED · TECH_PASS · HOSTED E2E PASS · owner visual sign-off pending** |
 
 ## G1 — acceptance table (first group; one PR + one Pages deployment)
 
@@ -108,3 +108,10 @@
 - Remove Lesson Results table, per-task report, remaining lives and wrong-try count from celebration. Do not change scoring or reveal correct answers. No attempt report in localStorage or network.
 - First full lesson success: You Got a Key! + permanent total. Replay: Great Job! + distinct star, same permanent total; no duplicate award. Coins and chests unaffected. Existing Classic unchanged.
 - Require native contracts, real complete/repeat lesson flows in Chromium and WebKit, screenshot review, regression across prior G1–G3 and deployed-site tests. Owner final artistic sign-off separate.
+
+## G4 key celebration — Production verified, 2026-11-24
+- Owner issue [#29](https://github.com/nikonovmike2737/kids-english/issues/29), implementation [PR #37](https://github.com/nikonovmike2737/kids-english/pull/37), application SHA `e49e168e519d70903d1af0968b43c93fa530c94a`.
+- [Pages deploy #45269141023](https://github.com/nikonovmike2737/kids-english/actions/runs/45269141023) SUCCESS; [premerge #45268695084](https://github.com/nikonovmike2737/kids-english/actions/runs/45268695084) Chromium and WebKit SUCCESS, 49/49 native contracts; [independent hosted QA #45269242613](https://github.com/nikonovmike2737/kids-english/actions/runs/45269242613) both jobs SUCCESS.
+- One large illustrated celebration with shared transparent dressable kitten, new original scalable golden key/star artwork, simple total and Continue. No Lesson Results table, wrong-attempt report or remaining lives in reward. Replay shows Great Job! and a star, no additional key. Actual complete/repeat/reload flows verified at 1649×928, 1280×800, 390×844 and 844×390 (repeat on desktop and portrait mobile). Existing quiz scoring, 3 hearts, chest/coin economy, outfits and Classic regressions PASS; no personal data network requests.
+- [WebKit screenshots](https://github.com/nikonovmike2737/kids-english/actions/runs/45268695084/artifacts/14864142682) manually reviewed at 1649×928 and 390×844, with replay screenshot checked at desktop. [Chromium visual artifacts](https://github.com/nikonovmike2737/kids-english/actions/runs/45268695084/artifacts/14863568743).
+- G1, G2, G2R, G3 and G4 technical delivery complete. Owner visual acceptance remains pending; no claim that owner has approved screenshots. No new lessons unlocked. Nine additional full lessons remain methodologist scope.

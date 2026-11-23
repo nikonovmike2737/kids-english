@@ -41,3 +41,6 @@ All production art is committed to GitHub as **native binary PNG/WebP** (not ext
 - Render rule: backpack in a **rear layer** (`.outfit-behind`), all other four accessory types in the **front layer** (`.outfit-overlays`), with percentage-based positions that scale from desktop to mobile. Otherwise a baked-in captain's hat/backpack would visually duplicate newly purchased gear.
 - No change to catalog prices (1/3/5 coins), purchases, equipped IDs, achievements, credits, lesson answers, storage or the Classic fallback. Binary artwork is served from GitHub Pages; no external image dependencies.
 - Acceptance: 16 content-pinned alpha WebPs, original item silhouettes and exact source link, native image decoding at 1280/390px, all five categories + five outfitted items at once, behind/front stacking, persistence/reload, key reward, older G1 and lesson regression. Browser screenshot review and final owner visual sign-off are separately recorded.
+
+## G4 reward artwork (2026-11-24)
+- `assets/modals/g4-golden-key.svg` and `assets/modals/g4-golden-star.svg`: original scalable local celebration art; shared `cat-dressable.webp` and owned outfit layers. Prior `reward-key.webp` retained for history/rollback. Chest and sad-cat assets unchanged.
