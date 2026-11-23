@@ -60,8 +60,8 @@ try {
   page.on('request',req=>{if(req.method()!=='GET')unsafeRequests.push(req.method()+' '+req.url())});
   const response=await page.goto(url+'?smoke=1',{waitUntil:'networkidle',timeout:60000});
   assert.equal(response.status(),200);
-  await inspectImage(page.locator('#island-cat>.cat-base'),1024,936);
-  assert.equal(await page.locator('#island-cat>.cat-base').getAttribute('src'),'assets/mascot/cat-dressable.webp');
+  await inspectImage(page.locator('#island-cat .cat-avatar-canvas>.cat-base'),1024,936);
+  assert.equal(await page.locator('#island-cat .cat-avatar-canvas>.cat-base').getAttribute('src'),'assets/mascot/cat-dressable.webp');
   assert.equal(await page.locator('#island-outfit .equipped-item').count(),0);
   assert.equal(await page.locator('#island-outfit-behind .equipped-item').count(),0);
   pass('map uses true transparent neutral cat with zero pre-equipped accessories');
