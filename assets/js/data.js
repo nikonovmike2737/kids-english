@@ -21,16 +21,18 @@ export const lessons = [
 ];
 export const themeLabels=['Getting Started','Next Level','Final Challenge'];
 export const stopToLesson={1:'ENG-001',2:'ENG-002',3:'ENG-003'};
+// Anchors in the original 1672x941 scenery. Every row has four lesson nodes and one chest before the bridge.
 export const stopPositions=[
- [1,35,29.8],[2,43,29.8],[3,51,29.8],[4,59,29.8],
- [5,66,53.4],[6,58,53.4],[7,50,53.4],[8,42,53.4],
- [9,34,76.9],[10,42,76.9],[11,50,76.9],[12,58,76.9]
+ [1,30.0,29.9],[2,37.0,29.9],[3,44.0,29.9],[4,51.0,29.9],
+ [5,64.5,53.4],[6,57.0,53.4],[7,49.5,53.4],[8,42.0,53.4],
+ [9,35.0,77.0],[10,42.5,77.0],[11,50.0,77.0],[12,57.5,77.0]
 ];
+// Chest coordinates are FOOT CONTACT points, not image centers.
 export const chests=[
- {id:'chest-a',name:'First Chest',x:65.6,y:27.1,worldGroup:0,bonus:1},
- {id:'chest-b',name:'Second Chest',x:30.6,y:53.5,worldGroup:1,bonus:1},
- {id:'chest-c',name:'Third Chest',x:68.0,y:76.6,worldGroup:2,bonus:1},
- {id:'grand-chest',name:'Grand Treasure',x:88.2,y:66.8,worldGroup:3,bonus:5}
+ {id:'chest-a',name:'First Chest',x:58.3,y:32.1,worldGroup:0,bonus:1},
+ {id:'chest-b',name:'Second Chest',x:30.0,y:59.0,worldGroup:1,bonus:1},
+ {id:'chest-c',name:'Third Chest',x:64.5,y:81.5,worldGroup:2,bonus:1},
+ {id:'grand-chest',name:'Grand Treasure',x:88.5,y:69.5,worldGroup:3,bonus:5}
 ];
 export const shopCatalog={
  hats:[['Captain Cap',1],['Explorer Hat',3],['Pirate Hat',5]],
