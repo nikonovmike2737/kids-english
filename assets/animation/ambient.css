@@ -1,20 +1,18 @@
-/* G6: all scenic motion is decorative and cannot intercept the route. */
+/* G7 — scene only. The mascot is static and never gets an animation layer. */
 .island-ambient{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;overflow:hidden}
-.fall-stream{fill:none;stroke:url(#water-glint);stroke-width:4;stroke-linecap:round;stroke-dasharray:22 28;animation:fall-flow 2.1s linear infinite;opacity:.55}
-.fall-stream:nth-child(2n){stroke-width:2.6;animation-duration:1.65s;animation-delay:-.7s;opacity:.65}
-.fall-stream:nth-child(3n){animation-duration:2.7s;animation-delay:-1.3s}
-@keyframes fall-flow{to{stroke-dashoffset:-100}}
-.fall-mist{fill:url(#mist-glow);transform-box:fill-box;transform-origin:center;animation:mist-breathe 4.5s ease-in-out infinite}
-@keyframes mist-breathe{0%,100%{opacity:.15;transform:scale(.94)}50%{opacity:.63;transform:scale(1.07)}}
-.shore-wave{fill:none;stroke:#e7ffff;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:42 22 15 35;opacity:0;animation:shore-roll 5.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-.shore-wave:nth-child(2n){animation-delay:-2.8s;stroke-width:1.6}
-@keyframes shore-roll{0%{opacity:0;transform:translateY(7px)}24%{opacity:.38}57%{opacity:.52;transform:translateY(-2px)}100%{opacity:0;transform:translateY(-7px)}}
-.foliage-sway{transform-box:view-box;animation:leaf-breeze 12s ease-in-out infinite;opacity:0}
+.fall-stream{fill:none;stroke:url(#water-glint);stroke-width:4.5;stroke-linecap:round;stroke-dasharray:65 18 30 24;animation:fall-flow 1.55s linear infinite;opacity:.74}
+.fall-stream:nth-child(2n){stroke-width:2.3;stroke-dasharray:38 19 55 25;animation-duration:1.18s;animation-delay:-.7s;opacity:.83}
+.fall-stream:nth-child(3n){stroke-width:3.2;animation-duration:1.95s;animation-delay:-1.3s;opacity:.62}
+@keyframes fall-flow{to{stroke-dashoffset:-137}}
+.fall-mist{fill:url(#mist-glow);transform-box:fill-box;transform-origin:center;animation:mist-breathe 3.1s ease-in-out infinite}
+@keyframes mist-breathe{0%,100%{opacity:.36;transform:scale(.92,.8)}50%{opacity:.78;transform:scale(1.12,1.15)}}
+.shore-wave{fill:none;stroke:#e7ffff;stroke-width:2.8;stroke-linecap:round;stroke-dasharray:93 17 54 26;opacity:0;animation:shore-roll 4.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.shore-wave:nth-child(2n){animation-delay:-2.4s;stroke-width:1.7;stroke:#aeeeff}
+@keyframes shore-roll{0%{opacity:0;transform:translateY(8px) scaleX(1.012)}20%{opacity:.65}55%{opacity:.78;transform:translateY(-1px) scaleX(1)}100%{opacity:0;transform:translateY(-7px) scaleX(.99)}}
+.foliage-sway{transform-box:view-box;animation:leaf-breeze 11s ease-in-out infinite;opacity:0}
 .foliage-sway.palm-left{transform-origin:222px 181px;animation-delay:-3s}
-.foliage-sway.tree-center{transform-origin:709px 126px;animation-delay:-6s;animation-duration:15s}
-.foliage-sway.palm-right{transform-origin:1360px 185px;animation-delay:-9s;animation-duration:17s}
-@keyframes leaf-breeze{0%,41%,100%{transform:rotate(0);opacity:0}45%{opacity:.9}53%{transform:rotate(1.25deg);opacity:.9}60%{transform:rotate(-.95deg);opacity:.95}68%{transform:rotate(.55deg);opacity:.8}75%{transform:rotate(0);opacity:0}}
-.cat-motion-layer{position:absolute;display:block;max-width:none;max-height:none;z-index:4;pointer-events:none;object-fit:fill}
-.motion-active>.cat-base,.motion-active>.outfit-behind,.motion-active>.outfit-overlays{visibility:hidden}
+.foliage-sway.tree-center{transform-origin:709px 126px;animation-delay:-6s;animation-duration:14s}
+.foliage-sway.palm-right{transform-origin:1360px 185px;animation-delay:-9s;animation-duration:16s}
+@keyframes leaf-breeze{0%,22%,100%{transform:rotate(0);opacity:0}31%{transform:rotate(.35deg);opacity:.9}45%{transform:rotate(1.8deg);opacity:1}59%{transform:rotate(-1.35deg);opacity:1}72%{transform:rotate(.7deg);opacity:.96}86%{transform:rotate(0);opacity:0}}
 body.modal-open .island-ambient *{animation-play-state:paused}
-@media(prefers-reduced-motion:reduce){.island-ambient{display:none}.cat-motion-layer{display:none!important}.motion-active>.cat-base,.motion-active>.outfit-behind,.motion-active>.outfit-overlays{visibility:visible}}
+@media(prefers-reduced-motion:reduce){.island-ambient{display:none}}

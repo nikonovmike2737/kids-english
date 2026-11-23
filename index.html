@@ -18,7 +18,7 @@
     <!-- Decorative original-coordinate effects; no new map hit targets. -->
     <svg class="island-ambient" viewBox="0 0 1672 941" preserveAspectRatio="none" aria-hidden="true" focusable="false">
       <defs>
-        <linearGradient id="water-glint" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#dcffff" stop-opacity=".15"/><stop offset=".45" stop-color="#eaffff" stop-opacity=".9"/><stop offset="1" stop-color="#eaffff" stop-opacity=".05"/></linearGradient>
+        <linearGradient id="water-glint" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b7f4ff" stop-opacity=".20"/><stop offset=".3" stop-color="#eaffff" stop-opacity=".95"/><stop offset=".75" stop-color="#f4ffff" stop-opacity=".8"/><stop offset="1" stop-color="#8ce8ff" stop-opacity=".12"/></linearGradient>
         <radialGradient id="mist-glow"><stop stop-color="#eaffff" stop-opacity=".85"/><stop offset="1" stop-color="#d9ffff" stop-opacity="0"/></radialGradient>
         <clipPath id="fall-upper"><path d="M1148 163 Q1238 156 1326 163 L1329 260 Q1300 279 1201 275 L1194 243 L1184 223 L1159 218 Z"/></clipPath>
         <clipPath id="fall-lower"><path d="M1228 294 Q1300 289 1383 298 L1383 404 Q1331 434 1266 424 L1265 384 L1245 369 Z"/></clipPath>
@@ -50,14 +50,14 @@
       <!-- G3: rounded, terrain-aware route. No line enters stop 1.
            Grass curves link the 4 stops to each chest in serpentine order;
            only the three bounded bridge curves cross the plank artwork. -->
-      <path id="route-top" class="land-route" data-route="grass-1" d="M 426 255 C 543 255 660 255 777 255 C 830 255 884 259 919 274 C 960 288 989 304 1018 326"></path>
-      <path id="route-bridge-a" class="bridge-route" data-route="bridge-a" d="M 1018 326 C 1067 353 1104 391 1133 428 C 1150 452 1142 467 1110 480"></path>
-      <path id="route-mid" class="land-route" data-route="grass-2" d="M 1110 480 C 1048 475 988 472 926 472 C 801 472 676 472 550 472 C 461 473 398 494 348 515 C 337 520 327 532 320 548"></path>
-      <path id="route-bridge-b" class="bridge-route" data-route="bridge-b" d="M 320 548 C 273 574 230 614 214 653 C 207 677 250 699 344 705"></path>
-      <path id="route-landfall-b" class="land-route" data-route="landfall-b" d="M 344 705 C 395 706 439 709 477 709"></path>
-      <path id="route-low" class="land-route" data-route="grass-3" d="M 477 709 C 602 709 727 709 853 709 C 920 710 981 726 1025 738 C 1062 746 1096 746 1128 745"></path>
-      <path id="route-bridge-c" class="bridge-route" data-route="bridge-c" d="M 1128 745 C 1194 737 1270 715 1344 675"></path>
-      <path id="route-islet" class="land-route" data-route="islet" d="M 1344 675 C 1395 663 1437 659 1474 654"></path>
+      <path id="route-top" class="land-route" data-route="grass-1" d="M 426 255 C 660 255 780 255 895 255 C 963 255 1027 292 1054 319"></path>
+      <path id="route-bridge-a" class="bridge-route" data-route="bridge-a" d="M 1054 319 C 1082 344 1108 376 1132 413 C 1143 430 1150 445 1150 456"></path>
+      <path id="route-mid" class="land-route" data-route="grass-2" d="M 1150 456 C 1149 474 1102 473 1040 472 C 830 472 620 472 425 472 C 369 472 332 510 300 543"></path>
+      <path id="route-bridge-b" class="bridge-route" data-route="bridge-b" d="M 300 543 C 264 564 241 593 236 623 C 234 651 253 681 278 703"></path>
+      <path id="route-landfall-b" class="land-route" data-route="landfall-b" d="M 278 703 C 330 721 418 709 477 709"></path>
+      <path id="route-low" class="land-route" data-route="grass-3" d="M 477 709 C 640 709 801 709 978 709 C 1068 709 1142 747 1200 730"></path>
+      <path id="route-bridge-c" class="bridge-route" data-route="bridge-c" d="M 1200 730 C 1240 727 1288 701 1322 668 C 1338 652 1348 647 1354 646"></path>
+      <path id="route-islet" class="land-route" data-route="islet" d="M 1354 646 C 1397 639 1433 643 1474 654"></path>
     </svg>
 
     <header class="topbar">
@@ -77,9 +77,9 @@
       </nav>
     </header>
 
-    <div class="stage-label label-top">Getting Started</div>
-    <div class="stage-label label-mid">Next Level</div>
-    <div class="stage-label label-low">Final Challenge</div>
+    <div class="stage-label label-top"><img class="stage-icon" src="assets/symbols/g7-compass.webp" alt=""><span>Getting Started</span></div>
+    <div class="stage-label label-mid"><img class="stage-icon" src="assets/symbols/g7-rocket.webp" alt=""><span>Next Level</span></div>
+    <div class="stage-label label-low"><img class="stage-icon" src="assets/symbols/g7-mountain.webp" alt=""><span>Final Challenge</span></div>
 
     <div id="island-nodes"></div>
 

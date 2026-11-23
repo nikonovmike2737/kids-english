@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {stopPositions,chests} from '../assets/js/data.js';
 test('G5-01: exact owner-marked group positions and unchanged chest rewards',()=>{
  assert.deepEqual(stopPositions.map(x=>x.slice(1)),[[25.5,27.1],[32.5,27.1],[39.5,27.1],[46.5,27.1],[55.4,50.2],[47.9,50.2],[40.4,50.2],[32.9,50.2],[28.5,75.4],[36,75.4],[43.5,75.4],[51,75.4]]);
- assert.deepEqual(chests.map(c=>[c.x,c.y,c.bonus]),[[53.9,31.3,1],[20.8,56,1],[58.5,79.4,1],[88.5,69.5,5]]);
+ assert.deepEqual(chests.map(c=>[c.x,c.y,c.bonus]),[[53.5,32.25,1],[25.4,55.35,1],[58.5,80.55,1],[88.5,69.5,5]]);
  const css=readFileSync('assets/css/app.css','utf8');
  assert.match(css,/\.stage \.label-top\{left:19\.9%;top:13\.4%\}/);
  assert.match(css,/\.stage \.label-mid\{left:26\.3%;top:33\.5%\}/);

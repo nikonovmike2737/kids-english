@@ -1,5 +1,4 @@
 import {centerShopArt,fitWardrobe} from '../animation/wardrobe-art.js';
-import {playCatMotion,stopCatMotion,startIslandMotion} from '../animation/cat-motion.js';
 import {lessons,themeLabels,stopToLesson,stopPositions,chests,shopCatalog,worldCards} from './data.js';
 
 const STORE = 'kids-english.progress.v1';
@@ -94,7 +93,6 @@ function outfittedCat(layer = 'front') {
 }
 
 function updateMap() {
-  stopCatMotion();
   const target = $('#island-nodes');
   target.innerHTML = '';
   for (const [number, x, y] of stopPositions) {
@@ -126,12 +124,12 @@ function updateMap() {
     b.dataset.chest = c.id;
     b.style.setProperty('--x', `${c.x}%`);
     b.style.setProperty('--y', `${c.y}%`);
-    b.innerHTML = `<img src="assets/chests/${st === 'opened' ? 'opened' : c.id === 'grand-chest' ? 'grand' : 'closed'}.webp" alt="">`;
+    b.innerHTML = `<img src="assets/chests/${st === 'opened' ? 'opened' : c.id === 'grand-chest' ? 'grand' : 'closed'}.webp" alt="">${st !== 'opened' ? '<span class="chest-padlock" aria-hidden="true"></span>' : ''}`;
     b.setAttribute('aria-label', `${c.name}, ${st}`);
     b.title = `${c.name}: ${st}`;
     b.addEventListener('click', () => {
       if (st === 'ready') openChest(c.id);
-      else if (st === 'opened') showReward('Chest Opened!', 'Already collected', c.id === 'grand-chest' ? 'assets/chests/grand.webp' : 'assets/chests/opened.webp');
+      else if (st === 'opened') showReward('Chest Opened!', 'Already collected', 'assets/chests/opened.webp');
       else toast('🔒 Locked');
     });
     target.append(b);
@@ -144,7 +142,6 @@ function updateMap() {
 }
 
 function setModal(html, mode = 'preview') {
-  stopCatMotion();
   // A lesson can re-render several times; keep the original map control for focus return.
   if (!root.children.length) restoreFocus = document.activeElement;
   modalType = mode;
@@ -444,7 +441,7 @@ function openChest(id) {
   progress.coinBalance += chest.bonus;
   persist();
   updateMap();
-  showReward(id === 'grand-chest' ? 'Grand Treasure!' : 'Chest Opened!', `+${chest.bonus} ${chest.bonus === 1 ? 'Coin' : 'Coins'}`, id === 'grand-chest' ? 'assets/chests/grand.webp' : 'assets/modals/chest-reward.webp');
+  showReward(id === 'grand-chest' ? 'Grand Treasure!' : 'Chest Opened!', `+${chest.bonus} ${chest.bonus === 1 ? 'Coin' : 'Coins'}`, 'assets/chests/opened.webp');
 }
 
 function worldMap() {
@@ -638,7 +635,6 @@ document.addEventListener('keydown', (e) => {
 
 
 updateMap();
-if (!new URLSearchParams(location.search).has('smoke')) startIslandMotion();
 if (new URLSearchParams(location.search).has('smoke')) {
-  window.__kidsSmoke = { playCatMotion, stopCatMotion, startIslandMotion, progress: () => structuredClone(progress), startLesson, showWorld: worldMap, showCat: catProfile, openChest, updateMap, forceProgress: (p) => { progress = { ...emptyProgress(), ...p }; persist(); updateMap(); } };
+  window.__kidsSmoke = { progress: () => structuredClone(progress), startLesson, showWorld: worldMap, showCat: catProfile, openChest, updateMap, forceProgress: (p) => { progress = { ...emptyProgress(), ...p }; persist(); updateMap(); } };
 }

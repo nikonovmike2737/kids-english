@@ -34,9 +34,9 @@ export const stopPositions=[
 // not centers. All three small chests stay on their own grass terrace;
 // the final chest stands on the separate right-hand islet.
 export const chests=[
- {id:'chest-a',name:'First Chest',x:53.9,y:31.3,worldGroup:0,bonus:1},
- {id:'chest-b',name:'Second Chest',x:20.8,y:56.0,worldGroup:1,bonus:1},
- {id:'chest-c',name:'Third Chest',x:58.5,y:79.4,worldGroup:2,bonus:1},
+ {id:'chest-a',name:'First Chest',x:53.5,y:32.25,worldGroup:0,bonus:1},
+ {id:'chest-b',name:'Second Chest',x:25.4,y:55.35,worldGroup:1,bonus:1},
+ {id:'chest-c',name:'Third Chest',x:58.5,y:80.55,worldGroup:2,bonus:1},
  {id:'grand-chest',name:'Grand Treasure',x:88.5,y:69.5,worldGroup:3,bonus:5}
 ];
 export const shopCatalog={
