@@ -12,7 +12,24 @@
   <style>
     :root{--bg:#f8f6f2;--surface:#fff;--text:#27304a;--muted:#66708b;--purple:#6554cf;--purple-dark:#4736ad;--lilac:#efebff;--coral:#f29f78;--mint:#d7f6e8;--mint-strong:#237a58;--gold:#fef2c6;--danger:#bb485c;--line:#e8e6ef;--shadow:0 18px 50px rgba(52,45,100,.08)}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:17px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:4px solid #d1b6ff;outline-offset:3px}button:disabled{opacity:.48;cursor:not-allowed}.wrap{width:min(1100px,calc(100% - 34px));margin:auto}header{padding:22px 0}header .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}.logo{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:-.04em;font-size:1.25rem;text-decoration:none;color:inherit}.logo-badge{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:16px;overflow:hidden;box-shadow:0 7px 16px #6554cf31;flex:0 0 auto}.logo-badge img{width:100%;height:100%;display:block}.logo-text{display:inline-block}header .subtitle{font-weight:650;font-size:.85rem;color:var(--muted)}main{padding:10px 0 64px}.eyebrow{text-transform:uppercase;font-size:.73rem;letter-spacing:.18em;font-weight:900;color:var(--purple);margin:0 0 12px}.hero{background:linear-gradient(115deg,#eae4ff 0%,#fff7ec 76%);padding:36px clamp(23px,5vw,56px);border:1px solid #ece7f5;border-radius:30px;display:grid;grid-template-columns:1.5fr .7fr;align-items:center;gap:14px;overflow:hidden}.hero h1{font-size:clamp(2.25rem,5vw,4rem);letter-spacing:-.075em;line-height:1.08;margin:0 0 14px}.hero p{max-width:540px;color:#59617b;margin:0;font-size:1.05rem}.hero-art{display:grid;place-items:center;user-select:none}.hero-art img{width:min(100%,240px);height:auto;display:block;filter:drop-shadow(10px 13px 0 #b3a0ed60);transform:rotate(-7deg)}.tiny{font-size:.83rem;color:var(--muted)}.section-title{font-size:1.55rem;letter-spacing:-.045em;margin:32px 0 16px}.lesson-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.lesson-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:flex-start}.lesson-card .ico{font-size:3.5rem;margin-bottom:6px}.lesson-card h3{font-size:1.33rem;letter-spacing:-.04em;margin:4px 0}.lesson-card p{color:var(--muted);margin:4px 0 18px;flex:1;font-size:.92rem}.pill{display:inline-flex;align-items:center;border-radius:100px;background:#f3efff;color:#6554cf;padding:5px 11px;font-size:.76rem;font-weight:750}.card-meta{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 15px}.btn{border:0;background:var(--purple);color:white;padding:12px 18px;border-radius:14px;font-weight:800;box-shadow:0 5px 0 var(--purple-dark);transition:transform .12s,box-shadow .12s;text-align:center}.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 7px 0 var(--purple-dark)}.btn:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 var(--purple-dark)}.btn-ghost{background:white;color:var(--purple);border:1.5px solid #c9c0fb;box-shadow:none}.btn-ghost:hover:not(:disabled){box-shadow:none}.btn-white{background:#fff;color:var(--purple);box-shadow:none;border:1px solid #d9d2fa}.btn-white:hover:not(:disabled){box-shadow:none}.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.space{justify-content:space-between}.panel{background:#fff;border:1px solid var(--line);border-radius:26px;padding:clamp(20px,4vw,32px);box-shadow:var(--shadow)}.return{background:none;border:none;padding:10px 0;color:var(--purple);font-weight:800}.lesson-banner{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px}.lesson-banner h1{font-size:clamp(2rem,4vw,3rem);line-height:1.05;margin:4px 0 12px;letter-spacing:-.06em}.banner-emoji{font-size:6rem}.word-grid{display:flex;flex-wrap:wrap;gap:9px}.word-chip{background:#f5f2ff;border:1px solid #e1d9ff;padding:10px 14px;border-radius:13px;font-size:1rem}.word-chip strong{display:block;line-height:1.15}.word-chip small{display:block;color:var(--muted);font-size:.74rem}.callout{border-radius:18px;background:#fff4de;padding:16px 18px;margin:18px 0}.callout strong{display:block;margin-bottom:3px}.divider{height:1px;background:var(--line);margin:24px 0}.progress{height:11px;background:#eeeaf7;border-radius:20px;overflow:hidden}.progress-fill{height:100%;background:var(--purple);width:0;transition:width .25s}.progress-meta{display:flex;justify-content:space-between;gap:10px;font-size:.86rem;color:var(--muted);font-weight:700;margin:0 0 9px}.question h2{font-size:clamp(1.4rem,3.4vw,2rem);line-height:1.25;letter-spacing:-.04em;margin:12px 0 14px}.question p{color:var(--muted)}.figure{background:#f6f2ff;border-radius:24px;padding:13px 24px;font-size:5rem;min-height:136px;text-align:center;display:grid;place-items:center;margin:12px 0 20px}.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.option{background:#fff;border:2px solid #e5e1f1;border-radius:16px;min-height:70px;padding:12px;font-size:1.2rem;font-weight:750;color:var(--text);display:flex;align-items:center;justify-content:center;gap:10px;transition:background .15s,border-color .15s}.option:hover:not(:disabled){border-color:#aa9de7}.option[aria-pressed="true"]{background:#ede8ff;border-color:var(--purple)}.option.right{border-color:#37aa77;background:#e7fbf2}.option.wrong{border-color:#e28d98;background:#fff0f1}.answer{background:#f0f9f4;border:1px solid #c7e8d6;border-radius:17px;padding:14px 16px;margin:14px 0 8px}.answer.bad{background:#fff5f4;border-color:#f2d3cd}.answer strong{display:block}.answer small{font-size:.82rem;display:block;color:var(--muted);margin-top:2px}.controls{display:flex;gap:12px;justify-content:space-between;margin-top:24px;align-items:center}.controls .btn{min-width:128px}.match{display:grid;grid-template-columns:1fr 1fr;gap:12px}.match-col{display:flex;flex-direction:column;gap:10px}.match .tile{display:grid;place-items:center;text-align:center;border-radius:15px;border:2px solid #e6e0f3;background:#fff;min-height:74px;padding:8px;word-break:break-word;font-size:1.15rem;font-weight:750}.match .tile.emoji{font-size:2.2rem}.match .tile.selected{border-color:var(--purple);background:#eeeaff}.match .tile.matched{border-color:#b6e9d1;background:#e8fbf2;color:#347c5e}.match .tile.error{border-color:#e78996;background:#fff0f0}.hint{font-size:.83rem;color:var(--muted);margin:12px 0}.build-area{padding:14px;border:2px dashed #d8cef9;background:#f7f4ff;border-radius:18px;min-height:73px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}.word-token{background:#fff;border:1.5px solid #a69be2;border-radius:12px;padding:8px 12px;font-size:1.07rem;font-weight:800}.token-pool{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0}.token-pool button{background:#fff;border:2px solid #ded8ed;border-radius:13px;padding:12px 16px;font-weight:850}.token-pool button:hover:not(:disabled){border-color:var(--purple)}.score-banner{background:linear-gradient(120deg,#e9e5ff,#e5f9f0);border-radius:24px;padding:28px;text-align:center;margin-bottom:22px}.score-banner .big{font-size:clamp(3rem,8vw,5rem);font-weight:900;letter-spacing:-.07em;line-height:1}.result-list{display:grid;gap:10px;margin:20px 0}.result{border:1px solid var(--line);background:#fff;border-radius:15px;padding:12px 15px;display:flex;gap:12px;align-items:start}.result i{font-style:normal;font-size:1.2rem}.result b{display:block}.result small{color:var(--muted);display:block}.final-actions{display:flex;gap:10px;flex-wrap:wrap}.notes{margin-top:28px;background:#fff;border:1px dashed #d4cdec;border-radius:18px;padding:18px;font-size:.9rem;color:var(--muted)}.notes strong{color:var(--text)}footer{border-top:1px solid var(--line);color:var(--muted);font-size:.84rem;padding:20px 0 40px}footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.hidden{display:none!important}@media(max-width:750px){.hero{grid-template-columns:1fr;padding:26px}.hero-art{display:none}.lesson-grid{grid-template-columns:1fr}.lesson-card{flex-direction:row;gap:16px;align-items:center}.lesson-card .ico{font-size:2.6rem}.lesson-card .content{flex:1}.lesson-card p{margin-bottom:10px}.banner-emoji{font-size:4.6rem}.panel{padding:20px}.option{font-size:1rem;min-height:64px}.controls .btn{min-width:0}.figure{font-size:4rem}header .subtitle{display:none}}@media(max-width:420px){.options{grid-template-columns:1fr}.lesson-card{flex-direction:column;align-items:flex-start}.controls{gap:8px}.controls .btn{font-size:.9rem;padding:11px 13px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
-  </style>
+  
+    /* One lesson = three lives; all question types share the same UI contract. */
+    .lives{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:999px;background:#fff1f2;border:1px solid #ffd4dd;font-size:1.3rem;white-space:nowrap}
+    .lives-label{font-size:.74rem;font-weight:800;color:#8e3755;margin-right:3px}
+    .heart.empty{filter:grayscale(1);opacity:.32}
+    .check-row{margin-top:17px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .check-row .btn{min-width:155px}
+    .match .tile.paired{border-color:#c9b9ff;background:#f4f0ff;color:#493394}
+    .match .tile.selected{outline:3px solid #927dea;outline-offset:2px}
+    .pair-no{display:inline-flex;align-items:center;justify-content:center;min-width:25px;height:25px;margin-left:9px;padding:0 5px;border-radius:99px;background:#6554cf;color:white;font-size:.77rem;font-weight:850}
+    .game-over-backdrop{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px;background:rgba(37,31,66,.7);backdrop-filter:blur(5px)}
+    .game-over-dialog{background:white;border-radius:28px;max-width:430px;width:100%;padding:30px 25px;text-align:center;box-shadow:0 22px 80px #2b234955}
+    .game-over-cat{display:block;font-size:5.8rem;line-height:1.2;margin:0 auto 10px}
+    .game-over-dialog h2{font-size:1.8rem;margin:10px 0;letter-spacing:-.05em}
+    .game-over-dialog p{color:#66708b;margin:0 0 20px}
+    .game-over-dialog .btn{width:100%}
+    @media(max-width:560px){.lives{font-size:1rem;padding:6px 10px}.lives-label{font-size:.67rem}.game-over-dialog{padding:22px 18px}}
+</style>
 </head>
 <body>
 <header><div class="wrap"><a class="logo" href="#app" aria-label="Kids English — на главную"><span class="logo-badge"><img src="assets/brand/abc-cat-logo.png" alt=""></span><span class="logo-text">Kids English</span></a><span class="subtitle">Play · Learn · Repeat ♡</span></div></header>
@@ -24,25 +41,25 @@
 const lessons = [
  {id:'ENG-001',icon:'😄',accent:'#ece8ff',title:'Feelings',ru:'Эмоции',description:'Учим happy, sad, tired, angry, scared — узнаём эмоции и играем в пантомиму.',duration:'10–15 мин',words:[['happy','счастливый'],['sad','грустный'],['tired','уставший'],['angry','сердитый'],['scared','испуганный']],game:'Игра «Зеркало»: взрослый изображает эмоцию, ребёнок повторяет и говорит: “I am happy!” Затем поменяйтесь ролями.',tasks:[
   {type:'choice',title:'Какое слово подходит к картинке?',caption:'Посмотри на лицо.',figure:'😄',options:['sad','happy','angry','tired'],correct:1,explain:'Happy — счастливый. Попробуй изобразить счастливое лицо!'},
-  {type:'choice',title:'Как сказать «Я устал»?',figure:'🥱',options:["I'm scared","I'm tired","I'm happy","I'm angry"],correct:1,explain:'I’m tired — я устал / устала.'},
+  {type:'choice',title:'Как сказать «Я устал»?',options:["I'm scared","I'm tired","I'm happy","I'm angry"],correct:1,explain:'I’m tired — я устал / устала.'},
   {type:'match',title:'Найди пары',caption:'Нажми сначала на слово, потом на нужную картинку.',pairs:[['happy','😄'],['sad','😢'],['angry','😠']],explain:'Happy — 😄, sad — 😢, angry — 😠.'},
   {type:'order',title:'Собери фразу «Я счастлив»',caption:'Нажимай на слова в правильном порядке.',tokens:['happy','am','I'],correct:['I','am','happy'],explain:'I am happy — я счастлив / счастлива.'}
  ]},
  {id:'ENG-002',icon:'🤸',accent:'#e4f7ec',title:'Move & Play',ru:'Движения',description:'Действуем по-английски: run, jump, fly, swim, spin, sleep и другие команды.',duration:'10–15 мин',words:[['run','беги'],['jump','прыгай'],['fly','лети'],['swim','плыви'],['spin','кружись'],['sleep','спи'],['stand up','встань'],['take a seat','сядь']],game:'Игра «Робот»: взрослый говорит “Jump!”, “Spin around!”, “Sleep!”; ребёнок выполняет действие. Затем ребёнок отдаёт команды взрослому.',tasks:[
-  {type:'choice',title:'Какое слово означает «прыгай»?',figure:'🦘',options:['Sleep','Jump','Read','Drink'],correct:1,explain:'Jump — прыгать. Покажи большой прыжок!'},
-  {type:'choice',title:'Какая картинка означает “Swim”?',figure:'🏊',options:['🏃','😴','🏊','💃'],correct:2,explain:'Swim — плавать. Представь, что плывёшь в море!'},
+  {type:'choice',title:'Какое слово означает «прыгай»?',options:['Sleep','Jump','Read','Drink'],correct:1,explain:'Jump — прыгать. Покажи большой прыжок!'},
+  {type:'choice',title:'Выбери картинку к слову “Swim”',options:['🏃','😴','🏊','💃'],correct:2,explain:'Swim — плавать. Представь, что плывёшь в море!'},
   {type:'match',title:'Соедини команды и движения',caption:'Нажми команду и подходящую картинку.',pairs:[['run','🏃'],['fly','🦅'],['sleep','😴']],explain:'Run — 🏃, fly — 🦅, sleep — 😴.'},
   {type:'order',title:'Собери команду «Кружись вокруг»',caption:'Нажми слова по порядку.',tokens:['around','Spin'],correct:['Spin','around'],explain:'Spin around! — покружись!'}
  ]},
  {id:'ENG-003',icon:'🐸',accent:'#fff0d7',title:'Animal Theatre',ru:'Театр животных',description:'Соединяем животных, движения и эмоции в маленьких сценках.',duration:'12–15 мин',words:[['frog','лягушка'],['cat','кот'],['dog','собака'],['bird','птица'],['The cat is happy','Кот счастлив'],['Is it a frog?','Это лягушка?']],game:'Игра «Театр сумасшедших животных»: пусть игрушечный кот сначала спит, потом становится angry, а лягушка прыгает и становится happy. Называйте героев и эмоции по-английски.',tasks:[
   {type:'choice',title:'Кто это?',figure:'🐸',options:['A cat','A frog','A bird','A dog'],correct:1,explain:'A frog — лягушка. The frog can jump!'},
-  {type:'choice',title:'“Is it a frog?” 🐱',caption:'Посмотри на животное и ответь.',figure:'🐱',options:['Yes, it is.','No, it is not.'],correct:1,explain:'Это кот, а не лягушка. No, it is not.'},
+  {type:'choice',title:'“Is it a frog?”',caption:'Посмотри на животное и ответь.',figure:'🐱',options:['Yes, it is.','No, it is not.'],correct:1,explain:'Это кот, а не лягушка. No, it is not.'},
   {type:'match',title:'Подбери животных',pairs:[['cat','🐱'],['dog','🐶'],['bird','🐦']],explain:'Cat — кот, dog — собака, bird — птица.'},
   {type:'order',title:'Собери «Кот грустный»',caption:'Нажми слова по порядку.',tokens:['sad','is','The','cat'],correct:['The','cat','is','sad'],explain:'The cat is sad — кот грустный.'}
  ]}
 ];
 const app=document.getElementById('app');
-let state={page:'home',lesson:null,index:0,results:[],selected:null,checked:false,word:null,matches:[],wrongPairs:0,pool:[],order:[],feedback:''};
+let state={page:'home',lesson:null,index:0,results:[],lives:3,taskMistakes:0,selected:null,checked:false,matchSelection:null,assignments:{},pool:[],order:[]};
 const esc=v=>String(v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const lesson=()=>lessons.find(l=>l.id===state.lesson);
 const task=()=>lesson().tasks[state.index];
@@ -56,38 +73,127 @@ function openLesson(id){const l=lessons.find(x=>x.id===id);if(!l)return;state={p
  app.innerHTML=`<button class="return" id="back">← Все уроки</button><section class="panel"><div class="lesson-banner"><div><span class="pill">${l.id} · ${l.duration}</span><h1>${esc(l.title)}</h1><p>${esc(l.description)}</p></div><span class="banner-emoji" aria-hidden="true">${l.icon}</span></div><div class="divider"></div><p class="eyebrow">Слова урока</p><div class="word-grid">${l.words.map(w=>`<div class="word-chip"><strong>${esc(w[0])}</strong><small>${esc(w[1])}</small></div>`).join('')}</div><div class="callout"><strong>🎭 Игра вместе со взрослым</strong>${esc(l.game)}</div><div class="row space"><p class="tiny">${l.tasks.length} интерактивных задания · Можно повторять без ограничений</p><button class="btn" id="start">Начать задания →</button></div></section>`;
  app.querySelector('#back').addEventListener('click',home);app.querySelector('#start').addEventListener('click',()=>startPractice());goTop();
 }
-function startPractice(){state.page='practice';state.index=0;state.results=[];resetTask();renderTask();}
-function resetTask(){state.selected=null;state.checked=false;state.word=null;state.matches=[];state.wrongPairs=0;state.order=[];state.feedback='';const t=task();if(t.type==='order')state.pool=t.tokens.map((v,i)=>({value:v,id:i}));}
-function renderTask(){const l=lesson(),t=task(),n=state.index+1;
- app.innerHTML=`<button class="return" id="exit">← К уроку</button><section class="panel"><div class="progress-meta"><span>${esc(l.title)}</span><span>Задание ${n} из ${l.tasks.length}</span></div><div class="progress" aria-label="Прогресс занятия"><div class="progress-fill" style="width:${state.index/l.tasks.length*100}%"></div></div><div class="question"><p class="eyebrow" style="margin-top:25px">${t.type==='choice'?'Выбери ответ':t.type==='match'?'Найди пары':'Собери фразу'}</p><h2>${esc(t.title)}</h2>${t.caption?`<p>${esc(t.caption)}</p>`:''}${t.figure?`<div class="figure" role="img" aria-label="Иллюстрация к вопросу">${t.figure}</div>`:''}<div id="activity"></div><div id="feedback" aria-live="polite"></div></div><div class="controls"><button class="btn btn-white" id="restart">↻ Сначала</button><button class="btn" id="next" disabled>${n===l.tasks.length?'Показать результат':'Дальше →'}</button></div></section>`;
- app.querySelector('#exit').addEventListener('click',()=>openLesson(l.id));app.querySelector('#restart').addEventListener('click',startPractice);
- app.querySelector('#next').addEventListener('click',()=>{if(!state.checked)return;if(n===l.tasks.length)showResults();else {state.index++;resetTask();renderTask();}});
+function startPractice(){
+ state.page='practice';state.index=0;state.results=[];state.lives=3;
+ resetTask();renderTask();
+}
+function resetTask(){
+ state.selected=null;state.checked=false;state.taskMistakes=0;
+ state.matchSelection=null;state.assignments={};state.order=[];
+ const t=task();state.pool=t.type==='order'?t.tokens.map((value,id)=>({value,id})):[];
+}
+function heartsHtml(){
+ return `<div class="lives" role="status" aria-label="Осталось жизней: ${state.lives} из 3"><span class="lives-label">Жизни</span>${[0,1,2].map(i=>`<span class="heart ${i>=state.lives?'empty':''}" aria-hidden="true">❤️</span>`).join('')}</div>`;
+}
+function updateHearts(){const el=app.querySelector('#lives');if(el)el.innerHTML=heartsHtml();}
+function clearFeedback(){const el=app.querySelector('#feedback');if(el)el.innerHTML='';}
+function renderTask(){
+ const l=lesson(),t=task(),n=state.index+1;
+ app.innerHTML=`<button class="return" id="exit">← К уроку</button><section class="panel"><div class="progress-meta"><span>${esc(l.title)}</span><span>Задание ${n} из ${l.tasks.length}</span></div><div class="row space" style="margin-top:10px"><div class="tiny">Три жизни на весь урок</div><div id="lives">${heartsHtml()}</div></div><div class="progress" aria-label="Прогресс занятия"><div class="progress-fill" style="width:${state.index/l.tasks.length*100}%"></div></div><div class="question"><p class="eyebrow" style="margin-top:25px">${t.type==='choice'?'Выбери ответ':t.type==='match'?'Найди пары':'Собери фразу'}</p><h2>${esc(t.title)}</h2>${t.caption?`<p>${esc(t.caption)}</p>`:''}${t.figure?`<div class="figure" role="img" aria-label="Иллюстрация к вопросу">${t.figure}</div>`:''}<div id="activity"></div><div id="feedback" aria-live="polite" role="status"></div></div><div class="controls"><button class="btn btn-white" id="restart">↻ Сначала</button><button class="btn" id="next" hidden>${n===l.tasks.length?'Показать результат':'Далее →'}</button></div></section>`;
+ app.querySelector('#exit').addEventListener('click',()=>openLesson(l.id));
+ app.querySelector('#restart').addEventListener('click',startPractice);
+ app.querySelector('#next').addEventListener('click',()=>{if(!state.checked||state.lives===0)return;if(n===l.tasks.length)showResults();else{state.index++;resetTask();renderTask();}});
  if(t.type==='choice')renderChoice();else if(t.type==='match')renderMatch();else renderOrder();goTop();
 }
-function finish(correct,details){if(state.checked)return;state.checked=true;state.results[state.index]={title:task().title,correct,details,explain:task().explain};const feedback=app.querySelector('#feedback');feedback.innerHTML=`<div class="answer ${correct?'':'bad'}"><strong>${correct?'🎉 Отлично, правильно!':'💡 Хорошая попытка!'}</strong>${esc(details)}<small>${esc(task().explain)}</small></div>`;app.querySelector('#next').disabled=false;}
-function renderChoice(){const t=task(),act=app.querySelector('#activity');
- act.innerHTML=`<div class="options">${t.options.map((v,i)=>`<button class="option" type="button" data-ix="${i}" aria-pressed="${state.selected===i?'true':'false'}">${esc(v)}</button>`).join('')}</div><div style="margin-top:15px"><button id="check" class="btn btn-ghost" ${state.selected===null?'disabled':''}>Проверить</button></div>`;
- act.querySelectorAll('[data-ix]').forEach(b=>b.addEventListener('click',()=>{if(state.checked)return;state.selected=Number(b.dataset.ix);act.querySelectorAll('[data-ix]').forEach(x=>x.setAttribute('aria-pressed',String(Number(x.dataset.ix)===state.selected)));act.querySelector('#check').disabled=false;}));
- act.querySelector('#check').addEventListener('click',()=>{if(state.selected===null||state.checked)return;const correct=state.selected===t.correct;act.querySelectorAll('[data-ix]').forEach(b=>{b.disabled=true;if(Number(b.dataset.ix)===t.correct)b.classList.add('right');else if(Number(b.dataset.ix)===state.selected)b.classList.add('wrong');});act.querySelector('#check').disabled=true;finish(correct,correct?'Ответ найден.':`Правильный ответ: ${t.options[t.correct]}.`);});
+function checkAnswer(correct){
+ if(state.checked||state.lives<=0)return;
+ if(correct){
+   state.checked=true;
+   state.results[state.index]={title:task().title,correct:true,mistakes:state.taskMistakes};
+   app.querySelector('#feedback').innerHTML='<div class="answer"><strong>✅ Правильно!</strong>Отлично! Можно переходить дальше.</div>';
+   app.querySelector('#next').hidden=false;
+   app.querySelector('#activity').querySelectorAll('button').forEach(b=>b.disabled=true);
+ }else{
+   state.lives--;
+   state.taskMistakes++;
+   updateHearts();
+   app.querySelector('#feedback').innerHTML='<div class="answer bad"><strong>❌ Неправильно.</strong>Попробуй ещё раз.</div>';
+   if(state.lives===0)showGameOver();
+ }
 }
-function renderMatch(){const t=task(),act=app.querySelector('#activity');const pictures=t.pairs.map((v,i)=>({v:v[1],i}));pictures.reverse();
- act.innerHTML=`<div class="match"><div class="match-col">${t.pairs.map((p,i)=>`<button class="tile" type="button" data-word="${i}">${esc(p[0])}</button>`).join('')}</div><div class="match-col">${pictures.map(p=>`<button class="tile emoji" type="button" data-picture="${p.i}" aria-label="${esc(t.pairs[p.i][1])}">${esc(p.v)}</button>`).join('')}</div></div><p class="hint" id="match-status" aria-live="polite">Выбери слово слева, затем картинку справа. Найдено пар: 0 из ${t.pairs.length}.</p>`;
- act.querySelectorAll('[data-word]').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.word);if(state.checked||state.matches.includes(i))return;state.word=i;act.querySelectorAll('[data-word]').forEach(x=>x.classList.toggle('selected',x===b));}));
- act.querySelectorAll('[data-picture]').forEach(b=>b.addEventListener('click',()=>{const i=Number(b.dataset.picture);if(state.checked||state.matches.includes(i))return;if(state.word===null){act.querySelector('#match-status').textContent='Сначала выбери слово слева.';return;}const selected=state.word;if(i===selected){state.matches.push(i);state.word=null;act.querySelector(`[data-word="${i}"]`).className='tile matched';b.className='tile emoji matched';act.querySelector('#match-status').textContent=`Отлично! Найдено пар: ${state.matches.length} из ${t.pairs.length}.`;
- if(state.matches.length===t.pairs.length){act.querySelectorAll('button').forEach(x=>x.disabled=true);finish(state.wrongPairs===0,state.wrongPairs===0?'Все пары с первого раза!':`Все пары найдены. Ошибочных попыток: ${state.wrongPairs}.`);}
- }else{state.wrongPairs++;act.querySelector('#match-status').textContent='Не совсем. Попробуй выбрать другую картинку.';b.classList.add('error');setTimeout(()=>b.classList.remove('error'),350);}
+function showGameOver(){
+ state.page='gameover';
+ const backdrop=document.createElement('div');
+ backdrop.className='game-over-backdrop';
+ backdrop.innerHTML='<div class="game-over-dialog" role="dialog" aria-modal="true" aria-labelledby="game-over-title" aria-describedby="game-over-desc"><span class="game-over-cat" aria-hidden="true">😿</span><h2 id="game-over-title">Сердечки закончились</h2><p id="game-over-desc">Не грусти, котик! Начни урок сначала и попробуй ещё раз.</p><button class="btn" id="retry-lesson" type="button">↻ Начать урок сначала</button></div>';
+ app.append(backdrop);
+ backdrop.querySelector('#retry-lesson').addEventListener('click',startPractice);
+ backdrop.querySelector('#retry-lesson').focus();
+}
+function renderChoice(){
+ const t=task(),act=app.querySelector('#activity');
+ act.innerHTML=`<div class="options">${t.options.map((v,i)=>`<button class="option" type="button" data-ix="${i}" aria-pressed="false">${esc(v)}</button>`).join('')}</div><div class="check-row"><button id="check" class="btn btn-ghost" disabled>Проверить</button></div>`;
+ const buttons=Array.from(act.querySelectorAll('[data-ix]'));
+ buttons.forEach(b=>b.addEventListener('click',()=>{
+   if(state.checked)return;
+   state.selected=Number(b.dataset.ix);buttons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+   act.querySelector('#check').disabled=false;clearFeedback();
  }));
+ act.querySelector('#check').addEventListener('click',()=>{
+   if(state.selected===null||state.checked)return;
+   const correct=state.selected===t.correct;checkAnswer(correct);
+   if(!correct&&state.lives>0){state.selected=null;buttons.forEach(b=>b.setAttribute('aria-pressed','false'));act.querySelector('#check').disabled=true;}
+ });
 }
-function renderOrder(){const t=task(),act=app.querySelector('#activity');
- const draw=()=>{act.innerHTML=`<p class="tiny">Твоя фраза (нажми слово, чтобы убрать его):</p><div class="build-area" aria-label="Собранная фраза">${state.order.length?state.order.map((x,i)=>`<button class="word-token" type="button" data-undo="${i}">${esc(x.value)} ×</button>`).join(''):'<span class="tiny">Нажимай на слова ниже ↓</span>'}</div><div class="token-pool" aria-label="Доступные слова">${state.pool.map(x=>`<button type="button" data-token="${x.id}">${esc(x.value)}</button>`).join('')}</div><button class="btn btn-ghost" id="check-order" ${state.pool.length?'disabled':''}>Проверить фразу</button>`;
- act.querySelectorAll('[data-token]').forEach(b=>b.addEventListener('click',()=>{if(state.checked)return;const id=Number(b.dataset.token),idx=state.pool.findIndex(x=>x.id===id);if(idx===-1)return;state.order.push(state.pool.splice(idx,1)[0]);draw();}));
- act.querySelectorAll('[data-undo]').forEach(b=>b.addEventListener('click',()=>{if(state.checked)return;state.pool.push(state.order.splice(Number(b.dataset.undo),1)[0]);state.pool.sort((a,b)=>a.id-b.id);draw();}));
- act.querySelector('#check-order').addEventListener('click',()=>{if(state.checked||state.pool.length)return;const given=state.order.map(x=>x.value).join(' '),expected=t.correct.join(' '),correct=given===expected;act.querySelectorAll('button').forEach(b=>b.disabled=true);finish(correct,correct?'Фраза собрана правильно.':`Правильный порядок: ${expected}.`);});};draw();
+function renderMatch(){
+ const t=task(),act=app.querySelector('#activity');
+ const pictures=t.pairs.map((p,i)=>({value:p[1],i})).reverse();
+ function draw(){
+   const linked=Object.entries(state.assignments);
+   const badge=(number)=>number===undefined?'':`<span class="pair-no" aria-hidden="true">${number+1}</span>`;
+   const wordBadge=i=>linked.some(([wi])=>Number(wi)===i)?i:undefined;
+   const picBadge=i=>{const pair=linked.find(([,pi])=>pi===i);return pair?Number(pair[0]):undefined;};
+   act.innerHTML=`<div class="match"><div class="match-col">${t.pairs.map((p,i)=>`<button type="button" class="tile ${state.matchSelection===i?'selected':''} ${state.assignments[i]!==undefined?'paired':''}" data-word="${i}" aria-pressed="${state.matchSelection===i}">${esc(p[0])}${badge(wordBadge(i))}</button>`).join('')}</div><div class="match-col">${pictures.map(p=>`<button type="button" class="tile emoji ${picBadge(p.i)!==undefined?'paired':''}" data-picture="${p.i}">${esc(p.value)}${badge(picBadge(p.i))}</button>`).join('')}</div></div><p class="hint" id="match-status">Выбери слово слева и картинку справа. Связано: ${linked.length} из ${t.pairs.length}. Номера показывают только твой выбор.</p><div class="check-row"><button id="check-match" class="btn btn-ghost" ${linked.length===t.pairs.length?'':'disabled'}>Проверить</button><button id="clear-match" class="btn btn-white" type="button">Очистить пары</button></div>`;
+   act.querySelectorAll('[data-word]').forEach(b=>b.addEventListener('click',()=>{
+     if(state.checked)return;state.matchSelection=Number(b.dataset.word);
+     delete state.assignments[state.matchSelection];clearFeedback();draw();
+   }));
+   act.querySelectorAll('[data-picture]').forEach(b=>b.addEventListener('click',()=>{
+     if(state.checked||state.matchSelection===null)return;
+     const picture=Number(b.dataset.picture);
+     for(const k of Object.keys(state.assignments))if(state.assignments[k]===picture)delete state.assignments[k];
+     state.assignments[state.matchSelection]=picture;state.matchSelection=null;clearFeedback();draw();
+   }));
+   act.querySelector('#clear-match').addEventListener('click',()=>{if(state.checked)return;state.assignments={};state.matchSelection=null;clearFeedback();draw();});
+   act.querySelector('#check-match').addEventListener('click',()=>{
+     if(state.checked||Object.keys(state.assignments).length!==t.pairs.length)return;
+     const correct=Object.entries(state.assignments).every(([i,picture])=>Number(i)===picture);
+     checkAnswer(correct);
+     if(!correct&&state.lives>0){state.assignments={};state.matchSelection=null;draw();}
+   });
+ }
+ draw();
 }
-function showResults(){state.page='results';const l=lesson(),total=l.tasks.length,passed=state.results.filter(r=>r?.correct).length;
- app.innerHTML=`<button class="return" id="all">← Все уроки</button><section class="panel"><div class="score-banner"><div aria-hidden="true" style="font-size:3.5rem">${passed===total?'🏆':'🌈'}</div><p class="eyebrow">${esc(l.title)} · Результат</p><div class="big">${passed} / ${total}</div><p>${passed===total?'Все задания выполнены без ошибок!':'Каждая попытка — шаг вперёд. Можно попробовать снова!'}</p></div><h2 class="section-title">Результат по каждому заданию</h2><div class="result-list">${state.results.map((r,i)=>`<div class="result"><i aria-hidden="true">${r.correct?'✅':'🔁'}</i><div><b>${i+1}. ${esc(r.title)}</b><small>${r.correct?'Правильно':'Нужна практика'} · ${esc(r.details)}</small><small>${esc(r.explain)}</small></div></div>`).join('')}</div><div class="final-actions"><button class="btn" id="again">↻ Пройти ещё раз</button><button class="btn btn-ghost" id="intro">Другие игры</button></div><div class="notes"><strong>Для родителей:</strong> этот результат виден только на экране. Он не отправляется и не сохраняется в GitHub. Обратную связь по урокам передавайте взрослым сообщением в чате, указывая код урока ${l.id}.</div></section>`;
+function renderOrder(){
+ const t=task(),act=app.querySelector('#activity');
+ function draw(){
+   act.innerHTML=`<p class="tiny">Твоя фраза (нажми слово, чтобы убрать его):</p><div class="build-area" aria-label="Собранная фраза">${state.order.length?state.order.map((x,i)=>`<button class="word-token" type="button" data-undo="${i}">${esc(x.value)} ×</button>`).join(''):'<span class="tiny">Нажимай на слова ниже ↓</span>'}</div><div class="token-pool" aria-label="Доступные слова">${state.pool.map(x=>`<button type="button" data-token="${x.id}">${esc(x.value)}</button>`).join('')}</div><div class="check-row"><button class="btn btn-ghost" id="check-order" ${state.pool.length?'disabled':''}>Проверить</button><button type="button" class="btn btn-white" id="clear-order">Очистить фразу</button></div>`;
+   act.querySelectorAll('[data-token]').forEach(b=>b.addEventListener('click',()=>{
+     if(state.checked)return;
+     const id=Number(b.dataset.token),idx=state.pool.findIndex(x=>x.id===id);if(idx<0)return;
+     state.order.push(state.pool.splice(idx,1)[0]);clearFeedback();draw();
+   }));
+   act.querySelectorAll('[data-undo]').forEach(b=>b.addEventListener('click',()=>{
+     if(state.checked)return;
+     const entry=state.order.splice(Number(b.dataset.undo),1)[0];state.pool.push(entry);
+     state.pool.sort((a,b)=>a.id-b.id);clearFeedback();draw();
+   }));
+   act.querySelector('#clear-order').addEventListener('click',()=>{if(state.checked)return;state.pool=t.tokens.map((value,id)=>({value,id}));state.order=[];clearFeedback();draw();});
+   act.querySelector('#check-order').addEventListener('click',()=>{
+     if(state.checked||state.pool.length)return;
+     const given=state.order.map(x=>x.value).join(' '),expected=t.correct.join(' ');
+     const correct=given===expected;checkAnswer(correct);
+     if(!correct&&state.lives>0){state.pool=t.tokens.map((value,id)=>({value,id}));state.order=[];draw();}
+   });
+ }
+ draw();
+}
+function showResults(){
+ state.page='results';const l=lesson(),total=l.tasks.length,passed=state.results.filter(r=>r?.correct).length;
+ app.innerHTML=`<button class="return" id="all">← Все уроки</button><section class="panel"><div class="score-banner"><div aria-hidden="true" style="font-size:3.5rem">🏆</div><p class="eyebrow">${esc(l.title)} · Результат</p><div class="big">${passed} / ${total}</div><p>Ты справился! Осталось жизней: ${state.lives} из 3 ❤️</p></div><h2 class="section-title">Результат по каждому заданию</h2><div class="result-list">${state.results.map((r,i)=>`<div class="result"><i aria-hidden="true">✅</i><div><b>${i+1}. ${esc(r.title)}</b><small>Правильно · Ошибок до верного ответа: ${r.mistakes}</small></div></div>`).join('')}</div><div class="final-actions"><button class="btn" id="again">↻ Пройти ещё раз</button><button class="btn btn-ghost" id="intro">Другие игры</button></div><div class="notes"><strong>Для родителей:</strong> этот результат виден только на экране. Он не отправляется и не сохраняется в GitHub. Обратную связь по урокам передавайте взрослым сообщением в чате, указывая код урока ${l.id}.</div></section>`;
  app.querySelector('#all').addEventListener('click',home);app.querySelector('#again').addEventListener('click',startPractice);app.querySelector('#intro').addEventListener('click',home);goTop();
 }
+
 home();
 </script>
 </body>
