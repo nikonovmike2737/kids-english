@@ -392,7 +392,7 @@ function nextQuestion() {
 function showGameOver() {
   const layer = nestedCard(`
     <h2>Try Again</h2>
-    <div class="retry-illustration"><span class="retry-spark retry-spark-left" aria-hidden="true">✦</span><img class="retry-cat" src="assets/modals/g5-sad-kitten.png" alt="Sad but hopeful orange kitten" draggable="false"><span class="retry-spark retry-spark-right" aria-hidden="true">✧</span></div>
+    <div class="retry-illustration"><span class="retry-spark retry-spark-left" aria-hidden="true">✦</span><img class="retry-cat" src="assets/modals/g5-sad-kitten.webp" alt="Sad but hopeful orange kitten" draggable="false"><span class="retry-spark retry-spark-right" aria-hidden="true">✧</span></div>
     <p class="reward-sub">You can do it!</p>
     <div class="btn-row"><button class="btn" id="retry">Play Again ↻</button><button class="btn white" id="exit-fail">Back to Map</button></div>
   `, 'wrong-card gameover-card');
