@@ -41,7 +41,7 @@ async function checkMap(page,width,height){
   for(let row=0;row<3;row++){
     const label=await page.locator(names[row]).boundingBox();
     const node=await page.locator('[data-stop="'+(row*4+1)+'"]').boundingBox();
-    assert.ok(label.bottom < node.top - 5,'row title must stay clear of lesson buttons: '+row+' '+JSON.stringify({label,node}));
+    assert.ok(label.y+label.height < node.y-5,'row title must stay clear of lesson buttons: '+row+' '+JSON.stringify({label,node}));
   }
   const chests=await page.locator('.chest-node').all();
   const ids=[];
@@ -81,9 +81,9 @@ async function checkMap(page,width,height){
   const bridge=await page.locator('#route-bridge-b').boundingBox();
   assert.ok(cat&&bridge);
   // Use the route's entire second bridge corridor as exclusion zone for the clickable kitten.
-  assert.ok(cat.right<=bridge.left+4,'cat hides bridge B: '+JSON.stringify({cat,bridge}));
-  assert.ok(cat.left>=map.left-2,'cat clipped left');
-  assert.ok(cat.right<=map.right+2,'cat clipped right');
+  assert.ok(cat.x+cat.width<=bridge.x+4,'cat hides bridge B: '+JSON.stringify({cat,bridge}));
+  assert.ok(cat.x>=map.x-2,'cat clipped left');
+  assert.ok(cat.x+cat.width<=map.x+map.width+2,'cat clipped right');
   const src=await page.locator('#island-cat .cat-base').getAttribute('src');
   assert.ok(src.endsWith('cat-dressable.webp'));
   await shot(page,'map-'+width+'x'+height);
