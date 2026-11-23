@@ -58,10 +58,10 @@ Production GitHub Pages status MUST be recorded after successful Actions run and
 
 | ID | Priority | Defect / acceptance case | Production implementation | Status |
 |---|---|---|---|---|
-| C1 | P1 | Preview → Lesson, 4-choice layout, explicit Check | 3 authored lessons × 4 tasks; each choice retains 4 options in 2×2; no content/answer-key edits | DEPLOYED · CI PASS |
-| C2 | P1 | Correct/Wrong and stacked overlay close controls | Upper dialog has close icon with accessible label; Tab bound to topmost active dialog; Escape leaves safe state | DEPLOYED · CI PASS |
-| C3 | P1 | Exactly one heart per wrong Check, no answer disclosure | Shared 3-life attempt contract retained for choice/match/order; wrong resets selection and stays on question; last heart triggers sad cat | DEPLOYED · CI PASS |
-| C4 | P1 | Results omitted after full-lesson reward | Reward shows all four solved task statuses, first try/mistakes per task, and remaining **lesson-attempt** lives; RAM-only, no answer keys | DEPLOYED · CI PASS |
+| C1 | P1 | Preview → Lesson, 4-choice layout, explicit Check | 3 authored lessons × 4 tasks; each choice retains 4 options in 2×2; no content/answer-key edits | DEPLOYED · CI + Browser E2E PASS |
+| C2 | P1 | Correct/Wrong and stacked overlay close controls | Upper dialog has close icon with accessible label; Tab bound to topmost active dialog; Escape leaves safe state | DEPLOYED · CI + Browser E2E PASS |
+| C3 | P1 | Exactly one heart per wrong Check, no answer disclosure | Shared 3-life attempt contract retained for choice/match/order; wrong resets selection and stays on question; last heart triggers sad cat | DEPLOYED · CI + Browser E2E PASS |
+| C4 | P1 | Results omitted after full-lesson reward | Reward shows all four solved task statuses, first try/mistakes per task, and remaining **lesson-attempt** lives; RAM-only, no answer keys | DEPLOYED · CI + Browser E2E PASS |
 | C5 | P1 | Modal close/refresh focus loss | Preserve original opener through internal re-renders; restore focus to the replacement live lesson node after map rebuild | DEPLOYED · CI PASS |
 | C6 | P1 | Mobile reward results clipped; regressions to inventory/key | Scroll-safe compact reward layout; key/chest idempotency preserved; Block B regression suite retained | DEPLOYED · CI PASS |
 
@@ -70,9 +70,15 @@ Production GitHub Pages status MUST be recorded after successful Actions run and
 - Production application commit: `59e9d60c0700ef460ac26a04be2c6953fe6591cf`.
 - PR checks: [run #45221634938](https://github.com/nikonovmike2737/kids-english/actions/runs/45221634938), SUCCESS.
 - GitHub Pages: [run #45221739204](https://github.com/nikonovmike2737/kids-english/actions/runs/45221739204), SUCCESS; validation, artifact upload and deployment succeeded.
-- **15 native Node contract tests** in CI: 5 from Block B and 10 from Block C; syntax checks pass. These are source-level contract tests, not full browser interaction tests.
+- **15 native Node contract tests** in CI: 5 from Block B and 10 from Block C; syntax checks pass. These source-level checks are complemented by the independent browser E2E in PR #21 (local + live Production).
 - Independent HTTP retrieval of public home `/kids-english/` and classic `/kids-english/classic/`: PASS; homepage title `Kids English — Adventure Island`, Classic title `Kids English — Play & Learn`.
-- **Not verified:** third-party live browser click-through. Browser agent refused execution due insufficient service balance. Owner screenshots/interactive acceptance still pending. Do not claim host-level visual C acceptance from static tests or URL retrieval.
+- **Hosted Chromium E2E PASS:** [PR #21](https://github.com/nikonovmike2737/kids-english/pull/21), [PR CI run #45223178696](https://github.com/nikonovmike2737/kids-english/actions/runs/45223178696), SUCCESS. Playwright runs identical real-click exercises both against a locally served PR tree and independently against **the public Production Pages URL**. Covered ENG-001 preview, wrong/correct choice, 3-life counter, keyboard Escape/focus, match/order to lesson completion, 4 per-task outcomes, key idempotency on failed replay, gameover/restart, 390px mobile and Classic. Zero JS exceptions/non-GET requests. The separately tried third-party browser agent was unavailable (wallet), but GitHub-hosted Chromium E2E did run successfully. Owner's manual visual acceptance still pending.
 - No changes in this C release to D (World Map), E (wardrobe visual corrections), METHOD content or `classic/index.html`.
 
 **Next:** Block D is the next technical unit. Block E follows independently. Verify owner acceptance for A/B/C separately; do not silently upgrade pending visual statuses.
+
+### Block C live-browser proof — follow-up 2026-11-23
+- [PR #21](https://github.com/nikonovmike2737/kids-english/pull/21) merged; test-only commit `a6fd09da8ed963a7f59817f8a6e5affa38c54790` (does not alter production JS or CSS).
+- [GitHub Actions PR run #45223178696](https://github.com/nikonovmike2737/kids-english/actions/runs/45223178696): **SUCCESS** on pinned Ubuntu 24.04 with Playwright Chromium.
+- Two independent browser smoke rounds (local PR static server and live `https://nikonovmike2737.github.io/kids-english/`): each recorded nine `BROWSER PASS` checkpoints; Node B/C 15/15; no uncaught JS errors, no non-GET network requests.
+- Thus C automated browser acceptance is **PASS**, beyond source-only/URL checks. Owner visual acceptance and future-world/cat feature D/E are **not** inferred as PASS.
