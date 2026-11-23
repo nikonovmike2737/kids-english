@@ -3,7 +3,7 @@
 
 **Latest owner visual acceptance (22:38, supersedes prior automated PASS for visual aspects):** [New four-group canonical register](ADVENTURE_ISLAND_OWNER_VISUAL_QA_2026-11-23_CURRENT.md) · [G1 #26](https://github.com/nikonovmike2737/kids-english/issues/26) · [G2 #27](https://github.com/nikonovmike2737/kids-english/issues/27) · [G3 #28](https://github.com/nikonovmike2737/kids-english/issues/28) · [G4 #29](https://github.com/nikonovmike2737/kids-english/issues/29). Prior A–E technical passes do **not** constitute owner approval of the visual design.
 
-Status: **A–E technical baseline previously deployed; newer owner visual QA is OPEN — G1 deployed / hosted E2E PASS / owner visual sign-off pending, G2/G3/G4 open. See owner issue register linked below.**
+Status: **A–E technical baseline previously deployed; newer owner visual QA is OPEN — G1 + G2 DEPLOYED / hosted E2E PASS / owner visual sign-off pending; G3/G4 OPEN. See owner issue register linked below.**
 Date: 2026-11-23. Owner annotations: screenshots 18:06:20, 18:10:31, 18:12:07, 18:18:25, 18:19:58 and 18:21:03. Comparison: earlier approved concept 16:03:44.
 
 | ID | Severity | Defect from owner review | Fix and verification | Status |
@@ -120,4 +120,10 @@ Production GitHub Pages status MUST be recorded after successful Actions run and
 ## New owner G1 visual-fix shipment — 2026-11-23
 - Latest owner visual QA reopens earlier A–E artistic acceptance. New canonical register: [2026-11-23 G1–G4](ADVENTURE_ISLAND_OWNER_VISUAL_QA_2026-11-23_CURRENT.md).
 - G1 (issue #26) source/layout fix: PR #30, SHA `6198b5c6`, [Pages SUCCESS #45254267042](https://github.com/nikonovmike2737/kids-english/actions/runs/45254267042), [hosted Chromium SUCCESS #45254355140](https://github.com/nikonovmike2737/kids-english/actions/runs/45254355140), 30/30 contracts, 9+7 browser checkpoints, desktop+mobile screenshots. G1 technical acceptance PASS; owner artistic acceptance pending.
-- G2 [#27](https://github.com/nikonovmike2737/kids-english/issues/27) / G3 [#28](https://github.com/nikonovmike2737/kids-english/issues/28) / G4 [#29](https://github.com/nikonovmike2737/kids-english/issues/29) OPEN. Existing asset illustrations are NOT the final owner-referenced 3D art. Never mark them fixed on the basis of G1.
+- **Historical at G1 time:** G2, G3 and G4 were still open. G2 has since been shipped separately (see below); G3/G4 remain OPEN.
+
+## New owner G2 original 3D inventory artwork — PRODUCTION VERIFIED, 2026-11-23
+- [G2 issue #27](https://github.com/nikonovmike2737/kids-english/issues/27), [PR #32](https://github.com/nikonovmike2737/kids-english/pull/32), published application SHA `9fd1f0b2ccd8dde2ab95a42a5bd1a7e0317be58e`.
+- [Pages SUCCESS #45262374460](https://github.com/nikonovmike2737/kids-english/actions/runs/45262374460); [independent hosted live Chromium SUCCESS #45262486687](https://github.com/nikonovmike2737/kids-english/actions/runs/45262486687); final [PR CI SUCCESS #45261967812](https://github.com/nikonovmike2737/kids-english/actions/runs/45261967812). 38/38 native tests + 23 live-browser checkpoints; all 16 image hashes pinned.
+- All fifteen old flat item graphics replaced with real 3D alpha-backed binaries; neutral kitten with independently arranged 5 wearable layers in My Cat, map, reward. Wallet no longer overlaps mobile close control.
+- Owner artistic sign-off still pending; **G3 map/chests/route/cat positioning and G4 reward composition remain OPEN.** See [canonical 4-group register](ADVENTURE_ISLAND_OWNER_VISUAL_QA_2026-11-23_CURRENT.md) for precise source evidence.
