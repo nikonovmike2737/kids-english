@@ -6,7 +6,7 @@ URL: https://nikonovmike2737.github.io/kids-english/
 Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 
 ## Production commit and Action
-- Current production release: `59e9d60c0700ef460ac26a04be2c6953fe6591cf` (Block C, Pages run #13). Earlier commits below are historical.
+- Current deployed Pages tree SHA: `a6fd09da8ed963a7f59817f8a6e5affa38c54790` (Action #14), with unchanged Block C application code originally introduced in `59e9d60c0700ef460ac26a04be2c6953fe6591cf` (Action #13). Earlier entries below are historical.
 - Release PR #10: https://github.com/nikonovmike2737/kids-english/pull/10
 - Visual hotfix PR #11: https://github.com/nikonovmike2737/kids-english/pull/11
 - Final Pages workflow #10: https://github.com/nikonovmike2737/kids-english/actions/runs/45188625945 — **SUCCESS**; validate JS and asset binary signatures: PASS; artifact upload: PASS; Pages deployment: PASS.
@@ -81,4 +81,4 @@ Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 - [CI run #45223178696](https://github.com/nikonovmike2737/kids-english/actions/runs/45223178696) SUCCESS; Ubuntu 24.04 + Playwright Chromium, 15/15 Node B/C static contracts, **9 browser checkpoints locally + 9 against public Production**.
 - Browser checked every task type in ENG-001, one wrong then correct, remaining heart carried to end, full lesson result for all four tasks, key credit exactly once, failed replay and restart, close/Escape/focus, mobile 390px, Classic route, no runtime exceptions or non-GET requests.
 - This upgrades automated browser evidence from NOT VERIFIED to **E2E PASS**. Do not claim owner visual approval (screenshots/proportions) without explicit sign-off.
-- Verification-only changes did not trigger another Pages deploy; production app remains `59e9d60c0700ef460ac26a04be2c6953fe6591cf` from Action #13.
+- **Correction:** the test-only PR #21 did trigger the Pages workflow, because `tests/**` is included in its site path filter. [Pages Action #14 (45223346682)](https://github.com/nikonovmike2737/kids-english/actions/runs/45223346682) SUCCESS published tree `a6fd09da8ed963a7f59817f8a6e5affa38c54790`. No game JS/CSS changed from Block C app commit `59e9d60c0700ef460ac26a04be2c6953fe6591cf`. Documentation-only PRs #22 and this one do not trigger Pages.
