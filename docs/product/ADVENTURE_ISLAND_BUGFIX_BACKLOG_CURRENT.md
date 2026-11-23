@@ -18,7 +18,7 @@ Date: 2026-11-23. Owner annotations: screenshots 18:06:20, 18:10:31, 18:12:07, 1
 - **C (P1)**: canonical lesson and reward modals: correct/wrong, four choices, heart loss and no answer reveal, close icons, result consistency.
 - **D (P1)**: World Map UI to match screenshot 16:03:44 (three distinct worlds, map presentation).
 - **E (P1)**: My Cat item inventory and equipment imagery, HUD consistency, one contextual action button, coin grammar.
-Block A is already deployed. Block B is implemented here but must pass Actions and public verification; C–E remain pending separate releases.
+Block A is already deployed. Block B is deployed via PR #17, Action #12 with five passing contract tests, and public home-URL verification. Live clickable QA remains unverified due external browser-service credit blocker; owner acceptance pending. C–E remain pending separate releases.
 
 ## Regression checks completed (local pre-merge)
 Headless Chromium, 1920x1080, 1366x768, 1024x768, 1280x800:
@@ -38,9 +38,18 @@ Production GitHub Pages status MUST be recorded after successful Actions run and
 ## Block B defect register and acceptance cases (2026-11-23)
 | ID | Priority | Problem | Expected fix | Status |
 |---|---|---|---|---|
-| B1 | P0 | Main HUD displays three hearts, creating false cross-lesson lives | Remove hearts and divider from main header; only keys and coins visible | CODE COMPLETE; CI/Production verification pending |
-| B2 | P0 | Wrong answers affect HUD outside lesson and create unexplained reset on success | Remove global heart DOM update; attempt lives live only inside lesson and Wrong overlay | CODE COMPLETE; CI/Production verification pending |
-| B3 | P0 | My Cat HUD repeats misleading hearts | Remove hearts and divider from My Cat; match keys and coins in main HUD | CODE COMPLETE; CI/Production verification pending |
-| B4 | P0 | Lives return to three after key reward on map | Start every separate lesson run with three; carry reduced hearts between its tasks only; no hearts on reward/map | CODE COMPLETE; CI/Production verification pending |
+| B1 | P0 | Main HUD displays three hearts, creating false cross-lesson lives | Remove hearts and divider from main header; only keys and coins visible | DEPLOYED · CI PASS · owner acceptance pending |
+| B2 | P0 | Wrong answers affect HUD outside lesson and create unexplained reset on success | Remove global heart DOM update; attempt lives live only inside lesson and Wrong overlay | DEPLOYED · CI PASS · owner acceptance pending |
+| B3 | P0 | My Cat HUD repeats misleading hearts | Remove hearts and divider from My Cat; match keys and coins in main HUD | DEPLOYED · CI PASS · owner acceptance pending |
+| B4 | P0 | Lives return to three after key reward on map | Start every separate lesson run with three; carry reduced hearts between its tasks only; no hearts on reward/map | DEPLOYED · CI PASS · owner acceptance pending |
 
 **Test scenarios:** (1) map no hearts with 0 or 1 key, (2) My Cat no hearts, (3) new lesson has three, (4) wrong twice leaves one, (5) correct plus Next keeps one, (6) finish with one key retains key but no life indicator outside lesson, (7) retry/new lesson reinitializes three, (8) no key loss on failed replay, (9) mobile/tablet HUD fits; (10) /classic/ is unchanged.
+
+## Block B Production evidence — 2026-11-23
+- **Release PR #17:** https://github.com/nikonovmike2737/kids-english/pull/17
+- **Application release commit:** `1dd48eac7dd4ce8a6a12d40a402664545c5d1fee`
+- **Pages workflow #12:** https://github.com/nikonovmike2737/kids-english/actions/runs/45215128388 — `completed/success`; source checks, **five Node block-B contract tests**, artifact publication and Pages deployment all passed.
+- **Live site checked:** https://nikonovmike2737.github.io/kids-english/ — root HTML rendering shows keys and coins only (no heart glyph). **Classic** https://nikonovmike2737.github.io/kids-english/classic/ remains accessible.
+- **B1–B4 code/CI PASS**: main HUD has no hearts; My Cat wallet template has no hearts; current lesson header and Wrong feedback keep attempt hearts, Start Lesson resets to 3. No progress storage migration, no changes to key/chest/reward economy.
+- **Limitation:** independent remote UI click-through did not execute because the connected browser-testing provider's wallet was exhausted. The browser tests have **not** been represented as passed; owner manual visual/interaction acceptance remains needed.
+- **Next separate release:** Block C — canonical lesson / reward modals and close controls. Do not conflate with Block B.
