@@ -15,14 +15,17 @@
   <div id="stage" class="stage">
     <div class="map-art" aria-hidden="true"></div>
     <svg class="route-lines" viewBox="0 0 1672 941" preserveAspectRatio="none" aria-hidden="true">
-      <!-- One authored route per grass tier; bridge dotted segments follow planks. -->
-      <!-- First lesson is the beginning: no inbound route. -->
-      <path class="land-route" d="M 502 281 H 914"></path>
-      <path class="bridge-route" d="M 1026 311 C 1062 339 1096 380 1135 424"></path>
-      <path class="land-route" d="M 1078 503 H 568"></path>
-      <path class="bridge-route" d="M 436 530 C 373 534 288 556 240 620 C 222 655 235 682 284 702"></path>
-      <path class="land-route" d="M 585 724 H 1014"></path>
-      <path class="bridge-route" d="M 1138 742 C 1191 739 1244 712 1293 688 L 1333 671"></path>
+      <!-- G3: rounded, terrain-aware route. No line enters stop 1.
+           Grass curves link the 4 stops to each chest in serpentine order;
+           only the three bounded bridge curves cross the plank artwork. -->
+      <path id="route-top" class="land-route" data-route="grass-1" d="M 502 280 C 624 278 755 277 853 280 C 909 282 951 298 978 318"></path>
+      <path id="route-bridge-a" class="bridge-route" data-route="bridge-a" d="M 1018 326 C 1067 353 1104 391 1133 428 C 1150 452 1124 476 1078 500"></path>
+      <path id="route-mid" class="land-route" data-route="grass-2" d="M 1078 500 C 962 499 848 500 702 500 C 620 507 550 525 500 553"></path>
+      <path id="route-bridge-b" class="bridge-route" data-route="bridge-b" d="M 458 548 C 383 553 320 581 291 628 C 270 656 285 684 344 700"></path>
+      <path id="route-landfall-b" class="land-route" data-route="landfall-b" d="M 344 700 C 416 702 500 716 585 718"></path>
+      <path id="route-low" class="land-route" data-route="grass-3" d="M 585 718 C 705 711 840 713 961 718 C 1012 724 1051 738 1087 753"></path>
+      <path id="route-bridge-c" class="bridge-route" data-route="bridge-c" d="M 1128 745 C 1194 737 1270 715 1344 675"></path>
+      <path id="route-islet" class="land-route" data-route="islet" d="M 1344 675 C 1395 663 1437 659 1474 654"></path>
     </svg>
 
     <header class="topbar">
