@@ -22,16 +22,21 @@ export const lessons = [
 export const themeLabels=['Getting Started','Next Level','Final Challenge'];
 export const stopToLesson={1:'ENG-001',2:'ENG-002',3:'ENG-003'};
 // Anchors in the original 1672x941 scenery. Every row has four lesson nodes and one chest before the bridge.
+// G3 visually aligned terrain anchors on the 1672×941 source map.
+// Preserve canonical serpentine number/order: 1→4, 5→8, 9→12.
+// Do not unlock the un-authored nine lessons.
 export const stopPositions=[
- [1,30.0,29.9],[2,37.0,29.9],[3,44.0,29.9],[4,51.0,29.9],
- [5,64.5,53.4],[6,57.0,53.4],[7,49.5,53.4],[8,42.0,53.4],
- [9,35.0,77.0],[10,42.5,77.0],[11,50.0,77.0],[12,57.5,77.0]
+ [1,30.0,29.8],[2,37.0,29.8],[3,44.0,29.8],[4,51.0,29.8],
+ [5,64.5,53.2],[6,57.0,53.2],[7,49.5,53.2],[8,42.0,53.2],
+ [9,35.0,76.3],[10,42.5,76.3],[11,50.0,76.3],[12,57.5,76.3]
 ];
-// Chest coordinates are FOOT CONTACT points, not image centers.
+// Independent interactive chest SPRITES. x/y are footing/ground contact,
+// not centers. All three small chests stay on their own grass terrace;
+// the final chest stands on the separate right-hand islet.
 export const chests=[
- {id:'chest-a',name:'First Chest',x:58.3,y:32.1,worldGroup:0,bonus:1},
- {id:'chest-b',name:'Second Chest',x:30.0,y:59.0,worldGroup:1,bonus:1},
- {id:'chest-c',name:'Third Chest',x:64.5,y:81.5,worldGroup:2,bonus:1},
+ {id:'chest-a',name:'First Chest',x:58.4,y:34.0,worldGroup:0,bonus:1},
+ {id:'chest-b',name:'Second Chest',x:29.9,y:59.0,worldGroup:1,bonus:1},
+ {id:'chest-c',name:'Third Chest',x:65.0,y:80.3,worldGroup:2,bonus:1},
  {id:'grand-chest',name:'Grand Treasure',x:88.5,y:69.5,worldGroup:3,bonus:5}
 ];
 export const shopCatalog={
