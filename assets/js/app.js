@@ -1,3 +1,5 @@
+import {centerShopArt,fitWardrobe} from '../animation/wardrobe-art.js';
+import {playCatMotion,stopCatMotion,startIslandMotion} from '../animation/cat-motion.js';
 import {lessons,themeLabels,stopToLesson,stopPositions,chests,shopCatalog,worldCards} from './data.js';
 
 const STORE = 'kids-english.progress.v1';
@@ -92,6 +94,7 @@ function outfittedCat(layer = 'front') {
 }
 
 function updateMap() {
+  stopCatMotion();
   const target = $('#island-nodes');
   target.innerHTML = '';
   for (const [number, x, y] of stopPositions) {
@@ -141,6 +144,7 @@ function updateMap() {
 }
 
 function setModal(html, mode = 'preview') {
+  stopCatMotion();
   // A lesson can re-render several times; keep the original map control for focus return.
   if (!root.children.length) restoreFocus = document.activeElement;
   modalType = mode;
@@ -544,7 +548,9 @@ function catProfile() {
       </div>
     </div>
   `, 'wardrobe');
-  $$('[data-category]').forEach((button) => button.addEventListener('click', () => {
+  void centerShopArt(root);
+  void fitWardrobe(root);
+  $('[data-category]').forEach((button) => button.addEventListener('click', () => {
     currentCategory = button.dataset.category;
     selectedTier = 1;
     wardrobeFocusTarget = `[data-category="${currentCategory}"]`;
@@ -632,6 +638,7 @@ document.addEventListener('keydown', (e) => {
 
 
 updateMap();
+if (!new URLSearchParams(location.search).has('smoke')) startIslandMotion();
 if (new URLSearchParams(location.search).has('smoke')) {
-  window.__kidsSmoke = { progress: () => structuredClone(progress), startLesson, showWorld: worldMap, showCat: catProfile, openChest, updateMap, forceProgress: (p) => { progress = { ...emptyProgress(), ...p }; persist(); updateMap(); } };
+  window.__kidsSmoke = { playCatMotion, stopCatMotion, startIslandMotion, progress: () => structuredClone(progress), startLesson, showWorld: worldMap, showCat: catProfile, openChest, updateMap, forceProgress: (p) => { progress = { ...emptyProgress(), ...p }; persist(); updateMap(); } };
 }
