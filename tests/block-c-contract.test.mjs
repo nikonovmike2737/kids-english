@@ -77,19 +77,15 @@ test('C6: terminal loss keeps the sad cat above lesson; restart resets three liv
   assert.match(keys, /if \(\$\('#gameover-layer', root\)\) closeModal\(\)/);
 });
 
-test('C7: results contain each solved task and mistake count, without saving answers', () => {
+test('C7/G4: celebrate one completed lesson without displaying or storing the attempt report', () => {
   const finish = section('function finishLesson()', 'function openChest(id)');
-  assert.match(finish, /active\.results\.map/);
-  assert.match(finish, /report = \{ lives: active\.lives/);
-  assert.match(finish, /Lesson Results/);
-  assert.match(finish, /Task \$\{i \+ 1\}/);
-  assert.match(finish, /First try/);
-  assert.match(finish, /Lives left in this lesson/);
-  assert.match(finish, /report = null/);
+  assert.match(finish, /active\.results = \[\]/);
+  assert.doesNotMatch(finish, /Lesson Results|lesson-summary|report\.results|Lives left in this lesson/);
+  assert.match(finish, /reward-celebration/);
+  assert.match(finish, /first \? 'key' : 'replay'/);
   const store = section('const emptyProgress = () =>', 'function readProgress()');
   assert.doesNotMatch(store, /answers|results|lives|hearts/);
-  assert.match(css, /\.lesson-summary-list/);
-  assert.match(css, /\.modal-panel\.reward\{[^}]*overflow-y:auto/);
+  assert.match(css, /\.modal-panel\.reward\.lesson-celebration/);
 });
 
 test('C8: reward key is minted once; chest is credited only if ready', () => {
