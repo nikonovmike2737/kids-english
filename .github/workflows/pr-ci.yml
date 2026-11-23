@@ -1,6 +1,7 @@
 name: Kids English PR regression checks
 
 on:
+  workflow_dispatch:
   pull_request:
     branches: [main]
     paths:
@@ -21,7 +22,7 @@ jobs:
         run: |
           node --check assets/js/app.js
           node --check assets/js/data.js
-      - name: Run Block B and C regression contracts
+      - name: Run Block B, C and D/E contract tests
         run: node --test tests/*.test.mjs
 
       - name: Install Playwright Chromium for real browser checks
@@ -37,6 +38,22 @@ jobs:
         env:
           KIDS_TEST_URL: http://127.0.0.1:8765/
         run: node tests/block-c-browser.smoke.mjs
+      - name: Browser smoke D/E against PR files
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+        run: node tests/block-de-browser.smoke.mjs
+      - name: Upload D/E visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: de-visual-qa
+          path: artifacts/*.png
+          if-no-files-found: ignore
+      - name: Browser smoke D/E against published Production
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
+        run: node tests/block-de-browser.smoke.mjs
       - name: Browser smoke against current Production
         env:
           KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
