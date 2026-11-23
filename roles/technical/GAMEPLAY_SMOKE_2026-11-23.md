@@ -18,4 +18,4 @@ Reference: docs/source-of-truth/GAMEPLAY_CANON.md and docs/methodology/QUESTION_
 - Match: deliberately swapped pair mapping triggers exactly one lost life, no pair hint; correcting all pairs allows Next without further life loss.
 - Order: deliberately wrong full word sequence triggers exactly one lost life, no correct-order disclosure; retry and correct allows Next.
 - Per-task successful results are shown with number of previous mistakes and remaining hearts.
-Status: TECH_CODE_PASS. Production deployment status pending GitHub Actions and independent live URL verification.
+Status: TECH_CODE_PASS + TECH_DEPLOY_PASS. GitHub Pages workflow #6 completed with success, commit `3a084b3ba3d7dd8f58742c34f5e359fd4a8f836d`; external public URL opened and rendered all three lessons. Live click-by-click browser test unavailable due external browser-service limitation; local Chromium covered click-by-click cases.

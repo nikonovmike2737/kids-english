@@ -3,27 +3,26 @@ Date: 2026-11-23
 Owner: role/technical
 Status: **DEPLOYED / VERIFIED**
 Live URL: https://nikonovmike2737.github.io/kids-english/
+Repo: nikonovmike2737/kids-english, branch main.
 
-## Facts
-- Repo: nikonovmike2737/kids-english, branch main.
-- Latest successful workflow run: https://github.com/nikonovmike2737/kids-english/actions/runs/45146954739
-- Version: commit `311a1bf3a063ed2e434d41d96622cbad6b6a61d4`.
-- GitHub Actions job status: success; Pages deployment action returned Reported success.
-- Public external fetch confirmed page title "Kids English — Play & Learn" and displayed ENG-001 Feelings, ENG-002 Move & Play, ENG-003 Animal Theatre.
-- Source HTML is static, with client-side answer evaluation and unlimited retries; feedback collected only via adult ChatGPT/Codex chats.
+## Current production
+- Deploy run: https://github.com/nikonovmike2737/kids-english/actions/runs/45153843054 (#6)
+- Released commit: `3a084b3ba3d7dd8f58742c34f5e359fd4a8f836d`
+- GitHub Actions job conclusion: success; upload, artifact visibility and Pages publish all succeeded.
+- External request opened the public site at `?rev=3a084b3`; confirmed Kids English home and ENG-001, ENG-002, ENG-003 lesson names.
+- Browser interactions on production were not independently replayed because external browser automation service was unavailable. Same answer/retry/loss/restart cases were tested locally in headless Chromium.
 
-## Failure and fix
-- First run failed because Pages was not enabled; owner enabled GitHub Actions as Pages source.
-- Subsequent run failed because deploy-pages saw 0 artifacts immediately after successful upload although artifact ID 14804027232 existed.
-- PR #3 updated the single Pages workflow (one `deploy` job): `actions: read`, newer upload-pages-artifact@v4, guard/wait for exactly one artifact in GitHub API before deploy.
-- Workflow #4 uploaded artifact ID 14805240115 and deployed successfully.
+## Game contract now in prod
+- Three shared hearts for the entire lesson; any wrong full Check subtracts one life, correct answer does not.
+- Check for choice/match/order; no hints or correct answers after errors; Next only after success.
+- Whole-batch evaluation for match; no early pair correctness.
+- Sad cat 😿 game-over modal and restart after third error.
+- Removed question spoilers in ENG-002 Swim and Jump; kept approved kitten branding.
+- No result storage, no analytics, no backend.
 
-## Trigger policy
-- Only changes to index.html, assets/**, site/**, content/**, or .github/workflows/pages.yml trigger automatic deployment.
-- Changes limited to methodology/source-of-truth markdown do not trigger deployment.
-- Manual workflow_dispatch remains available.
-- New HTML release changes should travel in one reviewed technical PR with METHOD_PASS and TECH_PASS evidence; do not create separate deploys for every unrelated document edit.
-
-## Acceptance
-TECH_DEPLOY_PASS = Github workflow success + external public URL returns intended content.
-Additional browser-level tests to run after major site changes: answers for 12/12, incorrect feedback, per-task result, reset, mobile layout, no data transmission.
+## Release history and operations
+- Initial Pages failures: Pages not enabled, then artifact visibility race.
+- Fixed in PR #3: one deploy job, explicit artifact-read permission and wait for uploaded artifact.
+- #4 Pages success (first); #5 kitten brand success; #6 three hearts + question redesign success.
+- Only changes to `index.html`, `assets/**`, `site/**`, `content/**`, workflow file trigger Pages. Documentation-only commits do not redeploy.
+- Adult feedback only via ChatGPT/Codex; anonymized and tracked by lesson/question ID through methodology PRs.
