@@ -30,7 +30,6 @@ button:disabled{cursor:not-allowed;opacity:.58}
 .hud-button:hover{background:white;transform:translateY(-.13cqw)}
 .hud-button.world{color:white;background:linear-gradient(#9861f6,#5726c2);border-color:#fff;font-size:1.38cqw}
 .hud-scores{gap:.7cqw;background:linear-gradient(180deg,#fffefff7,#eeebffea)}
-#top-hearts{letter-spacing:.09cqw;font-size:2.15cqw}
 .stat-item{display:flex;align-items:center;gap:.1cqw}
 .stat-item img{width:2.4cqw;height:2.4cqw;object-fit:contain}
 .hud-rule{display:inline-block;background:#b8a4e2;width:.16cqw;height:2.6cqw}
@@ -188,7 +187,7 @@ button:disabled{cursor:not-allowed;opacity:.58}
 .wardrobe-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:64px;padding:0 2.8rem .6rem 0}
 .wardrobe-header h2{margin:0;white-space:nowrap}
 .shop-wallet.hud-scores{display:inline-flex;flex-shrink:0;align-items:center;gap:.55rem;padding:.38rem .8rem;height:auto;min-height:39px;border:.12rem solid #d2b8ff;border-radius:999px;box-shadow:none;background:#f2e9ff;color:#5226a4;font-size:clamp(13px,1.85vh,19px);white-space:nowrap}
-.shop-wallet .wallet-hearts{font-size:clamp(15px,2.1vh,21px);letter-spacing:-.08em;white-space:nowrap}
+
 .shop-wallet .stat-item{display:inline-flex;align-items:center;gap:.2rem}
 .shop-wallet .stat-item img{width:clamp(18px,2.4vh,25px);height:clamp(18px,2.4vh,25px);object-fit:contain}
 .shop-wallet .hud-rule{height:1.55rem;width:2px;background:#cdb8ed}
@@ -200,7 +199,7 @@ button:disabled{cursor:not-allowed;opacity:.58}
 .shop-grid{gap:.65rem}
 .shop-panel{gap:.65rem}
 .item-action{margin-top:.1rem}
-@media(max-width:750px){.wardrobe-header{padding-right:2.5rem;gap:.4rem}.wardrobe-header h2{font-size:1.15rem}.shop-wallet.hud-scores{font-size:.75rem;gap:.25rem;padding:.3rem .4rem}.shop-wallet .wallet-hearts{font-size:.85rem}.shop-wallet .stat-item img{width:15px;height:15px}.shop-item img{height:min(17vh,140px)}}
+@media(max-width:750px){.wardrobe-header{padding-right:2.5rem;gap:.4rem}.wardrobe-header h2{font-size:1.15rem}.shop-wallet.hud-scores{font-size:.75rem;gap:.25rem;padding:.3rem .4rem}.shop-wallet .stat-item img{width:15px;height:15px}.shop-item img{height:min(17vh,140px)}}
 /* Keep the inventory compact and centered: product, item name, and its price remain a single group. */
 .shop-item{justify-content:center;gap:.65rem}
 .shop-item img{height:min(22vh,185px)}

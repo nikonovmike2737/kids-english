@@ -138,7 +138,6 @@ function updateMap() {
 
   $('#hud-keys').textContent = `${firstReady()}/12`;
   $('#hud-coins').textContent = String(progress.coinBalance);
-  $('#top-hearts').textContent = '❤️'.repeat(active.lessonId && modalType === 'lesson' ? active.lives : 3) + '🤍'.repeat(active.lessonId && modalType === 'lesson' ? 3 - active.lives : 0);
   $('#island-outfit').innerHTML = outfittedCat();
 }
 
@@ -452,7 +451,7 @@ function catProfile() {
     return `<button type="button" data-item="${tier}" class="shop-item ${selectedTier === tier ? 'selected' : ''}" aria-label="${esc(name)}, ${price} coins"><img src="assets/inventory/${currentCategory}/tier-${tier}.webp" alt="${esc(name)}"><span>${esc(name)}</span><span class="price">🪙 ${price}</span><span class="owned-indicator">${equipped ? '✓ Wearing' : owned ? '✓ Owned' : '&nbsp;'}</span></button>`;
   }).join('');
   const [label, color, disabled] = itemAction();
-  setModal(`${modalX()}<div class="lesson-head wardrobe-header"><h2>🐱 My Cat</h2><div class="shop-wallet hud-scores" aria-label="Adventure progress"><span class="wallet-hearts" aria-label="3 lives">❤️❤️❤️</span><span class="hud-rule"></span><span class="stat-item"><img src="assets/symbols/key.webp" alt="Keys"><b>${firstReady()}/12</b></span><span class="hud-rule"></span><span class="stat-item"><img src="assets/symbols/coin.webp" alt="Coins"><b>${progress.coinBalance}</b></span></div></div><div class="wardrobe-inner"><div class="cat-preview"><img src="assets/mascot/cat-wardrobe.webp" alt="My Cat"><span class="outfit-overlays">${outfittedCat()}</span></div><div class="shop-panel"><div class="category-tabs">${tab}</div><div class="shop-grid">${cards}</div><button id="item-action" class="btn item-action ${color}" ${disabled ? 'disabled' : ''}>${esc(label)}</button></div></div>`, 'wardrobe');
+  setModal(`${modalX()}<div class="lesson-head wardrobe-header"><h2>🐱 My Cat</h2><div class="shop-wallet hud-scores" aria-label="Adventure progress"><span class="stat-item"><img src="assets/symbols/key.webp" alt="Keys"><b>${firstReady()}/12</b></span><span class="hud-rule"></span><span class="stat-item"><img src="assets/symbols/coin.webp" alt="Coins"><b>${progress.coinBalance}</b></span></div></div><div class="wardrobe-inner"><div class="cat-preview"><img src="assets/mascot/cat-wardrobe.webp" alt="My Cat"><span class="outfit-overlays">${outfittedCat()}</span></div><div class="shop-panel"><div class="category-tabs">${tab}</div><div class="shop-grid">${cards}</div><button id="item-action" class="btn item-action ${color}" ${disabled ? 'disabled' : ''}>${esc(label)}</button></div></div>`, 'wardrobe');
   $$('[data-category]').forEach((b) => b.addEventListener('click', () => { currentCategory = b.dataset.category; selectedTier = 1; catProfile(); }));
   $$('[data-item]').forEach((b) => b.addEventListener('click', () => { selectedTier = Number(b.dataset.item); catProfile(); }));
   $('#item-action').addEventListener('click', performItemAction);
