@@ -35,3 +35,14 @@ jobs:
             sleep 15
           done
           exit 1
+
+      - name: Test all 15 G2 3D transparent assets and dressed cat on public Pages
+        env:
+          KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
+        run: |
+          for attempt in 1 2 3; do
+            if node tests/g2-art-browser.smoke.mjs; then exit 0; fi
+            echo "Public CDN asset propagation may still be in progress; retry ${attempt}/3"
+            sleep 15
+          done
+          exit 1
