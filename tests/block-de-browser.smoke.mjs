@@ -72,6 +72,12 @@ try {
     return {ratio:art.height/card.height,width:art.width/card.width};
   });
   assert.ok(layout.ratio>=.26 && layout.width>=.7,'item artwork must be prominent: '+JSON.stringify(layout));
+  const vertical = await page.locator('.shop-item').first().evaluate(el=>{
+    const rect=el.getBoundingClientRect(),art=el.querySelector(':scope > img').getBoundingClientRect();
+    const end=el.querySelector('.owned-indicator').getBoundingClientRect();
+    return Math.abs((art.top+end.bottom)/2-(rect.top+rect.height/2))/rect.height;
+  });
+  assert.ok(vertical<.14,'product image/name/price group must be vertically balanced, not parked at the top: '+vertical);
   pass('G1: direct categories, no segmented tabs/detail, large centered cat/art, prices and full-card locks');
 
   // Smoke fixture is confined to this disposable browser context: three credited
@@ -178,6 +184,11 @@ try {
   assert.equal(await m.locator('.shop-selected').count(),0);
   const noShopOverflow=await m.locator('.modal-panel.wardrobe').evaluate(el=>el.scrollWidth<=el.clientWidth+3);
   assert.equal(noShopOverflow,true);
+  const mobileFooterGap=await m.locator('.modal-panel.wardrobe').evaluate(el=>{
+    const r=el.getBoundingClientRect(),cta=el.querySelector('#item-action').getBoundingClientRect();
+    return r.bottom-cta.bottom;
+  });
+  assert.ok(mobileFooterGap<64,'no empty mobile panel below wardrobe CTA: '+mobileFooterGap);
   await screenshot(m,'de-my-cat-mobile');
   pass('D/E: mobile 390px opens both modals with decoded art and no horizontal overflow');
 
