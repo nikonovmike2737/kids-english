@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: Validate JavaScript syntax
@@ -23,3 +23,21 @@ jobs:
           node --check assets/js/data.js
       - name: Run Block B and C regression contracts
         run: node --test tests/*.test.mjs
+
+      - name: Install Playwright Chromium for real browser checks
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Start local static site
+        run: |
+          nohup python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/kids-english-http.log 2>&1 &
+          sleep 2
+          curl --fail --silent --head http://127.0.0.1:8765/
+      - name: Browser smoke against PR files
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+        run: node tests/block-c-browser.smoke.mjs
+      - name: Browser smoke against current Production
+        env:
+          KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
+        run: node tests/block-c-browser.smoke.mjs
