@@ -9,11 +9,43 @@
 <link rel="icon" type="image/png" href="assets/brand/abc-cat-logo.png">
 <link rel="apple-touch-icon" href="assets/brand/abc-cat-logo.png">
 <link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/animation/ambient.css">
 </head>
 <body>
 <main id="game" aria-label="Kids English Adventure Island">
   <div id="stage" class="stage">
     <div class="map-art" aria-hidden="true"></div>
+    <!-- Decorative original-coordinate effects; no new map hit targets. -->
+    <svg class="island-ambient" viewBox="0 0 1672 941" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="water-glint" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#dcffff" stop-opacity=".15"/><stop offset=".45" stop-color="#eaffff" stop-opacity=".9"/><stop offset="1" stop-color="#eaffff" stop-opacity=".05"/></linearGradient>
+        <radialGradient id="mist-glow"><stop stop-color="#eaffff" stop-opacity=".85"/><stop offset="1" stop-color="#d9ffff" stop-opacity="0"/></radialGradient>
+        <clipPath id="fall-upper"><path d="M1148 163 Q1238 156 1326 163 L1329 260 Q1300 279 1201 275 L1194 243 L1184 223 L1159 218 Z"/></clipPath>
+        <clipPath id="fall-lower"><path d="M1228 294 Q1300 289 1383 298 L1383 404 Q1331 434 1266 424 L1265 384 L1245 369 Z"/></clipPath>
+        <radialGradient id="leaf-feather"><stop offset=".65" stop-color="white"/><stop offset="1" stop-color="white" stop-opacity="0"/></radialGradient>
+        <mask id="leaf-mask-left" maskUnits="userSpaceOnUse" x="119" y="75" width="222" height="155"><ellipse cx="225" cy="151" rx="106" ry="76" fill="url(#leaf-feather)"/></mask>
+        <mask id="leaf-mask-center" maskUnits="userSpaceOnUse" x="537" y="0" width="340" height="145"><ellipse cx="707" cy="73" rx="170" ry="72" fill="url(#leaf-feather)"/></mask>
+        <mask id="leaf-mask-right" maskUnits="userSpaceOnUse" x="1300" y="110" width="115" height="95"><ellipse cx="1357" cy="157" rx="57" ry="47" fill="url(#leaf-feather)"/></mask>
+      </defs>
+      <g clip-path="url(#fall-upper)">
+        <path class="fall-stream" d="M1158 156 Q1165 182 1168 233 T1171 280"/><path class="fall-stream" d="M1180 156 Q1190 197 1194 280"/><path class="fall-stream" d="M1204 158 Q1211 203 1215 282"/><path class="fall-stream" d="M1229 158 Q1238 204 1235 282"/><path class="fall-stream" d="M1254 158 Q1266 212 1261 282"/><path class="fall-stream" d="M1280 157 Q1288 207 1285 283"/><path class="fall-stream" d="M1308 159 Q1316 211 1310 280"/>
+      </g>
+      <g clip-path="url(#fall-lower)">
+        <path class="fall-stream" d="M1247 291 Q1259 338 1263 432"/><path class="fall-stream" d="M1274 291 Q1286 342 1284 432"/><path class="fall-stream" d="M1300 291 Q1311 344 1310 435"/><path class="fall-stream" d="M1326 293 Q1339 346 1335 434"/><path class="fall-stream" d="M1356 294 Q1366 348 1360 426"/>
+      </g>
+      <ellipse class="fall-mist" cx="1273" cy="277" rx="64" ry="10"/><ellipse class="fall-mist" cx="1329" cy="424" rx="73" ry="13"/>
+      <g>
+        <path class="shore-wave" d="M192 787 Q266 833 364 863 Q463 891 564 887 Q671 913 793 894 Q896 909 1008 871 Q1110 873 1192 826"/>
+        <path class="shore-wave" d="M175 795 Q270 854 367 874 Q470 907 565 901 Q673 925 796 908 Q901 923 1013 885 Q1110 889 1206 838"/>
+        <path class="shore-wave" d="M1235 762 Q1336 813 1447 785 Q1560 803 1635 753"/>
+        <path class="shore-wave" d="M1256 774 Q1336 826 1453 799 Q1570 815 1645 767"/>
+        <path class="shore-wave" d="M1248 595 Q1281 581 1301 553 Q1319 535 1304 511"/>
+        <path class="shore-wave" d="M1381 427 Q1455 428 1534 391"/>
+      </g>
+      <g mask="url(#leaf-mask-left)"><image class="foliage-sway palm-left" href="assets/maps/g5-adventure-island.webp" width="1672" height="941" preserveAspectRatio="none"/></g>
+      <g mask="url(#leaf-mask-center)"><image class="foliage-sway tree-center" href="assets/maps/g5-adventure-island.webp" width="1672" height="941" preserveAspectRatio="none"/></g>
+      <g mask="url(#leaf-mask-right)"><image class="foliage-sway palm-right" href="assets/maps/g5-adventure-island.webp" width="1672" height="941" preserveAspectRatio="none"/></g>
+    </svg>
     <svg class="route-lines" viewBox="0 0 1672 941" preserveAspectRatio="none" aria-hidden="true">
       <!-- G3: rounded, terrain-aware route. No line enters stop 1.
            Grass curves link the 4 stops to each chest in serpentine order;
