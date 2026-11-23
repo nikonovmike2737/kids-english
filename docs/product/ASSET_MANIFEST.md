@@ -21,7 +21,15 @@ All production art is committed to GitHub as **native binary PNG/WebP** (not ext
 **No personal content:** art and filenames never contain a child's name, record, photographs or tracking data.
 
 ## Rendering
-- Map is a **single 16:9 stage** fitted inside the desktop/tablet viewport, using an illuminated frame for leftover aspect-ratio space; the map itself never vertically scrolls.
+- Map is a **single 16:9 stage** fitted inside the desktop/tablet viewport, without a decorative border; any leftover aspect-ratio space uses map imagery, never a white margin. The map itself never vertically scrolls.
 - The decorative background is intentionally separate from UI markers; lesson buttons, keys, locks, bridges and chests are state-aware interactive elements.
 - All child-facing labels are in simple English; documentation for adults may be in Russian or English.
 - Transparent PNG/WebP mascots and separate item images allow outfit customization without re-rendering the map.
+
+## Visual QA correction — 2026-11-23 (owner annotations)
+- `assets/mascot/cat-wardrobe.webp` is a **transparent, isolated** 3D explorer kitten: no stone, landscape, or hard background. The existing map kitten remains its own scenic asset; wardrobe shows the transparent version.
+- The 15 `assets/inventory/{category}/tier-{1,2,3}.webp` binaries now depict **actual individual accessories** (hats, scarves, shoes, backpacks, tools), no placeholder seals or ambiguous generic pictograms. These are transparent WebP images.
+- The `assets/maps/world-desert.webp` and `assets/maps/world-forest.webp` thumbnails are visibly distinct, cropped from the approved illustrated world-map reference (no Russian labels or duplicate Adventure Island landscape). They preview locked future worlds only.
+- Route dashes have separate grass and wooden-bridge segments, stopping at the bridge boundaries. The small chests stand on the three grass terraces; the grand chest sits on the grassy islet at right, above the waterline. The decorative frame was removed.
+- Wardrobe top HUD has a **single compact row** of 3 hearts, key counter and coin balance (same symbols as the adventure HUD). The sole item action uses correct English singular/plural: `Need 1 Coin`, `Need 2 Coins`, etc. The products, title and price are always visible.
+- The classic fallback `/classic/` and canonical reward logic were not changed by this visual pass.

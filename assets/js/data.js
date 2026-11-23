@@ -22,15 +22,15 @@ export const lessons = [
 export const themeLabels=['Getting Started','Next Level','Final Challenge'];
 export const stopToLesson={1:'ENG-001',2:'ENG-002',3:'ENG-003'};
 export const stopPositions=[
- [1,35,29.4],[2,43,29.4],[3,51,29.4],[4,59,29.4],
- [5,66,52.5],[6,58,52.5],[7,50,52.5],[8,42,52.5],
- [9,34,75.6],[10,42,75.6],[11,50,75.6],[12,58,75.6]
+ [1,35,29.8],[2,43,29.8],[3,51,29.8],[4,59,29.8],
+ [5,66,53.4],[6,58,53.4],[7,50,53.4],[8,42,53.4],
+ [9,34,76.9],[10,42,76.9],[11,50,76.9],[12,58,76.9]
 ];
 export const chests=[
- {id:'chest-a',name:'First Chest',x:70,y:29.4,worldGroup:0,bonus:1},
- {id:'chest-b',name:'Second Chest',x:32,y:52.5,worldGroup:1,bonus:1},
- {id:'chest-c',name:'Third Chest',x:68,y:75.6,worldGroup:2,bonus:1},
- {id:'grand-chest',name:'Grand Treasure',x:88,y:75.6,worldGroup:3,bonus:5}
+ {id:'chest-a',name:'First Chest',x:65.6,y:27.1,worldGroup:0,bonus:1},
+ {id:'chest-b',name:'Second Chest',x:30.6,y:53.5,worldGroup:1,bonus:1},
+ {id:'chest-c',name:'Third Chest',x:68.0,y:76.6,worldGroup:2,bonus:1},
+ {id:'grand-chest',name:'Grand Treasure',x:88.2,y:66.8,worldGroup:3,bonus:5}
 ];
 export const shopCatalog={
  hats:[['Captain Cap',1],['Explorer Hat',3],['Pirate Hat',5]],

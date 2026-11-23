@@ -19,7 +19,7 @@ Start (L1, no inbound dashes) → L2 → L3 → L4 → **Chest A at far right** 
 - The v1 progress schema stores only *anonymous achievements and outfit IDs* in browser `localStorage`: completed lesson IDs, opened chest IDs, purchased item IDs and equipped slots, earned/spendable coin accounting. No names, contacts, individual answers, online analytics, cookies or backend. Clearing the browser's site data can erase this progress; there is no cross-device sync.
 
 ## Interaction and UX
-- Desktop/tablet: map fully contained inside a fixed 16:9 viewport frame; full-width at 1920×1080, no vertical document scroll. Borders are filled by decorative map imagery if aspect ratios differ. Mobile landscape is supported with scaled stage; the map is not a vertical feed.
+- Desktop/tablet: map fully contained inside a fixed 16:9 viewport stage **without a decorative border**; full-width at 1920×1080, no vertical document scroll. Leftover aspect-ratio space shows uninterrupted map scenery, never white margins. Mobile landscape is supported with scaled stage; the map is not a vertical feed.
 - Hover/focus lesson node gives lesson name and duration. Click/tap opens preview → Start Lesson opens near-full-width modal over dimmed map, using the existing 4-task material and three-heart no-hint mechanism.
 - Every choice question has 4 options in 2×2 layout. Matching/order cards use their own mechanics. Correct → Next; Wrong → retry same question after loss of one life; no revealing right answer. Finish entire lesson → lesson modal closes → reward modal over map.
 - Error state after final heart: a new sad-cat overlay **above** question modal, with restart; permanent keys unchanged.
@@ -35,3 +35,6 @@ Start (L1, no inbound dashes) → L2 → L3 → L4 → **Chest A at far right** 
 
 ## Methodology and limits
 No invented questions or fake links for lessons 4–12. METHOD_PASS required for each newly authored full lesson before unlocking its icon. Keep original 3 English lessons intact in learning intent; ensure new wording does not reveal correct answer in question. TECH_PASS required for hearts, reward idempotency, storage, shop, map and hover/tap modals. Same approved mechanics will support later worlds after separate review.
+
+## Owner visual-acceptance addendum — 2026-11-23
+The product owner also requires: (1) all three small chests physically grounded on upper/middle/lower grass with the grand chest on the distant grassy islet, (2) dashed route segments following **actual wooden bridges** and never floating across water or extending past bridge edges, (3) no decorative outer stage frame, (4) canonical English modal flows for Lesson Preview, 4-choice Lesson, Wrong, Correct, key and chest rewards, (5) the dressing room cat without stone or landscape fragments, (6) recognizable product illustrations for all five inventory categories and three tiers, (7) a **compact single-line** My Cat hearts/keys/coins status consistent with the map HUD, and (8) grammatical dynamic coin labels (`Coin` vs `Coins`). Source details and assets are registered in `docs/product/ASSET_MANIFEST.md`.
