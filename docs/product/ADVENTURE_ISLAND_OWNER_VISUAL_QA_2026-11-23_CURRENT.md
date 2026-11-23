@@ -119,3 +119,6 @@
 ## G6 owner request — 2026-11-24 00:58:06
 - [#41](https://github.com/nikonovmike2737/kids-english/issues/41): enlarged and centered visible kitten, alpha-centered catalog artwork, living water/shore/foliage, random four-action dressed kitten idle rig.
 - Acceptance: actual opaque pixels inside preview, near green frame; all 15 items centered; water and foliage animate without hit-target changes; wave/wink/stretch/claws/sit use same composed gear/body texture, 13–17s random idle, no immediate repeat, no motion in lessons/hidden tabs/reduced-motion; no progression changes. Browser tests before and after publishing. Owner artistic sign-off separate.
+
+## G7 owner visual correction — [#43](https://github.com/nikonovmike2737/kids-english/issues/43)
+Static mascot supersedes G6 gestures completely. Clean native WebP chests (closed, grand and opened; no background/rays), independent state lock; equal horizontal edge spacing at each row; physical bridge deck centerline, three illustrated label icons. Refined scene-only ambient motion, reduced-motion safety, PR and hosted Chromium/WebKit required. Owner visual acceptance separate.
