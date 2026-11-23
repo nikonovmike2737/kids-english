@@ -6,7 +6,7 @@ URL: https://nikonovmike2737.github.io/kids-english/
 Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 
 ## Production commit and Action
-- **Current Production application/tree SHA:** `9fd1f0b2ccd8dde2ab95a42a5bd1a7e0317be58e` (owner visual G2 3D inventory release, PR #32, Pages SUCCESS #45262374460). Earlier entries below are historical.
+- **Current Production application/tree SHA:** `c39e9338c46dad6d4c5522d1610119007127caa1` (owner visual Safari G2R + scene G3 PR #35, Pages SUCCESS #45266932360). Earlier entries below are historical.
 - Release PR #10: https://github.com/nikonovmike2737/kids-english/pull/10
 - Visual hotfix PR #11: https://github.com/nikonovmike2737/kids-english/pull/11
 - Final Pages workflow #10: https://github.com/nikonovmike2737/kids-english/actions/runs/45188625945 — **SUCCESS**; validate JS and asset binary signatures: PASS; artifact upload: PASS; Pages deployment: PASS.
@@ -110,3 +110,13 @@ Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 - [Visual QA artifact #14859529735](https://github.com/nikonovmike2737/kids-english/actions/runs/45261967812/artifacts/14859529735): actual Playwright screenshots visually checked at 1280 and 390; outfit alignment repaired via shared kitten canvas; mobile header wallet-vs-close overlap fixed before merge.
 - No new network/analytics; no changes to economy/lesson keys/score or source-of-truth roles. Old mascot binaries remain in repo for rollback; all new art is local, not hotlinked.
 - Owner visual/artistic acceptance still OPEN; G3 (#28) map island coordinate/chest/route visual work and G4 (#29) key reward modal redesign are not addressed by G2.
+
+## G2R Safari + G3 terrain map — released, independent live WebKit/Chromium PASS
+- Application PR [#35](https://github.com/nikonovmike2737/kids-english/pull/35), exact Pages source `c39e9338c46dad6d4c5522d1610119007127caa1`.
+- [Pages deployment #45266932360](https://github.com/nikonovmike2737/kids-english/actions/runs/45266932360) **SUCCESS**; [public Chromium/WebKit acceptance #45267045055](https://github.com/nikonovmike2737/kids-english/actions/runs/45267045055) **BOTH SUCCESS** after Pages. [PR regression #45266658793](https://github.com/nikonovmike2737/kids-english/actions/runs/45266658793) **BOTH SUCCESS** including 45/45 Node contracts and complete original C/D/E/G1/G2 browser regression.
+- New visual anchors/route verified at 2048×1152, 1649×928, 1280×800, 1024×768 and 390×844 by both engines; 4 native alpha-backed chests, 3 stage titles, 12 distinct buttons and 3 cubic bridge connectors. No fake unlock.
+- Safari regression fixed: portrait kitten centered, fully inside neutral lavender cabinet; no island imagery in preview; equipped 3D items persist with shared anchor. Map kitten left, clear of bridge.
+- [Screenshot evidence](https://github.com/nikonovmike2737/kids-english/actions/runs/45266658793/artifacts/14862143090) inspected by technical owner; source/lessons/coins/keys and classic unchanged.
+- Original CSS and source layout kept clean; adapted CI to pinned Playwright container to remove apt stall. No new image assets or production data collection.
+- Owner artistic sign-off for G2R/G3 still OPEN; G4 reward modal [#29](https://github.com/nikonovmike2737/kids-english/issues/29) remains OPEN.
+- This docs-only update is not an application/Pages deployment.
