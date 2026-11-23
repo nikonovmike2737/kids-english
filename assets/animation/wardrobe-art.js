@@ -25,45 +25,32 @@ export async function centerShopArt(root){
   img.dataset.artCentered='true';
  }));
 }
-// Return the real transformed pixel bounds in the shared avatar coordinate
-// space. Transparent padding, object-fit and rotated accessory anchors matter.
-export function imagePlacement(img,avatar){
- const aw=avatar.offsetWidth,ah=avatar.offsetHeight;
- const w=img.offsetWidth,h=img.offsetHeight;
- let x=img.offsetLeft,y=img.offsetTop;
- // All outfit spans have absolute inset:0 and the same origin as avatar.
- const scale=Math.min(w/img.naturalWidth,h/img.naturalHeight);
- const dw=img.naturalWidth*scale,dh=img.naturalHeight*scale;
- const matrix=new DOMMatrix(getComputedStyle(img).transform==='none'?undefined:getComputedStyle(img).transform);
- return {aw,ah,w,h,x,y,dw,dh,matrix};
+// G8: stable base silhouette. Clothing, selected tier and current category
+// never participate in portrait scale/position. Refit only for real panel resize.
+let observer, generation=0;
+export function stopWardrobeFit(){
+ generation++;
+ observer?.disconnect();
+ observer=undefined;
 }
-function pointsOf(img,avatar,b){
- const q=imagePlacement(img,avatar);
- return [[b.l,b.t],[b.r,b.t],[b.l,b.b],[b.r,b.b]].map(([u,v])=>{
-  const pt=new DOMPoint((u-.5)*q.dw,(v-.5)*q.dh).matrixTransform(q.matrix);
-  return [(q.x+q.w/2+pt.x)/q.aw,(q.y+q.h/2+pt.y)/q.ah];
- });
-}
-let observer;
 export async function fitWardrobe(root){
+ stopWardrobeFit();
+ const epoch=generation;
  const avatar=root.querySelector('.cat-preview .cat-avatar-canvas');
  const panel=root.querySelector('.cat-preview');
  if(!avatar||!panel)return;
- observer?.disconnect();
- const imgs=[...avatar.querySelectorAll('.cat-base,.equipped-item')];
- const bounds=await Promise.all(imgs.map(alphaBounds));
- if(!avatar.isConnected)return;
+ const base=avatar.querySelector('.cat-base');
+ const {l,r,t,b}=await alphaBounds(base);
+ if(epoch!==generation||!avatar.isConnected)return;
+ let previous='';
  function fit(){
-  if(!avatar.isConnected)return;
-  // Measure in the original normalized 1024:936 rig, then size its
-  // transparent canvas so the opaque pixels fit the owner's green frame.
-  if(!avatar.offsetWidth||!avatar.offsetHeight)return;
-  const points=imgs.flatMap((img,i)=>pointsOf(img,avatar,bounds[i]));
-  const xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);
-  const l=Math.min(...xs),r=Math.max(...xs),t=Math.min(...ys),b=Math.max(...ys);
+  if(epoch!==generation||!avatar.isConnected)return;
   const pw=panel.clientWidth,ph=panel.clientHeight,ratio=1024/936;
-  if(![l,r,t,b,pw,ph].every(Number.isFinite)||r<=l||b<=t||pw<=0||ph<=0)return;
+  if(!pw||!ph||r<=l||b<=t)return;
   const mobile=matchMedia('(max-width:500px)').matches;
+  const key=[pw,ph,mobile].join(':');
+  if(key===previous)return;
+  previous=key;
   const desired=Math.min(pw*(mobile?.79:.82)/(r-l),ph*(mobile?.79:.67)*ratio/(b-t),430);
   avatar.style.setProperty('--portrait-width',desired.toFixed(2)+'px');
   avatar.style.setProperty('--portrait-x',((.5-(l+r)/2)*desired).toFixed(2)+'px');

@@ -1,4 +1,4 @@
-import {centerShopArt,fitWardrobe} from '../animation/wardrobe-art.js';
+import {centerShopArt,fitWardrobe,stopWardrobeFit} from '../animation/wardrobe-art.js';
 import {lessons,themeLabels,stopToLesson,stopPositions,chests,shopCatalog,worldCards} from './data.js';
 
 const STORE = 'kids-english.progress.v1';
@@ -124,7 +124,7 @@ function updateMap() {
     b.dataset.chest = c.id;
     b.style.setProperty('--x', `${c.x}%`);
     b.style.setProperty('--y', `${c.y}%`);
-    b.innerHTML = `<img src="assets/chests/${st === 'opened' ? 'opened' : c.id === 'grand-chest' ? 'grand' : 'closed'}.webp" alt="">${st !== 'opened' ? '<span class="chest-padlock" aria-hidden="true"></span>' : ''}`;
+    b.innerHTML = `<img src="assets/chests/${st === 'opened' ? 'opened' : c.id === 'grand-chest' ? 'grand' : 'closed'}.webp" alt="">`;
     b.setAttribute('aria-label', `${c.name}, ${st}`);
     b.title = `${c.name}: ${st}`;
     b.addEventListener('click', () => {
@@ -142,6 +142,7 @@ function updateMap() {
 }
 
 function setModal(html, mode = 'preview') {
+  stopWardrobeFit();
   // A lesson can re-render several times; keep the original map control for focus return.
   if (!root.children.length) restoreFocus = document.activeElement;
   modalType = mode;
@@ -152,14 +153,18 @@ function setModal(html, mode = 'preview') {
   $('.modal-panel', root)?.focus({ preventScroll: true });
 }
 
+function closeGlyph() {
+  return '<svg class="close-glyph" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M6 6L18 18M18 6L6 18" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/></svg>';
+}
+
 function modalX() {
-  return '<button class="close" id="close-modal" type="button" aria-label="Close">×</button>';
+  return `<button class="close" id="close-modal" type="button" aria-label="Close">${closeGlyph()}</button>`;
 }
 
 function nestedCard(html, cls = '') {
   const layer = document.createElement('div');
   layer.className = 'modal-backdrop nested';
-  layer.innerHTML = `<section class="modal-panel result-card ${cls}" role="alertdialog" aria-modal="true"><button class="close nested-close" type="button" aria-label="${cls.includes('gameover-card') ? 'Back to Map' : 'Close result'}">×</button>${html}</section>`;
+  layer.innerHTML = `<section class="modal-panel result-card ${cls}" role="alertdialog" aria-modal="true"><button class="close nested-close" type="button" aria-label="${cls.includes('gameover-card') ? 'Back to Map' : 'Close result'}">${closeGlyph()}</button>${html}</section>`;
   root.append(layer);
   const parentPanel = $('.modal-backdrop:not(.nested) .modal-panel', root);
   parentPanel?.setAttribute('aria-hidden', 'true');
@@ -186,6 +191,7 @@ function clearNested() {
 }
 
 function closeModal() {
+  stopWardrobeFit();
   clearNested();
   root.innerHTML = '';
   modalType = null;
@@ -517,7 +523,27 @@ function catProfile() {
     </button>`;
   }).join('');
   const [label, color, disabled] = itemAction();
-  setModal(`
+  const shop = `
+        <div class="category-tabs" aria-label="Item categories">${tab}</div>
+        <div class="shop-grid" aria-label="Available accessories">${cards}</div>
+        <button id="item-action" type="button" class="btn item-action ${color}" aria-label="${esc(label)}"
+          ${disabled ? 'disabled' : ''}>${esc(label)}</button>`;
+  const equippedSignature = JSON.stringify(progress.equippedBySlot);
+  const existing = $('.modal-panel.wardrobe', root);
+  if (existing) {
+    // Never remount the modal or the avatar when browsing the shop.
+    // Only update the catalogue and, for an actual equip action, its art layers.
+    $('.shop-panel', existing).innerHTML = shop;
+    $('.shop-wallet .stat-item:first-child b', existing).textContent = `${firstReady()}/12`;
+    $('.shop-wallet .stat-item:last-child b', existing).textContent = String(progress.coinBalance);
+    const avatar = $('.cat-avatar-canvas', existing);
+    if (avatar.dataset.equipment !== equippedSignature) {
+      $('.outfit-behind', avatar).innerHTML = outfittedCat('behind');
+      $('.outfit-overlays', avatar).innerHTML = outfittedCat();
+      avatar.dataset.equipment = equippedSignature;
+    }
+  } else {
+    setModal(`
     ${modalX()}
     <div class="wardrobe-header">
       <h2 class="modal-title">🐱 My Cat</h2>
@@ -537,16 +563,13 @@ function catProfile() {
           </div>
         </div>
       </div>
-      <div class="shop-panel">
-        <div class="category-tabs" aria-label="Item categories">${tab}</div>
-        <div class="shop-grid" aria-label="Available accessories">${cards}</div>
-        <button id="item-action" type="button" class="btn item-action ${color}" aria-label="${esc(label)}"
-          ${disabled ? 'disabled' : ''}>${esc(label)}</button>
-      </div>
+      <div class="shop-panel">${shop}</div>
     </div>
-  `, 'wardrobe');
+    `, 'wardrobe');
+    $('.cat-preview .cat-avatar-canvas', root).dataset.equipment = equippedSignature;
+    void fitWardrobe(root);
+  }
   void centerShopArt(root);
-  void fitWardrobe(root);
   $$('[data-category]').forEach((button) => button.addEventListener('click', () => {
     currentCategory = button.dataset.category;
     selectedTier = 1;
