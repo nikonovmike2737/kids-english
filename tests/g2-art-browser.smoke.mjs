@@ -172,6 +172,14 @@ try {
   for(const slot of ['hats','scarves','shoes','backpacks','tools']){
     await assertShopCategory(m,slot);
   }
+  const walletOverlap=await m.locator('.modal-panel.wardrobe').evaluate(el=>{
+    const w=el.querySelector('.shop-wallet').getBoundingClientRect();
+    const x=el.querySelector('#close-modal').getBoundingClientRect();
+    return Math.max(0,Math.min(w.right,x.right)-Math.max(w.left,x.left))*
+      Math.max(0,Math.min(w.bottom,x.bottom)-Math.max(w.top,x.top));
+  });
+  assert.equal(walletOverlap,0,'mobile wallet must not be covered by the close button');
+  assert.equal(await m.locator('.shop-wallet .stat-item').count(),2);
   const overflow=await m.locator('.modal-panel.wardrobe').evaluate(el=>el.scrollWidth-el.clientWidth);
   assert.ok(overflow<=3,'mobile horizontal overflow '+overflow);
   await screenshot(m,'g2-3d-catalog-mobile-390');
