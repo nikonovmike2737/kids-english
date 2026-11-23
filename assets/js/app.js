@@ -142,9 +142,10 @@ function updateMap() {
 }
 
 function setModal(html, mode = 'preview') {
-  restoreFocus = document.activeElement;
+  // A lesson can re-render several times; keep the original map control for focus return.
+  if (!root.children.length) restoreFocus = document.activeElement;
   modalType = mode;
-  root.innerHTML = `<div class="modal-backdrop" id="overlay"><section class="modal-panel ${mode}" role="dialog" aria-modal="true" aria-label="${mode === 'lesson' ? 'Lesson' : mode === 'wardrobe' ? 'My Cat' : mode === 'worldmap' ? 'World Map' : mode === 'reward' ? 'Reward' : 'Dialog'}">${html}</section></div>`;
+  root.innerHTML = `<div class="modal-backdrop" id="overlay"><section class="modal-panel ${mode}" role="dialog" tabindex="-1" aria-modal="true" aria-label="${mode === 'lesson' ? 'Lesson' : mode === 'wardrobe' ? 'My Cat' : mode === 'worldmap' ? 'World Map' : mode === 'reward' ? 'Reward' : 'Dialog'}">${html}</section></div>`;
   const close = $('#close-modal', root);
   if (close) close.addEventListener('click', closeModal);
   document.body.classList.add('modal-open');
@@ -160,12 +161,27 @@ function nestedCard(html, cls = '') {
   layer.className = 'modal-backdrop nested';
   layer.innerHTML = `<section class="modal-panel result-card ${cls}" role="alertdialog" aria-modal="true">${html}</section>`;
   root.append(layer);
+  const parentPanel = $('.modal-backdrop:not(.nested) .modal-panel', root);
+  parentPanel?.setAttribute('aria-hidden', 'true');
+  const panel = $('.modal-panel', layer);
+  panel.tabIndex = -1;
+  panel.setAttribute('aria-label', cls === 'correct-card' ? 'Correct answer' : cls === 'wrong-card' ? 'Try again' : 'Lesson result');
+  panel.focus({ preventScroll: true });
   return layer;
 }
 
 function clearNested() {
-  $('#nested-layer', root)?.remove();
-  $$('.modal-backdrop.nested', root).forEach((el) => el.remove());
+  const layers = $$('.modal-backdrop.nested', root);
+  layers.forEach((layer) => layer.remove());
+  const panel = $('.modal-backdrop:not(.nested) .modal-panel', root);
+  panel?.removeAttribute('aria-hidden');
+  if (layers.length && panel) {
+    // Only the current task's actions are focusable after dismissing a result.
+    const target = $('#next-task:not([hidden])', panel)
+      || $('#task-activity button:not(:disabled)', panel)
+      || $('#close-modal', panel);
+    target?.focus({ preventScroll: true });
+  }
 }
 
 function closeModal() {
@@ -176,7 +192,14 @@ function closeModal() {
   active.lives = 3;
   updateMap();
   document.body.classList.remove('modal-open');
-  restoreFocus?.focus?.({ preventScroll: true });
+  // updateMap recreates stop/chest nodes; restore to the matching live control.
+  const previous = restoreFocus;
+  restoreFocus = null;
+  const target = previous?.isConnected ? previous
+    : previous?.dataset?.stop ? $(`[data-stop="${previous.dataset.stop}"]`)
+      : previous?.dataset?.chest ? $(`[data-chest="${previous.dataset.chest}"]`)
+        : previous?.id ? document.getElementById(previous.id) : null;
+  (target || $('#world-button'))?.focus({ preventScroll: true });
 }
 
 function previewLesson(id) {
@@ -383,15 +406,25 @@ function finishLesson() {
   const lesson = curLesson();
   const first = !hasKey(lesson.id);
   if (first) { progress.completedLessonIds.push(lesson.id); persist(); }
-  const mistakes = active.results.reduce((sum, r) => sum + r.attempts - 1, 0);
+  // Attempt results and remaining lives are RAM-only, never part of saved progress.
+  const report = { lives: active.lives, results: active.results.map((r) => ({ type: r.type, attempts: r.attempts })) };
+  const mistakes = report.results.reduce((sum, r) => sum + r.attempts - 1, 0);
   active.lessonId = null;
   active.lives = 3;
   updateMap();
-  showReward(first ? 'You Got a Key!' : 'Great Job!', first ? `🔑 ${firstReady()} / 12 keys` : `Completed again · ${mistakes} wrong tries`, 'assets/modals/reward-key.webp');
+  showReward(first ? 'You Got a Key!' : 'Great Job!', first ? `🔑 ${firstReady()} / 12 keys` : `Completed again · ${mistakes} wrong tries`, 'assets/modals/reward-key.webp', report);
 }
 
-function showReward(title, sub, art) {
-  setModal(`${modalX()}<h2>${esc(title)}</h2><img class="reward-art" src="${esc(art)}" alt=""><p class="reward-sub">${esc(sub)}</p><button class="btn" id="reward-continue">Continue →</button>`, 'reward');
+function showReward(title, sub, art, report = null) {
+  const summary = report ? `
+    <section class="lesson-summary" aria-label="Lesson results">
+      <h3>Lesson Results</h3>
+      <p>Lives left in this lesson: <strong>${report.lives} of 3</strong></p>
+      <ol class="lesson-summary-list">${report.results.map((r, i) => `
+        <li><strong>Task ${i + 1}</strong><span>Solved · ${r.attempts === 1 ? "First try" : `${r.attempts - 1} ${r.attempts === 2 ? "mistake" : "mistakes"}`}</span></li>
+      `).join('')}</ol>
+    </section>` : '';
+  setModal(`${modalX()}<h2>${esc(title)}</h2><img class="reward-art" src="${esc(art)}" alt=""><p class="reward-sub">${esc(sub)}</p>${summary}<button class="btn" id="reward-continue" type="button">Continue →</button>`, "reward");
   $('#reward-continue').addEventListener('click', closeModal);
 }
 
@@ -497,19 +530,34 @@ $('#island-cat').addEventListener('click', catProfile);
 $('#settings-button').addEventListener('click', settings);
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && root.children.length) {
-    const nested = $('.modal-backdrop.nested', root);
-    if (nested) { nested.remove(); return; }
-    closeModal();
+  if (!root.children.length) return;
+  const nested = $$('.modal-backdrop.nested', root).at(-1);
+  if (e.key === 'Escape') {
+    e.preventDefault();
+    // A terminal game-over cannot be dismissed into a zero-life editable task.
+    if ($('#gameover-layer', root)) closeModal();
+    else if (nested) clearNested();
+    else closeModal();
+    return;
   }
-  if (e.key !== 'Tab' || !root.children.length) return;
-  const focusables = $$('button:not(:disabled),a[href]', root).filter((x) => x.offsetParent !== null);
-  if (!focusables.length) return;
+  if (e.key !== 'Tab') return;
+  const panel = (nested || $('.modal-backdrop:not(.nested)', root))?.querySelector('.modal-panel');
+  if (!panel) return;
+  const focusables = $$('button:not(:disabled),a[href]', panel)
+    .filter((el) => el.isConnected && el.offsetParent !== null);
+  if (!focusables.length) { e.preventDefault(); panel.focus(); return; }
   const first = focusables[0];
-  const last = focusables[focusables.length - 1];
-  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  const last = focusables.at(-1);
+  if (!panel.contains(document.activeElement)) {
+    e.preventDefault();
+    (e.shiftKey ? last : first).focus();
+  } else if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) {
+    e.preventDefault(); last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault(); first.focus();
+  }
 });
+
 
 updateMap();
 if (new URLSearchParams(location.search).has('smoke')) {
