@@ -1,28 +1,33 @@
 # Kids English — Deployment Status CURRENT
 Date: 2026-11-23
 Owner: role/technical
-Status: **DEPLOYED / VERIFIED**
-Live URL: https://nikonovmike2737.github.io/kids-english/
-Repo: nikonovmike2737/kids-english, branch main.
+Status: **Adventure Island v1 — DEPLOYED / VERIFIED**
+URL: https://nikonovmike2737.github.io/kids-english/
+Classic fallback: https://nikonovmike2737.github.io/kids-english/classic/
 
-## Current production
-- Deploy run: https://github.com/nikonovmike2737/kids-english/actions/runs/45153843054 (#6)
-- Released commit: `3a084b3ba3d7dd8f58742c34f5e359fd4a8f836d`
-- GitHub Actions job conclusion: success; upload, artifact visibility and Pages publish all succeeded.
-- External request opened the public site at `?rev=3a084b3`; confirmed Kids English home and ENG-001, ENG-002, ENG-003 lesson names.
-- Browser interactions on production were not independently replayed because external browser automation service was unavailable. Same answer/retry/loss/restart cases were tested locally in headless Chromium.
+## Production commit and Action
+- Current main: `7d31829ea7d3fe99e8116f41a7ae8461c78d30dc`
+- Release PR #10: https://github.com/nikonovmike2737/kids-english/pull/10
+- Visual hotfix PR #11: https://github.com/nikonovmike2737/kids-english/pull/11
+- Final Pages workflow #9: https://github.com/nikonovmike2737/kids-english/actions/runs/45178331406 — **SUCCESS**; validate JS and asset binary signatures: PASS; artifact upload: PASS; Pages deployment: PASS.
+- External public fetch verified Adventure Island title and classic old-page title after final deploy.
+- Prior immutable rollback branch: `release/classic-pre-island-2026-11-23` at `5a1bc670762c0e7ef73b78b4176bc068894cc846`. Also exposed classic mode in app Settings.
 
-## Game contract now in prod
-- Three shared hearts for the entire lesson; any wrong full Check subtracts one life, correct answer does not.
-- Check for choice/match/order; no hints or correct answers after errors; Next only after success.
-- Whole-batch evaluation for match; no early pair correctness.
-- Sad cat 😿 game-over modal and restart after third error.
-- Removed question spoilers in ENG-002 Swim and Jump; kept approved kitten branding.
-- No result storage, no analytics, no backend.
+## Shipped features
+- Single-screen 16:9 island map with non-scroll viewport and framed landscape on 1920×1080 and tablet.
+- Three stages, serpentine connecting bridges, three small chests plus a separate grand chest.
+- First 3 authored lessons playable in Getting Started; 4th plus other 8 honestly locked until METHOD_PASS.
+- Lesson preview, large focused lesson modal, 4 answer options for choice, match/order without hints, three hearts per attempt; gameover with sad cat.
+- One permanent key for first full completion of each distinct lesson. Failed replays keep keys. 4 unique lessons per small chest (+1 coin) and after 12 lessons 3 chests + grand chest (+5 coins).
+- World Map: Adventure Island active, Mystical Desert and Rainy Forest locked. My Cat: 5 categories × 3 item tiers, single contextual item action and local wardrobe state.
+- Anonymous achievements/equipment only in localStorage, no network result submission, no cookies, no accounts.
+- 43 native production/reference binary image assets in grouped folders.
 
-## Release history and operations
-- Initial Pages failures: Pages not enabled, then artifact visibility race.
-- Fixed in PR #3: one deploy job, explicit artifact-read permission and wait for uploaded artifact.
-- #4 Pages success (first); #5 kitten brand success; #6 three hearts + question redesign success.
-- Only changes to `index.html`, `assets/**`, `site/**`, `content/**`, workflow file trigger Pages. Documentation-only commits do not redeploy.
-- Adult feedback only via ChatGPT/Codex; anonymized and tracked by lesson/question ID through methodology PRs.
+## Verification and limits
+- Local headless Chromium @1920×1080, 1366×768, 1024×768, 390×844: no vertical document overflow, no JS uncaught exceptions, 12 map nodes and 4 distinct chest targets.
+- Checked first lesson intro, 4 choices, wrong Check burns one heart without answer reveal, corrected Check unlocks Next.
+- Three mistakes trigger sad-cat, Play Again restores 3 hearts; full 4-task lesson completion credits exactly one key; failed replay does not revoke earned key.
+- Tested World Map/return, My Cat single action button, buy→wear→wearing, immediate coin update using isolated test fixture.
+- Source and binary validation additionally passed on GitHub Actions.
+- **Remote production click-by-click verification was unavailable because the external browser agent had insufficient service credits.** The production page and fallback were fetched successfully from outside, but end-to-end interactions on the deployed host were not independently replayed. Keep this limit visible; do not conflate local Chromium tests with production interaction certification.
+- Future-world previews are nonfunctional by design. With only 3 full lessons published, no small chest can legitimately open yet.
