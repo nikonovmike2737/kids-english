@@ -982,6 +982,7 @@ button:disabled{cursor:not-allowed;opacity:.58}
 /* G5 owner green-box coordinate correction — 2026-11-24.
    The map is the single coordinate space; all three labels, four lesson
    circles and small chest per group are moved together in data.js. */
+.stage .stage-label{padding-block:.46cqw}
 .stage .label-top{left:19.9%;top:13.4%}
 .stage .label-mid{left:26.3%;top:33.5%}
 .stage .label-low{left:28.0%;top:60.2%}
