@@ -1,6 +1,8 @@
 /* G6: measure visible pixels, not transparent image rectangles. */
 const alphaCache=new Map();
 export async function alphaBounds(img){
+ // Each newly mounted DOM image must decode even when its alpha bounds are cached.
+ try{await img.decode();}catch{return {l:0,r:1,t:0,b:1};}
  const key=img.currentSrc||img.src;
  if(!alphaCache.has(key))alphaCache.set(key,(async()=>{
   await img.decode();
@@ -60,6 +62,7 @@ export async function fitWardrobe(root){
   const xs=points.map(p=>p[0]),ys=points.map(p=>p[1]);
   const l=Math.min(...xs),r=Math.max(...xs),t=Math.min(...ys),b=Math.max(...ys);
   const pw=panel.clientWidth,ph=panel.clientHeight,ratio=1024/936;
+  if(![l,r,t,b,pw,ph].every(Number.isFinite)||r<=l||b<=t||pw<=0||ph<=0)return;
   const mobile=matchMedia('(max-width:500px)').matches;
   const desired=Math.min(pw*(mobile?.79:.82)/(r-l),ph*(mobile?.79:.67)*ratio/(b-t),430);
   avatar.style.setProperty('--portrait-width',desired.toFixed(2)+'px');
