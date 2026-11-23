@@ -15,7 +15,9 @@
   
     /* One lesson = three lives; all question types share the same UI contract. */
     .lives{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:999px;background:#fff1f2;border:1px solid #ffd4dd;font-size:1.3rem;white-space:nowrap}
-    .lives-label{font-size:.74rem;font-weight:800;color:#8e3755;margin-right:3px}
+    .progress-counter{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right}
+    .lesson-start-row{justify-content:flex-end}
+    .progress-meta{align-items:flex-start}
     .heart.empty{filter:grayscale(1);opacity:.32}
     .check-row{margin-top:17px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
     .check-row .btn{min-width:155px}
@@ -28,13 +30,13 @@
     .game-over-dialog h2{font-size:1.8rem;margin:10px 0;letter-spacing:-.05em}
     .game-over-dialog p{color:#66708b;margin:0 0 20px}
     .game-over-dialog .btn{width:100%}
-    @media(max-width:560px){.lives{font-size:1rem;padding:6px 10px}.lives-label{font-size:.67rem}.game-over-dialog{padding:22px 18px}}
+    @media(max-width:560px){.lives{font-size:1rem;padding:6px 10px}.game-over-dialog{padding:22px 18px}}
 </style>
 </head>
 <body>
 <header><div class="wrap"><a class="logo" href="#app" aria-label="Kids English — на главную"><span class="logo-badge"><img src="assets/brand/abc-cat-logo.png" alt=""></span><span class="logo-text">Kids English</span></a><span class="subtitle">Play · Learn · Repeat ♡</span></div></header>
 <main class="wrap" id="app" aria-live="polite"></main>
-<footer><div class="wrap"><span>Kids English · Игровой английский для детей</span><span>Без аккаунтов, аналитики, рекламы и отправки ответов</span></div></footer>
+<footer><div class="wrap"><span>Kids English · Игровой английский для детей</span></div></footer>
 <script>
 'use strict';
 /** Content is educational. No personal data, telemetry, storage, forms or network requests. */
@@ -66,11 +68,11 @@ const task=()=>lesson().tasks[state.index];
 const goTop=()=>window.scrollTo({top:0,behavior:'smooth'});
 function home(){
  state.page='home';state.lesson=null;
- app.innerHTML=`<section class="hero"><div><p class="eyebrow">Little lessons, big adventures</p><h1>Английский<br>через игру ✨</h1><p>Выбирай приключение, отвечай на вопросы, двигай карточки и проверяй себя. Здесь можно ошибаться и начинать снова сколько угодно!</p></div><div class="hero-art"><img src="assets/brand/cat-mascot.png" alt="Плюшевый котик — маскот Kids English"></div></section><h2 class="section-title">Выбери приключение</h2><div class="lesson-grid">${lessons.map(l=>`<article class="lesson-card"><span class="ico" aria-hidden="true">${l.icon}</span><div class="content"><div class="card-meta"><span class="pill">${l.id}</span><span class="pill">${l.duration}</span></div><h3>${esc(l.title)}</h3><span class="tiny">${esc(l.ru)}</span><p>${esc(l.description)}</p><button class="btn" type="button" data-open="${l.id}">Открыть урок →</button></div></article>`).join('')}</div><div class="notes"><strong>Для родителей:</strong> упражнения не требуют регистрации. Ответы проверяются в браузере и никуда не отправляются. Оценка показывает результат текущего прохождения; её можно посмотреть и повторить урок. Живую практику с движениями и голосом дополняют подсказки в карточках уроков.</div>`;
+ app.innerHTML=`<section class="hero"><div><p class="eyebrow">Little lessons, big adventures</p><h1>Английский<br>через игру ✨</h1><p>Выбирай приключение, отвечай на вопросы, двигай карточки и проверяй себя. Здесь можно ошибаться и начинать снова сколько угодно!</p></div><div class="hero-art"><img src="assets/brand/cat-mascot.png" alt="Плюшевый котик — маскот Kids English"></div></section><h2 class="section-title">Выбери приключение</h2><div class="lesson-grid">${lessons.map(l=>`<article class="lesson-card"><span class="ico" aria-hidden="true">${l.icon}</span><div class="content"><div class="card-meta"><span class="pill">${l.duration}</span></div><h3>${esc(l.title)}</h3><span class="tiny">${esc(l.ru)}</span><p>${esc(l.description)}</p><button class="btn" type="button" data-open="${l.id}">Открыть урок →</button></div></article>`).join('')}</div>`;
  app.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>openLesson(b.dataset.open)));goTop();
 }
 function openLesson(id){const l=lessons.find(x=>x.id===id);if(!l)return;state={page:'intro',lesson:id,index:0,results:[],selected:null,checked:false,word:null,matches:[],wrongPairs:0,pool:[],order:[],feedback:''};
- app.innerHTML=`<button class="return" id="back">← Все уроки</button><section class="panel"><div class="lesson-banner"><div><span class="pill">${l.id} · ${l.duration}</span><h1>${esc(l.title)}</h1><p>${esc(l.description)}</p></div><span class="banner-emoji" aria-hidden="true">${l.icon}</span></div><div class="divider"></div><p class="eyebrow">Слова урока</p><div class="word-grid">${l.words.map(w=>`<div class="word-chip"><strong>${esc(w[0])}</strong><small>${esc(w[1])}</small></div>`).join('')}</div><div class="callout"><strong>🎭 Игра вместе со взрослым</strong>${esc(l.game)}</div><div class="row space"><p class="tiny">${l.tasks.length} интерактивных задания · Можно повторять без ограничений</p><button class="btn" id="start">Начать задания →</button></div></section>`;
+ app.innerHTML=`<button class="return" id="back">← Все уроки</button><section class="panel"><div class="lesson-banner"><div><span class="pill">${l.duration}</span><h1>${esc(l.title)}</h1><p>${esc(l.description)}</p></div><span class="banner-emoji" aria-hidden="true">${l.icon}</span></div><div class="divider"></div><p class="eyebrow">Слова урока</p><div class="word-grid">${l.words.map(w=>`<div class="word-chip"><strong>${esc(w[0])}</strong><small>${esc(w[1])}</small></div>`).join('')}</div><div class="callout"><strong>🎭 Игра вместе со взрослым</strong>${esc(l.game)}</div><div class="row lesson-start-row"><button class="btn" id="start">Начать задания →</button></div></section>`;
  app.querySelector('#back').addEventListener('click',home);app.querySelector('#start').addEventListener('click',()=>startPractice());goTop();
 }
 function startPractice(){
@@ -83,13 +85,13 @@ function resetTask(){
  const t=task();state.pool=t.type==='order'?t.tokens.map((value,id)=>({value,id})):[];
 }
 function heartsHtml(){
- return `<div class="lives" role="status" aria-label="Осталось жизней: ${state.lives} из 3"><span class="lives-label">Жизни</span>${[0,1,2].map(i=>`<span class="heart ${i>=state.lives?'empty':''}" aria-hidden="true">❤️</span>`).join('')}</div>`;
+ return `<div class="lives" role="status" aria-label="Осталось жизней: ${state.lives} из 3">${[0,1,2].map(i=>`<span class="heart ${i>=state.lives?'empty':''}" aria-hidden="true">❤️</span>`).join('')}</div>`;
 }
 function updateHearts(){const el=app.querySelector('#lives');if(el)el.innerHTML=heartsHtml();}
 function clearFeedback(){const el=app.querySelector('#feedback');if(el)el.innerHTML='';}
 function renderTask(){
  const l=lesson(),t=task(),n=state.index+1;
- app.innerHTML=`<button class="return" id="exit">← К уроку</button><section class="panel"><div class="progress-meta"><span>${esc(l.title)}</span><span>Задание ${n} из ${l.tasks.length}</span></div><div class="row space" style="margin-top:10px"><div class="tiny">Три жизни на весь урок</div><div id="lives">${heartsHtml()}</div></div><div class="progress" aria-label="Прогресс занятия"><div class="progress-fill" style="width:${state.index/l.tasks.length*100}%"></div></div><div class="question"><p class="eyebrow" style="margin-top:25px">${t.type==='choice'?'Выбери ответ':t.type==='match'?'Найди пары':'Собери фразу'}</p><h2>${esc(t.title)}</h2>${t.caption?`<p>${esc(t.caption)}</p>`:''}${t.figure?`<div class="figure" role="img" aria-label="Иллюстрация к вопросу">${t.figure}</div>`:''}<div id="activity"></div><div id="feedback" aria-live="polite" role="status"></div></div><div class="controls"><button class="btn btn-white" id="restart">↻ Сначала</button><button class="btn" id="next" hidden>${n===l.tasks.length?'Показать результат':'Далее →'}</button></div></section>`;
+ app.innerHTML=`<button class="return" id="exit">← К уроку</button><section class="panel"><div class="progress-meta"><span>${esc(l.title)}</span><div class="progress-counter"><div id="lives">${heartsHtml()}</div><span>Задание ${n} из ${l.tasks.length}</span></div></div><div class="progress" aria-label="Прогресс занятия"><div class="progress-fill" style="width:${state.index/l.tasks.length*100}%"></div></div><div class="question"><p class="eyebrow" style="margin-top:25px">${t.type==='choice'?'Выбери ответ':t.type==='match'?'Найди пары':'Собери фразу'}</p><h2>${esc(t.title)}</h2>${t.caption?`<p>${esc(t.caption)}</p>`:''}${t.figure?`<div class="figure" role="img" aria-label="Иллюстрация к вопросу">${t.figure}</div>`:''}<div id="activity"></div><div id="feedback" aria-live="polite" role="status"></div></div><div class="controls"><button class="btn btn-white" id="restart">↻ Сначала</button><button class="btn" id="next" hidden>${n===l.tasks.length?'Показать результат':'Далее →'}</button></div></section>`;
  app.querySelector('#exit').addEventListener('click',()=>openLesson(l.id));
  app.querySelector('#restart').addEventListener('click',startPractice);
  app.querySelector('#next').addEventListener('click',()=>{if(!state.checked||state.lives===0)return;if(n===l.tasks.length)showResults();else{state.index++;resetTask();renderTask();}});
@@ -190,7 +192,7 @@ function renderOrder(){
 }
 function showResults(){
  state.page='results';const l=lesson(),total=l.tasks.length,passed=state.results.filter(r=>r?.correct).length;
- app.innerHTML=`<button class="return" id="all">← Все уроки</button><section class="panel"><div class="score-banner"><div aria-hidden="true" style="font-size:3.5rem">🏆</div><p class="eyebrow">${esc(l.title)} · Результат</p><div class="big">${passed} / ${total}</div><p>Ты справился! Осталось жизней: ${state.lives} из 3 ❤️</p></div><h2 class="section-title">Результат по каждому заданию</h2><div class="result-list">${state.results.map((r,i)=>`<div class="result"><i aria-hidden="true">✅</i><div><b>${i+1}. ${esc(r.title)}</b><small>Правильно · Ошибок до верного ответа: ${r.mistakes}</small></div></div>`).join('')}</div><div class="final-actions"><button class="btn" id="again">↻ Пройти ещё раз</button><button class="btn btn-ghost" id="intro">Другие игры</button></div><div class="notes"><strong>Для родителей:</strong> этот результат виден только на экране. Он не отправляется и не сохраняется в GitHub. Обратную связь по урокам передавайте взрослым сообщением в чате, указывая код урока ${l.id}.</div></section>`;
+ app.innerHTML=`<button class="return" id="all">← Все уроки</button><section class="panel"><div class="score-banner"><div aria-hidden="true" style="font-size:3.5rem">🏆</div><p class="eyebrow">${esc(l.title)} · Результат</p><div class="big">${passed} / ${total}</div><p>Ты справился! Осталось жизней: ${state.lives} из 3 ❤️</p></div><h2 class="section-title">Результат по каждому заданию</h2><div class="result-list">${state.results.map((r,i)=>`<div class="result"><i aria-hidden="true">✅</i><div><b>${i+1}. ${esc(r.title)}</b><small>Правильно · Ошибок до верного ответа: ${r.mistakes}</small></div></div>`).join('')}</div><div class="final-actions"><button class="btn" id="again">↻ Пройти ещё раз</button><button class="btn btn-ghost" id="intro">Другие игры</button></div></section>`;
  app.querySelector('#all').addEventListener('click',home);app.querySelector('#again').addEventListener('click',startPractice);app.querySelector('#intro').addEventListener('click',home);goTop();
 }
 
