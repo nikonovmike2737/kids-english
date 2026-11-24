@@ -31,3 +31,6 @@
 
 ## Approved Adventure Island extension (2026-11-23)
 The gameplay canon for question scoring continues to apply inside the new modal. See `ADVENTURE_ISLAND_APPROVED_CANON.md`: 4 answer choices for every choice card, three shared hearts per attempt, no leaks, permanent key only for entire full lesson on its first success, open chest after 4 unique full lessons, shop with one context-sensitive button, and localStorage of **achievements only**. No backend or browser cookies.
+
+## G10 — mandatory fresh layout on full lesson start (2026-11-24)
+See QUESTION_DESIGN §F. Shared assets/js/answer-layout.js separates stable authored semantic IDs from positions. Every whole-lesson start creates a new attempt; each task lazily gets a stable layout compared with the last actually presented layout in page RAM. Choice correct position changes; both match columns and their row mapping change; order's prior positional solution is invalid, including duplicate words, and no solved prefix. Order checks target length and may include an authored extra familiar token. In-task retries/redraws must NOT reshuffle. No answer/result/layout storage or network; reload randomizes afresh. All authored lessons and Classic must pass repeated restart/replay acceptance.
