@@ -1102,3 +1102,13 @@ button:disabled{cursor:not-allowed;opacity:.58}
 .stage .node .icon-emoji{display:grid;place-items:center;line-height:1}
 .stage .node:focus-visible{outline:.18cqw solid #fff;outline-offset:.30cqw}
 @media(prefers-reduced-motion:reduce){.stage .node{transition:none}}
+
+/* G11.1: no uncentered first frame and no animated scarf translation.
+   Keep the image's layout slot, but reveal the art only after its measured
+   offset is committed. Other categories and the avatar are unaffected. */
+.modal-panel.wardrobe .shop-item>img[src^="assets/inventory/scarves/"]{
+  transition:none!important;animation:none!important;
+}
+.modal-panel.wardrobe .shop-item>img[src^="assets/inventory/scarves/"]:not([data-art-centered="true"]){
+  visibility:hidden;
+}

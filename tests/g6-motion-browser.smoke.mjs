@@ -50,6 +50,75 @@ async function checkScarves(p){
  assert.ok(result.every(v=>v.valid&&v.inside&&v.delta<=1.5),'G11 scarf optical centers '+JSON.stringify(result));
  pass('G11 all three scarf silhouettes centered within 1.5 CSS px at '+JSON.stringify(p.viewportSize()));
 }
+// G11.1: capture every paint opportunity, including a deliberately slow
+// cold image decode, and never accept an uncentered visible frame.
+async function checkStaticScarves(p){
+ await p.locator('[data-category="hats"]').click();
+ const samples=await p.evaluate(async()=>{
+  const original=HTMLImageElement.prototype.decode;
+  HTMLImageElement.prototype.decode=function(){
+   const decoded=original.call(this);
+   return this.getAttribute('src')?.includes('/scarves/')
+    ? Promise.all([decoded,new Promise(resolve=>setTimeout(resolve,120))]).then(()=>undefined)
+    : decoded;
+  };
+  const bounds=new Map();
+  function center(img){
+   const key=img.currentSrc;
+   if(!bounds.has(key)){
+    const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+    const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0);
+    const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+    let left=canvas.width,right=-1;
+    for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++)if(data[(y*canvas.width+x)*4+3]>160){left=Math.min(left,x);right=Math.max(right,x);}
+    bounds.set(key,(left+right+1)/2/canvas.width);
+   }
+   const r=img.getBoundingClientRect(),c=img.closest('.shop-item').getBoundingClientRect();
+   const fit=Math.min(r.width/img.naturalWidth,r.height/img.naturalHeight);
+   return r.x+r.width/2+(bounds.get(key)-.5)*img.naturalWidth*fit-(c.x+c.width/2);
+  }
+  async function frames(trigger){
+   trigger();
+   const report={hidden:0,visible:0,errors:[],positions:[]};
+   const end=performance.now()+3500;
+   let fullFrames=0;
+   while(performance.now()<end&&fullFrames<12){
+    await new Promise(requestAnimationFrame);
+    const images=[...document.querySelectorAll('.shop-item>img[src*="/scarves/"]')];
+    let full=images.length===3;
+    for(const img of images){
+     const style=getComputedStyle(img);
+     if(style.visibility!=='visible'){report.hidden++;full=false;continue;}
+     if(!img.complete||!img.naturalWidth){full=false;continue;}
+     report.visible++;
+     const delta=center(img);
+     if(img.dataset.artCentered!=='true'||Math.abs(delta)>1.5||img.getAnimations().length||style.transitionDuration!=='0s'||style.animationName!=='none'){
+      report.errors.push({src:img.getAttribute('src'),delta,ready:img.dataset.artCentered,transition:style.transitionDuration});
+     }
+     const tier=Number(img.closest('.shop-item').dataset.item)-1;
+     const rect=img.getBoundingClientRect(),card=img.closest('.shop-item').getBoundingClientRect();
+     const pos=rect.x-card.x;
+     if(report.positions[tier]===undefined)report.positions[tier]=pos;
+     else if(Math.abs(pos-report.positions[tier])>.5)report.errors.push({tier,movement:pos-report.positions[tier]});
+    }
+    if(full)fullFrames++;
+   }
+   return {...report,fullFrames};
+  }
+  try{
+   const first=await frames(()=>document.querySelector('[data-category="scarves"]').click());
+   const selected=await frames(()=>document.querySelector('[data-item="2"]').click());
+   document.querySelector('[data-category="hats"]').click();
+   const reopened=await frames(()=>document.querySelector('[data-category="scarves"]').click());
+   return [first,selected,reopened];
+  }finally{HTMLImageElement.prototype.decode=original;}
+ });
+ for(const sample of samples){
+  assert.ok(sample.hidden>0&&sample.visible>=36&&sample.fullFrames===12,'G11.1 complete hidden-to-visible trace '+JSON.stringify(sample));
+  assert.deepEqual(sample.errors,[],'G11.1 no uncentered paint or movement');
+ }
+ pass('G11.1 first visible scarf frame centered and static, including delayed decode, tier selection and reopening at '+JSON.stringify(p.viewportSize()));
+}
 async function closeCentered(p){
  const result=await p.locator('.modal-panel .close').evaluateAll(buttons=>buttons.map(b=>{
   const r=b.getBoundingClientRect(),svg=b.querySelector('.close-glyph'),path=svg?.querySelector('path');
@@ -144,7 +213,7 @@ try{
  const props=()=>p.locator('.island-ambient').evaluate(el=>[getComputedStyle(el.querySelector('.fall-stream')).strokeDashoffset,getComputedStyle(el.querySelector('.shore-wave')).transform,...[...el.querySelectorAll('.foliage-sway')].map(x=>getComputedStyle(x).transform)]);
  const a=await props();await p.waitForTimeout(520);const b=await props();assert.notEqual(a[0],b[0]);assert.notEqual(a[1],b[1]);
  await p.waitForTimeout(1800);const d=await props();assert.ok(a.slice(2).some((x,i)=>x!==b[i+2]||x!==d[i+2]));
- await p.locator('#cat-button').click();await p.waitForSelector('[data-portrait-fitted="true"]');await checkArt(p);await p.setViewportSize({width:1466,height:1056});await checkScarves(p);await shot(p,'g11-scarves-owner');await p.setViewportSize({width:1649,height:837});await checkScarves(p);await stableTabs(p);await shot(p,'wardrobe-scarves');await p.locator('#close-modal').click();
+ await p.locator('#cat-button').click();await p.waitForSelector('[data-portrait-fitted="true"]');await checkStaticScarves(p);await checkArt(p);await p.setViewportSize({width:1466,height:1056});await checkScarves(p);await shot(p,'g11-scarves-owner');await p.setViewportSize({width:1649,height:837});await checkScarves(p);await stableTabs(p);await shot(p,'wardrobe-scarves');await p.locator('#close-modal').click();
  await p.evaluate(()=>window.__kidsSmoke.forceProgress({purchasedItemIds:['hats-1','scarves-1','shoes-1','backpacks-1','tools-1'],equippedBySlot:{hats:'hats-1',scarves:'scarves-1',shoes:'shoes-1',backpacks:'backpacks-1',tools:'tools-1'}}));
  assert.equal(await p.locator('#island-cat .equipped-item').count(),5);await staticCat(p,'#island-cat .cat-avatar-canvas');
  await p.locator('#cat-button').click();await p.waitForSelector('[data-portrait-fitted="true"]');assert.equal(await p.locator('.cat-preview .equipped-item').count(),5);await stableTabs(p);await staticCat(p,'.cat-preview .cat-avatar-canvas');await p.locator('#close-modal').click();
@@ -152,7 +221,7 @@ try{
  for(const button of ['#world-button','#settings-button','[data-stop="1"]']){await p.locator(button).click();await closeCentered(p);await p.locator('#close-modal').click();}
  await c.close();
  const mobile=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
- const m=await mobile.newPage();watch(m);await m.goto(url,{waitUntil:'networkidle'});await mapCheck(m);await m.locator('#cat-button').click();await m.waitForSelector('[data-portrait-fitted="true"]');await checkScarves(m);await stableTabs(m);await staticCat(m,'.cat-preview .cat-avatar-canvas');await mobile.close();
+ const m=await mobile.newPage();watch(m);await m.goto(url,{waitUntil:'networkidle'});await mapCheck(m);await m.locator('#cat-button').click();await m.waitForSelector('[data-portrait-fitted="true"]');await checkStaticScarves(m);await checkScarves(m);await stableTabs(m);await staticCat(m,'.cat-preview .cat-avatar-canvas');await mobile.close();
  const reduced=await browser.newContext({viewport:{width:1280,height:800},reducedMotion:'reduce'});
  const r=await reduced.newPage();watch(r);await r.goto(url,{waitUntil:'networkidle'});assert.equal(await r.locator('.island-ambient').evaluate(el=>getComputedStyle(el).display),'none');await reduced.close();
  const normal=await browser.newContext({viewport:{width:1280,height:800}});
