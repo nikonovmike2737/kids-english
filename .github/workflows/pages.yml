@@ -46,6 +46,7 @@ jobs:
           set -euo pipefail
           node --check assets/js/app.js
           node --check assets/js/data.js
+          node --check assets/js/answer-layout.js
           node --test tests/*.test.mjs
           test -s classic/index.html
           python3 - <<'PY'
