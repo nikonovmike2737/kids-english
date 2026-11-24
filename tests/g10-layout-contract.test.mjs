@@ -58,3 +58,12 @@ test('G10 integrations and canonical authoring gate are present without persiste
  assert.doesNotMatch(read('assets/js/answer-layout.js'),/localStorage|sessionStorage|\bfetch\s*\(/);
  for(const p of ['docs/methodology/QUESTION_DESIGN.md','docs/methodology/RELEASE_ACCEPTANCE.md','docs/source-of-truth/ROLE_METHODOLOGIST.md','docs/source-of-truth/GAMEPLAY_CANON.md'])assert.match(read(p),/G10/);
 });
+
+test('G10 Classic module resolves within project Pages prefix with its HTML base',()=>{
+ const html=readFileSync('classic/index.html','utf8');
+ const base=html.match(/<base href="([^"]+)"/)?.[1];
+ const src=html.match(/import \{createLayoutHistory\} from '([^']+)'/)?.[1];
+ assert.ok(base&&src);
+ const root='https://example.invalid/kids-english/';
+ assert.equal(new URL(src,new URL(base,root+'classic/')).href,root+'assets/js/answer-layout.js');
+});
