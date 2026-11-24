@@ -1,3 +1,4 @@
+import {createLayoutHistory} from './answer-layout.js';
 import {centerShopArt,fitWardrobe,stopWardrobeFit} from '../animation/wardrobe-art.js';
 import {lessons,themeLabels,stopToLesson,stopPositions,chests,shopCatalog,worldCards} from './data.js';
 
@@ -50,6 +51,8 @@ function persist() {
   try { localStorage.setItem(STORE, JSON.stringify(progress)); } catch { /* play in memory only */ }
 }
 
+const layoutHistory = createLayoutHistory();
+let attemptLayout = null;
 const active = { lessonId: null, index: 0, lives: 3, attempts: 0, done: false, selected: null, matchWord: null, match: {}, order: [], results: [] };
 let currentCategory = 'hats';
 let selectedTier = 1;
@@ -240,6 +243,7 @@ function lessonHeader() {
 
 function startLesson(id) {
   active.lessonId = id;
+  attemptLayout = layoutHistory.begin(id);
   active.index = 0;
   active.lives = 3;
   active.results = [];
@@ -260,7 +264,8 @@ function renderLesson() {
 
 function renderChoice(t) {
   const el = $('#task-activity');
-  el.innerHTML = `<div class="answers">${t.options.map((s, i) => `<button class="option" type="button" data-choice="${i}" aria-pressed="false">${esc(s)}</button>`).join('')}</div>`;
+  const {choice} = attemptLayout.forTask(t,active.index);
+  el.innerHTML = `<div class="answers">${choice.map(i => `<button class="option" type="button" data-choice="${i}" aria-pressed="false">${esc(t.options[i])}</button>`).join('')}</div>`;
   $$('[data-choice]', el).forEach((b) => b.addEventListener('click', () => {
     if (active.done) return;
     active.selected = Number(b.dataset.choice);
@@ -271,13 +276,14 @@ function renderChoice(t) {
 
 function drawMatch(t) {
   const el = $('#task-activity');
-  const pictures = t.pairs.map((p, i) => ({ value: p[1], index: i })).reverse();
+  const {left,right} = attemptLayout.forTask(t,active.index);
+  const pictures = right.map(i => ({ value: t.pairs[i][1], index: i }));
   const pairs = Object.entries(active.match);
   const numberForPicture = (index) => {
     const k = pairs.find(([, v]) => v === index);
     return k ? Number(k[0]) + 1 : null;
   };
-  el.innerHTML = `<div class="match-grid"><div class="match-col">${t.pairs.map(([word], i) => `<button class="option" type="button" data-matchword="${i}" aria-pressed="${active.matchWord === i}">${esc(word)}${active.match[i] !== undefined ? ` <span class="pair-marker">${i + 1}</span>` : ''}</button>`).join('')}</div><div class="match-col">${pictures.map((p) => `<button class="option" type="button" data-matchpic="${p.index}">${esc(p.value)}${numberForPicture(p.index) ? ` <span class="pair-marker">${numberForPicture(p.index)}</span>` : ''}</button>`).join('')}</div></div>`;
+  el.innerHTML = `<div class="match-grid"><div class="match-col">${left.map(i => `<button class="option" type="button" data-matchword="${i}" aria-pressed="${active.matchWord === i}">${esc(t.pairs[i][0])}${active.match[i] !== undefined ? ` <span class="pair-marker">${i + 1}</span>` : ''}</button>`).join('')}</div><div class="match-col">${pictures.map((p) => `<button class="option" type="button" data-matchpic="${p.index}">${esc(p.value)}${numberForPicture(p.index) ? ` <span class="pair-marker">${numberForPicture(p.index)}</span>` : ''}</button>`).join('')}</div></div>`;
   $$('[data-matchword]', el).forEach((b) => b.addEventListener('click', () => {
     if (active.done) return;
     const i = Number(b.dataset.matchword);
@@ -301,9 +307,11 @@ function renderMatch(t) { drawMatch(t); }
 function drawOrder(t) {
   const el = $('#task-activity');
   const used = new Set(active.order);
-  el.innerHTML = `<div class="word-builder"><div class="word-line">${active.order.length ? active.order.map((i) => `<button class="option" type="button" data-undo="${i}">${esc(t.tokens[i])} ×</button>`).join('') : '<span class="tiny-notice">Tap the words to build a sentence</span>'}</div><div class="word-bank">${t.tokens.map((v, i) => used.has(i) ? '' : `<button class="option" type="button" data-pick="${i}">${esc(v)}</button>`).join('')}</div></div>`;
+  const {order} = attemptLayout.forTask(t,active.index);
+  const targetLength = t.correct.length;
+  el.innerHTML = `<div class="word-builder"><div class="word-line">${active.order.length ? active.order.map((i) => `<button class="option" type="button" data-undo="${i}">${esc(t.tokens[i])} ×</button>`).join('') : '<span class="tiny-notice">Tap the words to build a sentence</span>'}</div>${t.tokens.length > targetLength ? `<p class="tiny-notice">Choose ${targetLength} words. One word is extra.</p>` : ''}<div class="word-bank">${order.map(i => used.has(i) ? '' : `<button class="option" type="button" data-pick="${i}" ${active.order.length >= targetLength ? 'disabled' : ''}>${esc(t.tokens[i])}</button>`).join('')}</div></div>`;
   $$('[data-pick]', el).forEach((b) => b.addEventListener('click', () => {
-    if (active.done) return;
+    if (active.done || active.order.length >= targetLength) return;
     active.order.push(Number(b.dataset.pick));
     drawOrder(t);
   }));
@@ -312,7 +320,7 @@ function drawOrder(t) {
     active.order = active.order.filter((i) => i !== Number(b.dataset.undo));
     drawOrder(t);
   }));
-  $('#verify').disabled = active.order.length !== t.tokens.length;
+  $('#verify').disabled = active.order.length !== targetLength;
 }
 
 function renderOrder(t) { drawOrder(t); }
