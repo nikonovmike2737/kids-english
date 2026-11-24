@@ -42,14 +42,20 @@ export async function centerShopArt(root){
   function align(){
    if(epoch!==shopGeneration||!img.isConnected)return;
    // Use rendered geometry (including CSS object-fit and modal scale).
-   img.style.setProperty('--art-x','0px');
+   // Never reset an already visible image to its uncorrected position.
+   const previous=parseFloat(img.style.getPropertyValue('--art-x'))||0;
    const r=img.getBoundingClientRect(),c=card.getBoundingClientRect();
    if(!r.width||!r.height||!img.offsetWidth||!img.naturalWidth)return;
    const fit=Math.min(r.width/img.naturalWidth,r.height/img.naturalHeight);
    const visibleCenter=r.x+r.width/2+((optical.l+optical.r)/2-.5)*img.naturalWidth*fit;
    const scale=r.width/img.offsetWidth;
-   img.style.setProperty('--art-x',((c.x+c.width/2-visibleCenter)/scale).toFixed(3)+'px');
-   img.dataset.artCentered='true';
+   const corrected=previous+(c.x+c.width/2-visibleCenter)/scale;
+   if(Math.abs(corrected-previous)>.01||!img.style.getPropertyValue('--art-x')){
+    img.style.setProperty('--art-x',corrected.toFixed(3)+'px');
+   }
+   // CSS keeps a newly mounted scarf invisible until both offsets are applied.
+   // The first painted visible frame is already centered.
+   if(img.dataset.artCentered!=='true')img.dataset.artCentered='true';
   }
   align();
   scarves.push({img,card,align});

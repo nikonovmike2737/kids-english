@@ -132,3 +132,6 @@ Reference-style round ivory/pink lesson buttons with a glossy layered purple bas
 
 ## G11 — scarf card optical centering (owner 2026-11-24 10:43 MSK)
 Center each of Cozy, Adventure and Royal Scarf horizontally on its own card, matching the green reference rectangle. Preserve vertical placement, size, card text, locks, prices, other categories and stable avatar. Calculate visible opaque scarf bounds, excluding faint alpha fringes, and align to the actual card axis; recompute on resize and category/tier remount. Independent Chromium/WebKit pixel-geometry gate at 1466×1056, 1649×837 and 390×844 (≤1.5 CSS px). Owner visual acceptance remains separate.
+
+### G11.1 — static first frame (owner follow-up)
+Scarf art must never visibly slide from its original file center to the card center on tab open, tier selection or reopen. Preserve image slot while hidden until both optical offsets are set, reveal without transition or animation, and never reset a visible image to zero offset during resize alignment. Browser gate samples every animation frame with intentionally delayed image decode, cold and repeated category opens and tier remount, on desktop and mobile. Require first visible frame already centered and no subsequent horizontal movement in a stable viewport. No changes to art, size, economy, lesson or avatar.
