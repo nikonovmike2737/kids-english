@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 100">
+<title>Locked world</title>
+<defs><linearGradient id="lock" x2=".15" y2="1"><stop stop-color="#a665ef"/><stop offset=".55" stop-color="#7839cb"/><stop offset="1" stop-color="#4d1b99"/></linearGradient></defs>
+<path d="M24 44V29a20 20 0 0 1 40 0v15" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+<path d="M24 44V29a20 20 0 0 1 40 0v15" fill="none" stroke="#6632b3" stroke-width="11" stroke-linecap="round"/>
+<path d="M24 28a20 20 0 0 1 29-17" fill="none" stroke="#b88bf5" stroke-width="3" stroke-linecap="round"/>
+<rect x="7" y="38" width="74" height="57" rx="15" fill="url(#lock)" stroke="#fff" stroke-width="6"/>
+<path d="M44 50a11 11 0 0 0-6 20l-4 10q-1 5 5 5h10q6 0 5-5l-4-10a11 11 0 0 0-6-20Z" fill="#fff"/>
+</svg>

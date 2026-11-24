@@ -61,3 +61,12 @@ test('E6: storage is achievement-only; original C, map HUD and classic unchanged
   assert.ok(existsSync('classic/index.html'));
   assert.doesNotMatch(js,/\bfetch\s*\(|sendBeacon|XMLHttpRequest/);
 });
+
+test('G12: reference carousel has real navigation and local illustrated locks',()=>{
+ const map=cut('function worldMap()','function itemCode()');
+ assert.doesNotMatch(map,/world-kicker|🔒|✦/);
+ assert.match(map,/data-world-step="-1"/);assert.match(map,/data-world-step="1"/);
+ assert.match(map,/data-world-dot/);assert.match(map,/track\.append/);assert.match(map,/aria-pressed/);
+ assert.match(css,/g12-world-lock\.svg/);assert.match(css,/filter:blur\(2\.2px\)/);
+ assert.ok(existsSync('assets/symbols/g12-world-lock.svg'));
+});

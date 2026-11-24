@@ -459,30 +459,81 @@ function openChest(id) {
 }
 
 function worldMap() {
+  const arrow = (direction) => '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="'+(direction<0?'M15 4L7 12l8 8':'M9 4l8 8-8 8')+'" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   setModal(`
     ${modalX()}
     <div class="world-heading">
-      <span class="world-kicker">Explore</span>
-      <h2 class="modal-title">🌍 World Map</h2>
+      <h2 class="modal-title"><span aria-hidden="true">🌍</span> World Map</h2>
     </div>
-    <div class="world-grid" aria-label="Available and upcoming worlds">
-      ${worldCards.map((w, i) => `
-        <button class="world-card ${i === 0 ? 'current' : 'future'}" type="button" data-world="${esc(w.id)}"
-          aria-label="${esc(w.name)}, ${i === 0 ? 'current world' : 'locked, coming soon'}"
-          ${i ? 'disabled aria-disabled="true"' : ''}>
-          <span class="world-picture">
-            <img src="${esc(w.image)}" alt="" loading="eager" draggable="false">
-            ${i ? '<span class="world-lock" aria-hidden="true">🔒</span>' : '<span class="world-current-badge">Current World</span>'}
-          </span>
-          <span class="world-details">
-            <strong>${esc(w.name)}</strong>
-            <span class="world-status">${i ? '🔒 Coming Soon' : '<img src="assets/symbols/key.webp" alt=""> ' + firstReady() + ' / 12 Keys'}</span>
-          </span>
-        </button>`).join('')}
+    <div class="world-carousel" role="region" aria-label="World carousel" aria-roledescription="carousel">
+      <div class="world-carousel-row">
+        <button class="world-arrow" data-world-step="-1" type="button" aria-label="Previous world">${arrow(-1)}</button>
+        <div class="world-viewport">
+          <div class="world-grid" aria-label="Available and upcoming worlds">
+            ${worldCards.map((w, i) => `
+              <button class="world-card ${i === 0 ? 'current' : 'future'}" type="button" data-world="${esc(w.id)}"
+                aria-label="${esc(w.name)}, ${i === 0 ? 'Current World, '+firstReady()+' of 12 keys' : 'locked, Coming Soon'}"
+                ${i ? 'disabled aria-disabled="true"' : ''}>
+                <span class="world-picture">
+                  <img src="${esc(w.image)}" alt="" loading="eager" draggable="false">
+                  ${i ? '<span class="world-lock" aria-hidden="true"></span>' : ''}
+                </span>
+                <span class="world-details">
+                  <strong>${w.name.split(' ').map(word=>'<span>'+esc(word)+'</span>').join('')}</strong>
+                  ${i ? '' : '<span class="world-status"><img src="assets/symbols/key.webp" alt=""> '+firstReady()+'/12</span>'}
+                </span>
+              </button>`).join('')}
+          </div>
+        </div>
+        <button class="world-arrow" data-world-step="1" type="button" aria-label="Next world">${arrow(1)}</button>
+      </div>
+      <div class="world-atlas-footer" aria-label="Choose world">
+        ${worldCards.map((w,i)=>`<button type="button" class="world-dot" data-world-dot="${i}" aria-label="Show ${esc(w.name)}" aria-pressed="${i===0}"></button>`).join('')}
+      </div>
+      <span class="world-announcement" aria-live="polite"></span>
     </div>
-    <div class="world-atlas-footer" aria-hidden="true"><span>✦</span><span>✦</span><span>✦</span></div>
   `, 'worldmap');
-  $('[data-world="adventure-island"]').addEventListener('click', closeModal);
+  const carousel = $('.world-carousel', root);
+  const track = $('.world-grid', carousel);
+  const cards = [...track.children];
+  const dots = $$('[data-world-dot]', carousel);
+  let position = 0;
+  function showWorld(index) {
+    position = (index + cards.length) % cards.length;
+    // Rotate the visible strip. Navigation changes browsing order, not access.
+    cards.forEach((_,i)=>track.append(cards[(position+i)%cards.length]));
+    track.dataset.position = String(position);
+    dots.forEach((dot,i)=>dot.setAttribute('aria-pressed',String(i===position)));
+    $('.world-announcement', carousel).textContent = worldCards[position].name;
+    syncFocus();
+  }
+  function syncFocus() {
+    const mobile = matchMedia('(max-width: 600px)').matches;
+    cards[0].tabIndex = mobile && position !== 0 ? -1 : 0;
+  }
+  // CSS hides offscreen cards in the mobile carousel; keep their buttons out of tab order.
+  const media = matchMedia('(max-width: 600px)');
+  const onResize = () => { if(carousel.isConnected)syncFocus(); else media.removeEventListener('change',onResize); };
+  media.addEventListener('change',onResize);
+  $$('[data-world-step]', carousel).forEach(b=>b.addEventListener('click',()=>showWorld(position+Number(b.dataset.worldStep))));
+  dots.forEach((dot,i)=>dot.addEventListener('click',()=>showWorld(i)));
+  carousel.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft'||e.key==='ArrowRight'){
+      e.preventDefault();showWorld(position+(e.key==='ArrowLeft'?-1:1));
+    }
+  });
+  let touchStart = null;
+  const viewport = $('.world-viewport', carousel);
+  viewport.addEventListener('touchstart',e=>{touchStart=e.touches[0]?.clientX??null;},{passive:true});
+  viewport.addEventListener('touchend',e=>{
+    if(touchStart===null)return;
+    const delta=(e.changedTouches[0]?.clientX??touchStart)-touchStart;
+    touchStart=null;
+    if(Math.abs(delta)>45)showWorld(position+(delta<0?1:-1));
+  },{passive:true});
+  viewport.addEventListener('touchcancel',()=>{touchStart=null;},{passive:true});
+  showWorld(0);
+  cards[0].addEventListener('click', closeModal);
 }
 
 function itemCode() { return selectedTier ? `${currentCategory}-${selectedTier}` : null; }

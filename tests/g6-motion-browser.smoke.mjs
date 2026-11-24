@@ -119,6 +119,53 @@ async function checkStaticScarves(p){
  }
  pass('G11.1 first visible scarf frame centered and static, including delayed decode, tier selection and reopening at '+JSON.stringify(p.viewportSize()));
 }
+async function worldCarousel(p){
+ await p.locator('#world-button').click();
+ const panel=p.locator('.modal-panel.worldmap');
+ assert.equal(await panel.locator('.world-kicker').count(),0);
+ assert.equal(await panel.locator('h2').innerText(),'🌍 World Map');
+ assert.equal(await panel.locator('.world-card').count(),3);
+ assert.equal(await panel.locator('.world-arrow').count(),2);
+ assert.equal(await panel.locator('.world-dot').count(),3);
+ const order=()=>panel.locator('[data-world]').evaluateAll(els=>els.map(el=>el.dataset.world));
+ const first=await order();
+ assert.equal(first[0],'adventure-island');
+ const active=()=>panel.locator('.world-dot[aria-pressed="true"]').getAttribute('data-world-dot');
+ assert.equal(await active(),'0');
+ const appearance=await panel.locator('.world-card').evaluateAll(cards=>cards.map(card=>{
+  const img=card.querySelector('.world-picture>img'),lock=card.querySelector('.world-lock');
+  const a=img.getBoundingClientRect(),b=lock?.getBoundingClientRect();
+  return {disabled:card.disabled,filter:getComputedStyle(img).filter,
+   lock:lock?getComputedStyle(lock).backgroundImage:null,
+   lockCentered:b?Math.abs(a.x+a.width/2-b.x-b.width/2)<1:null};
+ }));
+ assert.equal(appearance[0].disabled,false);assert.equal(appearance[0].filter,'none');
+ for(const item of appearance.slice(1)){
+  assert.ok(item.disabled&&item.filter.includes('blur(')&&item.lock.includes('g12-world-lock.svg')&&item.lockCentered,JSON.stringify(item));
+ }
+ const viewport=panel.locator('.world-viewport');
+ const countVisible=()=>viewport.evaluate(v=>{
+  const a=v.getBoundingClientRect();
+  return [...v.querySelectorAll('.world-card')].filter(c=>{const b=c.getBoundingClientRect();return b.left>=a.left-1&&b.right<=a.right+1}).length;
+ });
+ assert.equal(await countVisible(),p.viewportSize().width<=600?1:3);
+ assert.ok(await panel.evaluate(el=>el.scrollWidth<=el.clientWidth+3));
+ await panel.locator('[data-world-step="1"]').click();
+ assert.equal((await order())[0],'mystical-desert');assert.equal(await active(),'1');
+ await panel.locator('[data-world-step="1"]').click();
+ assert.equal((await order())[0],'rainy-forest');assert.equal(await active(),'2');
+ await panel.locator('[data-world-step="1"]').click();
+ assert.deepEqual(await order(),first);assert.equal(await active(),'0');
+ await panel.locator('[data-world-step="-1"]').click();assert.equal(await active(),'2');
+ await panel.locator('[data-world-dot="1"]').click();assert.equal((await order())[0],'mystical-desert');
+ await p.keyboard.press('ArrowRight');assert.equal(await active(),'2');
+ assert.equal(await panel.locator('[data-world="rainy-forest"]').isDisabled(),true);
+ await panel.locator('[data-world-dot="0"]').click();
+ await shot(p,'g12-world-carousel-'+p.viewportSize().width);
+ await panel.locator('[data-world="adventure-island"]').click();
+ assert.equal(await panel.count(),0);
+ pass('G12 World Map reference cards, sharp purple locks, blurred art, wraparound arrows, dots, keyboard and active return at '+JSON.stringify(p.viewportSize()));
+}
 async function closeCentered(p){
  const result=await p.locator('.modal-panel .close').evaluateAll(buttons=>buttons.map(b=>{
   const r=b.getBoundingClientRect(),svg=b.querySelector('.close-glyph'),path=svg?.querySelector('path');
@@ -207,7 +254,7 @@ async function mapCheck(p){
 try{
  const c=await browser.newContext({viewport:{width:1649,height:837}});
  const p=await c.newPage();watch(p);await p.goto(url+'?smoke=1',{waitUntil:'networkidle'});
- await mapCheck(p);
+ await mapCheck(p);await worldCarousel(p);
  const scene=await p.locator('.island-ambient').evaluate(el=>({pointer:getComputedStyle(el).pointerEvents,falls:el.querySelectorAll('.fall-stream').length,waves:el.querySelectorAll('.shore-wave').length,leaves:el.querySelectorAll('.foliage-sway').length,names:[...el.querySelectorAll('.fall-stream,.shore-wave,.foliage-sway')].map(x=>getComputedStyle(x).animationName)}));
  assert.equal(scene.pointer,'none');assert.equal(scene.falls,12);assert.equal(scene.waves,6);assert.equal(scene.leaves,3);assert.ok(scene.names.every(n=>n!=='none'));
  const props=()=>p.locator('.island-ambient').evaluate(el=>[getComputedStyle(el.querySelector('.fall-stream')).strokeDashoffset,getComputedStyle(el.querySelector('.shore-wave')).transform,...[...el.querySelectorAll('.foliage-sway')].map(x=>getComputedStyle(x).transform)]);
@@ -221,7 +268,7 @@ try{
  for(const button of ['#world-button','#settings-button','[data-stop="1"]']){await p.locator(button).click();await closeCentered(p);await p.locator('#close-modal').click();}
  await c.close();
  const mobile=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
- const m=await mobile.newPage();watch(m);await m.goto(url,{waitUntil:'networkidle'});await mapCheck(m);await m.locator('#cat-button').click();await m.waitForSelector('[data-portrait-fitted="true"]');await checkStaticScarves(m);await checkScarves(m);await stableTabs(m);await staticCat(m,'.cat-preview .cat-avatar-canvas');await mobile.close();
+ const m=await mobile.newPage();watch(m);await m.goto(url,{waitUntil:'networkidle'});await mapCheck(m);await worldCarousel(m);await m.locator('#cat-button').click();await m.waitForSelector('[data-portrait-fitted="true"]');await checkStaticScarves(m);await checkScarves(m);await stableTabs(m);await staticCat(m,'.cat-preview .cat-avatar-canvas');await mobile.close();
  const reduced=await browser.newContext({viewport:{width:1280,height:800},reducedMotion:'reduce'});
  const r=await reduced.newPage();watch(r);await r.goto(url,{waitUntil:'networkidle'});assert.equal(await r.locator('.island-ambient').evaluate(el=>getComputedStyle(el).display),'none');await reduced.close();
  const normal=await browser.newContext({viewport:{width:1280,height:800}});
