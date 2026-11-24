@@ -39,7 +39,7 @@ async function checkMap(page,width,height){
     return {state:el.dataset.state,disabled:el.disabled,w:b.width,h:b.height,face:style.backgroundImage,shadow:style.boxShadow,filter:style.filter,
       icon:icon?{loaded:icon.naturalWidth>0,src:icon.getAttribute('src'),dx:Math.abs(i.x+i.width/2-b.x-b.width/2),dy:Math.abs(i.y+i.height/2-b.y-b.height/2),ratio:i.width/b.width}:null,text:el.textContent};
   })));
-  assert.ok(disks.every(d=>Math.abs(d.w-d.h)<.5&&d.shadow.split('),').length>=5&&d.filter==='none'),'layered round disks '+JSON.stringify(disks));
+  assert.ok(disks.every(d=>Math.abs(d.w-d.h)<.5&&d.shadow.split(/,(?![^()]*\))/).length===6&&d.filter==='none'),'layered round disks '+JSON.stringify(disks));
   assert.ok(disks.filter(d=>d.state==='locked').every(d=>d.disabled&&d.icon?.loaded&&d.icon.src.endsWith('g9-lesson-lock.svg')&&d.icon.dx<.7&&d.icon.dy<.7&&d.icon.ratio>.37&&d.icon.ratio<.50&&!d.text.includes('🔒')),'centered reference lock art');
   assert.ok(disks.filter(d=>d.state==='available').every(d=>!d.disabled&&!d.icon),'available lessons remain actionable');
   await page.locator('[data-stop="4"]').evaluate(el=>el.click());
@@ -102,7 +102,7 @@ async function checkMap(page,width,height){
   const src=await page.locator('#island-cat .cat-base').getAttribute('src');
   assert.ok(src.endsWith('cat-dressable.webp'));
   await shot(page,'map-'+width+'x'+height);
-  pass('12 nodes/4 alpha chests/3 terrain titles/3 curved bridge corridors and separate kitten at '+width+'x'+height);
+  pass('G9 reference discs, centered SVG locks, 12 nodes/4 alpha chests/3 terrain titles/3 curved bridge corridors and separate kitten at '+width+'x'+height);
 }
 async function checkWardrobe(page,width,height){
   await page.locator('#cat-button').click();
