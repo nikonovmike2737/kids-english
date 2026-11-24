@@ -29,3 +29,6 @@
 
 ## Adventure Island release v1 — approved technical scope
 Full-screen 16:9 framed map, separate binary asset groups, actual ready lessons only, two-step lesson preview + large modal, no-hint check, three lives, first-full-lesson keys, chests and local-only wardrobe economy. Technical partner owns `index.html`, `assets/js`, `assets/maps`, inventory sprites, World Map and live Pages verification. Follow `ADVENTURE_ISLAND_APPROVED_CANON.md` and preserve `classic/` plus rollback branch. The earlier blanket prohibition on localStorage is superseded **only for anonymous achievement state**, not for individual task answers.
+
+## G10 обязательное условие реализации
+Общий answer-layout.js для всех поддерживаемых типов; стабильные ID, новый допустимый shuffle на полный запуск, стабильность внутри карточки, отсутствие совпадения предыдущего позиционного решения, RAM only. Не выпускать новый тип без аналогичного контракта и browser gate по QUESTION_DESIGN §F.

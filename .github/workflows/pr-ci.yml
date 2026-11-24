@@ -7,6 +7,7 @@ on:
     paths:
       - 'index.html'
       - 'assets/**'
+      - 'classic/**'
       - 'tests/**'
       - '.github/workflows/**'
 
@@ -23,6 +24,7 @@ jobs:
         run: |
           node --check assets/js/app.js
           node --check assets/js/data.js
+          node --check assets/js/answer-layout.js
       - name: Run Block B/C/D/E/G1/G2 contract tests
         run: node --test tests/*.test.mjs
 
@@ -67,6 +69,11 @@ jobs:
           KIDS_TEST_URL: http://127.0.0.1:8765/
           KIDS_BROWSER: chromium
         run: node tests/g6-motion-browser.smoke.mjs
+      - name: G10 mandatory answer reshuffle chromium
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+          KIDS_BROWSER: chromium
+        run: node tests/g10-layout-browser.smoke.mjs
       - name: Upload D/E visual evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -109,6 +116,11 @@ jobs:
           KIDS_TEST_URL: http://127.0.0.1:8765/
           KIDS_BROWSER: webkit
         run: node tests/g6-motion-browser.smoke.mjs
+      - name: G10 mandatory answer reshuffle webkit
+        env:
+          KIDS_TEST_URL: http://127.0.0.1:8765/
+          KIDS_BROWSER: webkit
+        run: node tests/g10-layout-browser.smoke.mjs
       - name: Upload Safari desktop and mobile screenshots
         if: always()
         uses: actions/upload-artifact@v4

@@ -78,6 +78,12 @@ jobs:
           KIDS_BROWSER: chromium
         run: node tests/g6-motion-browser.smoke.mjs
 
+      - name: G10 mandatory answer reshuffle chromium
+        env:
+          KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
+          KIDS_BROWSER: chromium
+        run: node tests/g10-layout-browser.smoke.mjs
+
   hosted-safari:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04
@@ -111,3 +117,9 @@ jobs:
           KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
           KIDS_BROWSER: webkit
         run: node tests/g6-motion-browser.smoke.mjs
+
+      - name: G10 mandatory answer reshuffle webkit
+        env:
+          KIDS_TEST_URL: https://nikonovmike2737.github.io/kids-english/
+          KIDS_BROWSER: webkit
+        run: node tests/g10-layout-browser.smoke.mjs

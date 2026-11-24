@@ -37,7 +37,10 @@
 <header><div class="wrap"><a class="logo" href="#app" aria-label="Kids English — на главную"><span class="logo-badge"><img src="assets/brand/abc-cat-logo.png" alt=""></span><span class="logo-text">Kids English</span></a><span class="subtitle">Play · Learn · Repeat ♡</span></div></header>
 <main class="wrap" id="app" aria-live="polite"></main>
 <footer><div class="wrap"><span>Kids English · Игровой английский для детей</span></div></footer>
-<script>
+<script type="module">
+import {createLayoutHistory} from '../assets/js/answer-layout.js';
+const layoutHistory=createLayoutHistory();
+let attemptLayout=null;
 'use strict';
 /** Content is educational. No personal data, telemetry, storage, forms or network requests. */
 const lessons = [
@@ -51,11 +54,11 @@ const lessons = [
   {type:'choice',title:'Какое слово означает «прыгай»?',options:['Sleep','Jump','Read','Drink'],correct:1,explain:'Jump — прыгать. Покажи большой прыжок!'},
   {type:'choice',title:'Выбери картинку к слову “Swim”',options:['🏃','😴','🏊','💃'],correct:2,explain:'Swim — плавать. Представь, что плывёшь в море!'},
   {type:'match',title:'Соедини команды и движения',caption:'Нажми команду и подходящую картинку.',pairs:[['run','🏃'],['fly','🦅'],['sleep','😴']],explain:'Run — 🏃, fly — 🦅, sleep — 😴.'},
-  {type:'order',title:'Собери команду «Кружись вокруг»',caption:'Нажми слова по порядку.',tokens:['around','Spin'],correct:['Spin','around'],explain:'Spin around! — покружись!'}
+  {type:'order',title:'Собери команду «Кружись вокруг»',caption:'Нажми слова по порядку.',tokens:['around','Spin','sleep'],correct:['Spin','around'],explain:'Spin around! — покружись!'}
  ]},
  {id:'ENG-003',icon:'🐸',accent:'#fff0d7',title:'Animal Theatre',ru:'Театр животных',description:'Соединяем животных, движения и эмоции в маленьких сценках.',duration:'12–15 мин',words:[['frog','лягушка'],['cat','кот'],['dog','собака'],['bird','птица'],['The cat is happy','Кот счастлив'],['Is it a frog?','Это лягушка?']],game:'Игра «Театр сумасшедших животных»: пусть игрушечный кот сначала спит, потом становится angry, а лягушка прыгает и становится happy. Называйте героев и эмоции по-английски.',tasks:[
   {type:'choice',title:'Кто это?',figure:'🐸',options:['A cat','A frog','A bird','A dog'],correct:1,explain:'A frog — лягушка. The frog can jump!'},
-  {type:'choice',title:'“Is it a frog?”',caption:'Посмотри на животное и ответь.',figure:'🐱',options:['Yes, it is.','No, it is not.'],correct:1,explain:'Это кот, а не лягушка. No, it is not.'},
+  {type:'choice',title:'“Is it a frog?”',caption:'Посмотри на животное и ответь.',figure:'🐱',options:['Yes, it is.','No, it is not.','Yes, they are.','No, they are not.'],correct:1,explain:'Это кот, а не лягушка. No, it is not.'},
   {type:'match',title:'Подбери животных',pairs:[['cat','🐱'],['dog','🐶'],['bird','🐦']],explain:'Cat — кот, dog — собака, bird — птица.'},
   {type:'order',title:'Собери «Кот грустный»',caption:'Нажми слова по порядку.',tokens:['sad','is','The','cat'],correct:['The','cat','is','sad'],explain:'The cat is sad — кот грустный.'}
  ]}
@@ -76,14 +79,15 @@ function openLesson(id){const l=lessons.find(x=>x.id===id);if(!l)return;state={p
  app.querySelector('#back').addEventListener('click',home);app.querySelector('#start').addEventListener('click',()=>startPractice());goTop();
 }
 function startPractice(){
- state.page='practice';state.index=0;state.results=[];state.lives=3;
+ state.page='practice';state.index=0;state.results=[];state.lives=3;attemptLayout=layoutHistory.begin(state.lesson);
  resetTask();renderTask();
 }
 function resetTask(){
  state.selected=null;state.checked=false;state.taskMistakes=0;
  state.matchSelection=null;state.assignments={};state.order=[];
- const t=task();state.pool=t.type==='order'?t.tokens.map((value,id)=>({value,id})):[];
+ const t=task();state.layout=attemptLayout.forTask(t,state.index);state.pool=t.type==='order'?orderPool(t):[];
 }
+function orderPool(t){return state.layout.order.map(id=>({value:t.tokens[id],id}));}
 function heartsHtml(){
  return `<div class="lives" role="status" aria-label="Осталось жизней: ${state.lives} из 3">${[0,1,2].map(i=>`<span class="heart ${i>=state.lives?'empty':''}" aria-hidden="true">❤️</span>`).join('')}</div>`;
 }
@@ -124,7 +128,7 @@ function showGameOver(){
 }
 function renderChoice(){
  const t=task(),act=app.querySelector('#activity');
- act.innerHTML=`<div class="options">${t.options.map((v,i)=>`<button class="option" type="button" data-ix="${i}" aria-pressed="false">${esc(v)}</button>`).join('')}</div><div class="check-row"><button id="check" class="btn btn-ghost" disabled>Проверить</button></div>`;
+ act.innerHTML=`<div class="options">${state.layout.choice.map(i=>`<button class="option" type="button" data-ix="${i}" aria-pressed="false">${esc(t.options[i])}</button>`).join('')}</div><div class="check-row"><button id="check" class="btn btn-ghost" disabled>Проверить</button></div>`;
  const buttons=Array.from(act.querySelectorAll('[data-ix]'));
  buttons.forEach(b=>b.addEventListener('click',()=>{
    if(state.checked)return;
@@ -139,13 +143,13 @@ function renderChoice(){
 }
 function renderMatch(){
  const t=task(),act=app.querySelector('#activity');
- const pictures=t.pairs.map((p,i)=>({value:p[1],i})).reverse();
+ const pictures=state.layout.right.map(i=>({value:t.pairs[i][1],i}));
  function draw(){
    const linked=Object.entries(state.assignments);
    const badge=(number)=>number===undefined?'':`<span class="pair-no" aria-hidden="true">${number+1}</span>`;
    const wordBadge=i=>linked.some(([wi])=>Number(wi)===i)?i:undefined;
    const picBadge=i=>{const pair=linked.find(([,pi])=>pi===i);return pair?Number(pair[0]):undefined;};
-   act.innerHTML=`<div class="match"><div class="match-col">${t.pairs.map((p,i)=>`<button type="button" class="tile ${state.matchSelection===i?'selected':''} ${state.assignments[i]!==undefined?'paired':''}" data-word="${i}" aria-pressed="${state.matchSelection===i}">${esc(p[0])}${badge(wordBadge(i))}</button>`).join('')}</div><div class="match-col">${pictures.map(p=>`<button type="button" class="tile emoji ${picBadge(p.i)!==undefined?'paired':''}" data-picture="${p.i}">${esc(p.value)}${badge(picBadge(p.i))}</button>`).join('')}</div></div><p class="hint" id="match-status">Выбери слово слева и картинку справа. Связано: ${linked.length} из ${t.pairs.length}. Номера показывают только твой выбор.</p><div class="check-row"><button id="check-match" class="btn btn-ghost" ${linked.length===t.pairs.length?'':'disabled'}>Проверить</button><button id="clear-match" class="btn btn-white" type="button">Очистить пары</button></div>`;
+   act.innerHTML=`<div class="match"><div class="match-col">${state.layout.left.map(i=>`<button type="button" class="tile ${state.matchSelection===i?'selected':''} ${state.assignments[i]!==undefined?'paired':''}" data-word="${i}" aria-pressed="${state.matchSelection===i}">${esc(t.pairs[i][0])}${badge(wordBadge(i))}</button>`).join('')}</div><div class="match-col">${pictures.map(p=>`<button type="button" class="tile emoji ${picBadge(p.i)!==undefined?'paired':''}" data-picture="${p.i}">${esc(p.value)}${badge(picBadge(p.i))}</button>`).join('')}</div></div><p class="hint" id="match-status">Выбери слово слева и картинку справа. Связано: ${linked.length} из ${t.pairs.length}. Номера показывают только твой выбор.</p><div class="check-row"><button id="check-match" class="btn btn-ghost" ${linked.length===t.pairs.length?'':'disabled'}>Проверить</button><button id="clear-match" class="btn btn-white" type="button">Очистить пары</button></div>`;
    act.querySelectorAll('[data-word]').forEach(b=>b.addEventListener('click',()=>{
      if(state.checked)return;state.matchSelection=Number(b.dataset.word);
      delete state.assignments[state.matchSelection];clearFeedback();draw();
@@ -169,23 +173,23 @@ function renderMatch(){
 function renderOrder(){
  const t=task(),act=app.querySelector('#activity');
  function draw(){
-   act.innerHTML=`<p class="tiny">Твоя фраза (нажми слово, чтобы убрать его):</p><div class="build-area" aria-label="Собранная фраза">${state.order.length?state.order.map((x,i)=>`<button class="word-token" type="button" data-undo="${i}">${esc(x.value)} ×</button>`).join(''):'<span class="tiny">Нажимай на слова ниже ↓</span>'}</div><div class="token-pool" aria-label="Доступные слова">${state.pool.map(x=>`<button type="button" data-token="${x.id}">${esc(x.value)}</button>`).join('')}</div><div class="check-row"><button class="btn btn-ghost" id="check-order" ${state.pool.length?'disabled':''}>Проверить</button><button type="button" class="btn btn-white" id="clear-order">Очистить фразу</button></div>`;
+   act.innerHTML=`<p class="tiny">Твоя фраза (нажми слово, чтобы убрать его):</p><div class="build-area" aria-label="Собранная фраза">${state.order.length?state.order.map((x,i)=>`<button class="word-token" type="button" data-undo="${i}">${esc(x.value)} ×</button>`).join(''):'<span class="tiny">Нажимай на слова ниже ↓</span>'}</div>${t.tokens.length>t.correct.length?`<p class="tiny">Выбери ${t.correct.length} слова. Одно слово лишнее.</p>`:''}<div class="token-pool" aria-label="Доступные слова">${state.pool.map(x=>`<button type="button" data-token="${x.id}" ${state.order.length>=t.correct.length?'disabled':''}>${esc(x.value)}</button>`).join('')}</div><div class="check-row"><button class="btn btn-ghost" id="check-order" ${state.order.length!==t.correct.length?'disabled':''}>Проверить</button><button type="button" class="btn btn-white" id="clear-order">Очистить фразу</button></div>`;
    act.querySelectorAll('[data-token]').forEach(b=>b.addEventListener('click',()=>{
-     if(state.checked)return;
+     if(state.checked||state.order.length>=t.correct.length)return;
      const id=Number(b.dataset.token),idx=state.pool.findIndex(x=>x.id===id);if(idx<0)return;
      state.order.push(state.pool.splice(idx,1)[0]);clearFeedback();draw();
    }));
    act.querySelectorAll('[data-undo]').forEach(b=>b.addEventListener('click',()=>{
      if(state.checked)return;
      const entry=state.order.splice(Number(b.dataset.undo),1)[0];state.pool.push(entry);
-     state.pool.sort((a,b)=>a.id-b.id);clearFeedback();draw();
+     state.pool.sort((a,b)=>state.layout.order.indexOf(a.id)-state.layout.order.indexOf(b.id));clearFeedback();draw();
    }));
-   act.querySelector('#clear-order').addEventListener('click',()=>{if(state.checked)return;state.pool=t.tokens.map((value,id)=>({value,id}));state.order=[];clearFeedback();draw();});
+   act.querySelector('#clear-order').addEventListener('click',()=>{if(state.checked)return;state.pool=orderPool(t);state.order=[];clearFeedback();draw();});
    act.querySelector('#check-order').addEventListener('click',()=>{
-     if(state.checked||state.pool.length)return;
+     if(state.checked||state.order.length!==t.correct.length)return;
      const given=state.order.map(x=>x.value).join(' '),expected=t.correct.join(' ');
      const correct=given===expected;checkAnswer(correct);
-     if(!correct&&state.lives>0){state.pool=t.tokens.map((value,id)=>({value,id}));state.order=[];draw();}
+     if(!correct&&state.lives>0){state.pool=orderPool(t);state.order=[];draw();}
    });
  }
  draw();
