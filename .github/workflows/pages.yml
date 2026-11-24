@@ -27,6 +27,8 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      PAGES_ARTIFACT_NAME: github-pages-${{ github.run_attempt }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -82,9 +84,11 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: '.'
+          name: ${{ env.PAGES_ARTIFACT_NAME }}
 
       # GitHub's artifact API may lag behind a completed upload.
-      # Verify that exactly one artifact is queryable before deploying.
+      # Each run attempt has its own artifact name, so reruns cannot collide.
+      # Verify that exactly one current-attempt artifact is queryable.
       - name: Wait for uploaded artifact visibility
         env:
           GH_TOKEN: ${{ github.token }}
@@ -92,10 +96,10 @@ jobs:
         run: |
           set -euo pipefail
           for attempt in {1..15}; do
-            count="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts?per_page=100" --jq '[.artifacts[] | select(.name == "github-pages" and .expired == false)] | length')"
+            count="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts?per_page=100" | jq --arg name "$PAGES_ARTIFACT_NAME" '[.artifacts[] | select(.name == $name and .expired == false)] | length')"
             if [ "$count" = "1" ]; then
-              echo "Exactly one github-pages artifact is visible in run ${GITHUB_RUN_ID}"
-              sleep 5
+              echo "Exactly one $PAGES_ARTIFACT_NAME artifact is visible in run ${GITHUB_RUN_ID}"
+              sleep 15
               exit 0
             fi
             if [ "$count" != "0" ]; then
@@ -111,3 +115,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ${{ env.PAGES_ARTIFACT_NAME }}
