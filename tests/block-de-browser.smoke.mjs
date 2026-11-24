@@ -38,7 +38,7 @@ try {
   assert.equal(await page.locator('[data-world="rainy-forest"]').isDisabled(),true);
   const worlds=await verifyArt(page,'.world-picture img');
   assert.equal(new Set(worlds.map(w=>w.src)).size,3);
-  assert.match(await page.locator('[data-world="adventure-island"]').innerText(),/Current World/);
+  assert.match(await page.locator('[data-world="adventure-island"]').getAttribute('aria-label'),/Current World/);
   await screenshot(page,'de-world-map-1280');
   await page.locator('[data-world="adventure-island"]').click();
   assert.equal(await page.locator('.modal-panel.worldmap').count(),0);
