@@ -123,7 +123,7 @@ async function worldCarousel(p){
  await p.locator('#world-button').click();
  const panel=p.locator('.modal-panel.worldmap');
  assert.equal(await panel.locator('.world-kicker').count(),0);
- assert.equal(await panel.locator('h2').innerText(),'🌍 World Map');
+ assert.equal((await panel.locator('h2').innerText()).replace(/\s+/g,' ').trim(),'🌍 World Map');
  assert.equal(await panel.locator('.world-card').count(),3);
  assert.equal(await panel.locator('.world-arrow').count(),2);
  assert.equal(await panel.locator('.world-dot').count(),3);
