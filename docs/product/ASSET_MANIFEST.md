@@ -53,3 +53,6 @@ All production art is committed to GitHub as **native binary PNG/WebP** (not ext
 
 ## G8 owner correction
 G7 lock/unlock SVG overlays removed from the live tree; original chest keyholes are part of the clean chest art. Modal close icons now use one inline symmetric SVG. Wardrobe uses a persistent base portrait with outfit overlays and resize-only fit.
+
+## G9 reference lesson controls
+`assets/symbols/g9-lesson-lock.svg` — original scalable, muted lavender lock with white keyhole, transparent canvas. Layered ivory/pink lesson discs and purple bevels are rendered by CSS; completed nodes retain green state and earned key badge. No changes to node coordinates or lesson progression.

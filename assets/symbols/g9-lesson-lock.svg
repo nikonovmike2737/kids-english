@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 92">
+<title>Lesson lock</title>
+<defs>
+ <linearGradient id="shackle" x1="0" y1="0" x2=".75" y2="1">
+  <stop stop-color="#b0a6bd"/><stop offset=".38" stop-color="#8d819c"/><stop offset="1" stop-color="#65596f"/>
+ </linearGradient>
+ <linearGradient id="body" x1=".12" y1="0" x2=".87" y2="1">
+  <stop stop-color="#a79bad"/><stop offset=".35" stop-color="#8d8196"/><stop offset="1" stop-color="#675b76"/>
+ </linearGradient>
+ <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".48"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs>
+<path d="M20 43V30a20 20 0 0 1 40 0v13" fill="none" stroke="#52475e" stroke-width="12" stroke-linecap="round"/>
+<path d="M20 43V30a20 20 0 0 1 40 0v13" fill="none" stroke="url(#shackle)" stroke-width="8" stroke-linecap="round"/>
+<path d="M17 28a23 23 0 0 1 34-19" fill="none" stroke="#f4eaf9" stroke-opacity=".57" stroke-width="2" stroke-linecap="round"/>
+<rect x="7" y="39" width="66" height="48" rx="10" fill="#51455d" opacity=".26" transform="translate(0 2)"/>
+<rect x="7" y="38" width="66" height="48" rx="10" fill="url(#body)" stroke="#62566c" stroke-width="2.5"/>
+<path d="M17 41h46a7 7 0 0 1 7 7v4H10v-4a7 7 0 0 1 7-7Z" fill="url(#sheen)"/>
+<path d="M40 48a8.1 8.1 0 0 0-4.1 15.1L34 74h12l-1.9-10.9A8.1 8.1 0 0 0 40 48Z" fill="#fffaf2" stroke="#766a80" stroke-width=".65"/>
+</svg>
