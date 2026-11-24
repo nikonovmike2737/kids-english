@@ -128,3 +128,7 @@ Remove G7 additional chest lock overlays (native art and locked/ready/opened sta
 
 ## G9 — [#47](https://github.com/nikonovmike2737/kids-english/issues/47)
 Reference-style round ivory/pink lesson buttons with a glossy layered purple base and centered illustrated lavender padlock instead of platform emoji. Preserve native disabled states, available lesson icons, completed key badges and fixed map geometry. Browser checks at five viewports in Chromium/WebKit; owner visual acceptance separate.
+
+
+## G11 — scarf card optical centering (owner 2026-11-24 10:43 MSK)
+Center each of Cozy, Adventure and Royal Scarf horizontally on its own card, matching the green reference rectangle. Preserve vertical placement, size, card text, locks, prices, other categories and stable avatar. Calculate visible opaque scarf bounds, excluding faint alpha fringes, and align to the actual card axis; recompute on resize and category/tier remount. Independent Chromium/WebKit pixel-geometry gate at 1466×1056, 1649×837 and 390×844 (≤1.5 CSS px). Owner visual acceptance remains separate.

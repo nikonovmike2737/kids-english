@@ -15,7 +15,7 @@ async function checkArt(p){
   const metrics=await p.locator('.shop-item').evaluateAll(async cards=>{
    const {alphaBounds}=await import(new URL('assets/animation/wardrobe-art.js',document.baseURI).href);
    return Promise.all(cards.map(async card=>{
-    const img=card.querySelector(':scope > img'),b=await alphaBounds(img),r=img.getBoundingClientRect(),c=card.getBoundingClientRect();
+    const img=card.querySelector(':scope > img'),b=await alphaBounds(img,img.getAttribute('src').includes('/scarves/')?160:36),r=img.getBoundingClientRect(),c=card.getBoundingClientRect();
     const s=Math.min(r.width/img.naturalWidth,r.height/img.naturalHeight);
     const center=r.x+r.width/2+((b.l+b.r)/2-.5)*img.naturalWidth*s;
     return {centerDelta:Math.abs(center-(c.x+c.width/2))/c.width,inside:r.x+b.l*r.width>=c.x-2&&r.x+b.r*r.width<=c.right+2};
@@ -28,6 +28,28 @@ async function checkArt(p){
 }
 
 
+// G11: independently measure actual high-opacity scarf pixels (not the
+// production alphaBounds helper), at the owner's viewport and on mobile.
+async function checkScarves(p){
+ await p.locator('[data-category="scarves"]').click();
+ await p.waitForFunction(()=>document.querySelectorAll('.shop-item>img[data-art-centered="true"]').length===3);
+ const metrics=()=>p.locator('.shop-item').evaluateAll(cards=>cards.map(card=>{
+  const img=card.querySelector(':scope > img'),r=img.getBoundingClientRect(),c=card.getBoundingClientRect();
+  const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+  const ctx=canvas.getContext('2d');ctx.drawImage(img,0,0);
+  const pixels=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+  let l=canvas.width,right=-1;
+  for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++)if(pixels[(y*canvas.width+x)*4+3]>160){l=Math.min(l,x);right=Math.max(right,x);}
+  const fit=Math.min(r.width/canvas.width,r.height/canvas.height);
+  const cx=r.x+r.width/2+((l+right+1)/2-canvas.width/2)*fit;
+  return {delta:Math.abs(cx-c.x-c.width/2),valid:right>=l,inside:cx-(right-l+1)*fit/2>=c.x&&cx+(right-l+1)*fit/2<=c.right};
+ }));
+ await p.waitForTimeout(150);
+ const result=await metrics();
+ assert.equal(result.length,3);
+ assert.ok(result.every(v=>v.valid&&v.inside&&v.delta<=1.5),'G11 scarf optical centers '+JSON.stringify(result));
+ pass('G11 all three scarf silhouettes centered within 1.5 CSS px at '+JSON.stringify(p.viewportSize()));
+}
 async function closeCentered(p){
  const result=await p.locator('.modal-panel .close').evaluateAll(buttons=>buttons.map(b=>{
   const r=b.getBoundingClientRect(),svg=b.querySelector('.close-glyph'),path=svg?.querySelector('path');
@@ -122,7 +144,7 @@ try{
  const props=()=>p.locator('.island-ambient').evaluate(el=>[getComputedStyle(el.querySelector('.fall-stream')).strokeDashoffset,getComputedStyle(el.querySelector('.shore-wave')).transform,...[...el.querySelectorAll('.foliage-sway')].map(x=>getComputedStyle(x).transform)]);
  const a=await props();await p.waitForTimeout(520);const b=await props();assert.notEqual(a[0],b[0]);assert.notEqual(a[1],b[1]);
  await p.waitForTimeout(1800);const d=await props();assert.ok(a.slice(2).some((x,i)=>x!==b[i+2]||x!==d[i+2]));
- await p.locator('#cat-button').click();await p.waitForSelector('[data-portrait-fitted="true"]');await checkArt(p);await stableTabs(p);await shot(p,'wardrobe-scarves');await p.locator('#close-modal').click();
+ await p.locator('#cat-button').click();await p.waitForSelector('[data-portrait-fitted="true"]');await checkArt(p);await p.setViewportSize({width:1466,height:1056});await checkScarves(p);await shot(p,'g11-scarves-owner');await p.setViewportSize({width:1649,height:837});await checkScarves(p);await stableTabs(p);await shot(p,'wardrobe-scarves');await p.locator('#close-modal').click();
  await p.evaluate(()=>window.__kidsSmoke.forceProgress({purchasedItemIds:['hats-1','scarves-1','shoes-1','backpacks-1','tools-1'],equippedBySlot:{hats:'hats-1',scarves:'scarves-1',shoes:'shoes-1',backpacks:'backpacks-1',tools:'tools-1'}}));
  assert.equal(await p.locator('#island-cat .equipped-item').count(),5);await staticCat(p,'#island-cat .cat-avatar-canvas');
  await p.locator('#cat-button').click();await p.waitForSelector('[data-portrait-fitted="true"]');assert.equal(await p.locator('.cat-preview .equipped-item').count(),5);await stableTabs(p);await staticCat(p,'.cat-preview .cat-avatar-canvas');await p.locator('#close-modal').click();
@@ -130,7 +152,7 @@ try{
  for(const button of ['#world-button','#settings-button','[data-stop="1"]']){await p.locator(button).click();await closeCentered(p);await p.locator('#close-modal').click();}
  await c.close();
  const mobile=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
- const m=await mobile.newPage();watch(m);await m.goto(url,{waitUntil:'networkidle'});await mapCheck(m);await m.locator('#cat-button').click();await m.waitForSelector('[data-portrait-fitted="true"]');await stableTabs(m);await staticCat(m,'.cat-preview .cat-avatar-canvas');await mobile.close();
+ const m=await mobile.newPage();watch(m);await m.goto(url,{waitUntil:'networkidle'});await mapCheck(m);await m.locator('#cat-button').click();await m.waitForSelector('[data-portrait-fitted="true"]');await checkScarves(m);await stableTabs(m);await staticCat(m,'.cat-preview .cat-avatar-canvas');await mobile.close();
  const reduced=await browser.newContext({viewport:{width:1280,height:800},reducedMotion:'reduce'});
  const r=await reduced.newPage();watch(r);await r.goto(url,{waitUntil:'networkidle'});assert.equal(await r.locator('.island-ambient').evaluate(el=>getComputedStyle(el).display),'none');await reduced.close();
  const normal=await browser.newContext({viewport:{width:1280,height:800}});
